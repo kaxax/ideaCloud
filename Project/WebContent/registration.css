@@ -1,3 +1,8 @@
+body{
+	background-color: #BCDBFE;
+}
+
+
 #name {
 	font-size: 150%
 }
@@ -25,3 +30,74 @@
 #button {
 	font-size: 150%
 }
+
+
+#form{
+	
+}
+
+#logo{
+	position: absolute;
+	left: 45%;
+	top: 10%;
+}
+#image-logo{
+	width: 40%;
+}
+
+#name-div{
+	position: absolute; 
+	left: 40%;
+	top: 34%;
+}
+#surname-div{
+	position: absolute; 
+	left: 40%; 
+	top: 42%;
+}
+#username-div{
+	position: absolute; 
+	left: 40%; 
+	top: 50%;
+}
+#email-div{
+	position: absolute; 
+	left: 40%; 
+	top: 58%;
+}
+#password-div{
+	position: absolute; 
+	left: 40%; 
+	top: 66%;
+}
+#password-again-div{
+	position: absolute; 
+	left: 40%; 
+	top: 74%;
+}
+#submit-div{
+	position: absolute; 
+	left: 45%; 
+	top: 85%;
+}
+#post-div{
+	position: absolute; 
+	left: 47%; 
+	top: 93%;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #5CA3F4;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+
+
+

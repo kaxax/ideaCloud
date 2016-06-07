@@ -1,15 +1,100 @@
+body {
+    background-color: #BCDBFE;
+        
+}
+
 #username {
-	font-size: 150%
+	font-size: 150%;
 }
 
 #password {
-	font-size: 150%
+	font-size: 150%;
+}
+
+#image-share{
+	width: 80%;
+}
+
+
+
+#share{
+	position: absolute;
+	left: 15%;
+	top: 40%
+}
+
+#help{
+	position: absolute;
+	left: 70%;
+	top: 40%;
+}
+#image-help{
+	width: 60%;
+}
+
+#logo{
+	position: absolute;
+	top: 15%;
+	left: 42%;
+	
+}
+#image-logo{
+	width: 60%;
+}
+
+#image-fb{
+	position: absolute; 
+	left: 41%; 
+	top: 57%; 
+	
+}
+
+#username-div{
+	position: absolute; 
+	left: 40%; 
+	top: 65%;	
+	
+}
+
+#password-div{
+	position: absolute; 
+	left: 40%; 
+	top: 75%;
+}
+
+#login-div{
+	position: absolute; 
+	left: 42%; 
+	top: 85%;
 }
 
 #register {
-	font-size: 150%
+	font-size: 150%;
+	margin-left:  50px;
+	
+}
+
+#join{
+	position: absolute;
+	left: 47%;
+	top: 85%;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #5CA3F4;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 #login {
-	font-size: 150%
+	font-size: 150%;
+
+}
+
+.form{
+	border: medium;
+	border-color: black;
 }

@@ -8,35 +8,48 @@
 </head>
 <body>
 
-	<form action="http://localhost:8080/IdeaCloud/hereWeGo">
-		<div style="position: absolute; left: 40%; top: 20%">
+	<div id = "logo">
+		<img src="logo.png" id = "image-logo">
+	</div>
+
+	<form action="http://localhost:8080/IdeaCloud/hereWeGo" id = "form">
+	
+		<div id = "name-div">
 			<input type="text" id="name" placeholder="name" name = "name">
 		</div>
-		<div style="position: absolute; left: 40%; top: 30%">
+		
+		<div id = "surname-div">
 			<input type="text" id="surname" placeholder="surname" name = "surname">
 		</div>
-		<div style="position: absolute; left: 40%; top: 40%">
+		
+		<div id = "username-div">
 			<input type="text" id="username" placeholder="username" name = "username">
 		</div>
-		<div style="position: absolute; left: 40%; top: 50%">
+		
+		<div id = "email-div">
 			<input type="text" id="mail" placeholder="e-mail" name = "email">
 		</div>
-		<div style="position: absolute; left: 40%; top: 60%">
+		
+		<div id = "password-div">
 			<input type="password" id="password" placeholder="password" name = "password">
 		</div>
-		<div style="position: absolute; left: 40%; top: 70%">
+		
+		<div id = "password-again-div">
 			<input type="password" id="password-again" placeholder="repeate password" name = "again">
 		</div>
-		<div style="position: absolute; left: 45%; top: 80%">
-			<input id="button" type=submit value="here we go!" class="button"
-				onclick="myFunction()">
+		
+		<div id = "submit-div">
+			<input id="button" type=submit value="here we go!" class="button" onclick="myFunction()">
 		</div>
+		
 	</form>
 	
-	<div style="position: absolute; left: 47%; top: 90%;">
+	<div id = "post-div">
+	
 		<form action="post.jsp">
 			<input type=submit value="see post" class="button" id="register">
 		</form>
+	
 	</div>
 
 
