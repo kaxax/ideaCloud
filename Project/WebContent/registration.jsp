@@ -8,25 +8,24 @@
 </head>
 <body>
 
-	<form action="registration.html">
+	<form action="http://localhost:8080/IdeaCloud/hereWeGo">
 		<div style="position: absolute; left: 40%; top: 20%">
-			<input type="text" id="name" placeholder="name">
+			<input type="text" id="name" placeholder="name" name = "name">
 		</div>
 		<div style="position: absolute; left: 40%; top: 30%">
-			<input type="text" id="surname" placeholder="surname">
+			<input type="text" id="surname" placeholder="surname" name = "surname">
 		</div>
 		<div style="position: absolute; left: 40%; top: 40%">
-			<input type="text" id="username" placeholder="username">
+			<input type="text" id="username" placeholder="username" name = "username">
 		</div>
 		<div style="position: absolute; left: 40%; top: 50%">
-			<input type="text" id="mail" placeholder="e-mail">
+			<input type="text" id="mail" placeholder="e-mail" name = "email">
 		</div>
 		<div style="position: absolute; left: 40%; top: 60%">
-			<input type="password" id="password" placeholder="password">
+			<input type="password" id="password" placeholder="password" name = "password">
 		</div>
 		<div style="position: absolute; left: 40%; top: 70%">
-			<input type="password" id="password-again"
-				placeholder="repeate password">
+			<input type="password" id="password-again" placeholder="repeate password" name = "again">
 		</div>
 		<div style="position: absolute; left: 45%; top: 80%">
 			<input id="button" type=submit value="here we go!" class="button"

@@ -16,12 +16,12 @@
 
 
 
-	<form action="logButton">
+	<form action="http://localhost:8080/IdeaCloud/register">
 		<div id="inp" style="position: absolute; left: 40%; top: 30%;">
-			<input type="text" placeholder="username" id="username">
+			<input type="text" placeholder="username" id="username" name = "username">
 		</div>
 		<div style="position: absolute; left: 40%; top: 45%;">
-			<input type="password" placeholder="password" id="password">
+			<input type="password" placeholder="password" id="password" name = "password">
 		</div>
 		<div style="position: absolute; left: 48%; top: 57%;">
 			<input type=submit value="log in" class="button" id="login">
@@ -30,7 +30,8 @@
 
 
 	<div style="position: absolute; left: 47%; top: 75%;">
-		<form action="registration.jsp">
+	
+		<form action="http://localhost:8080/IdeaCloud/joinNow">
 			<input type=submit value="Join Now" class="button" id="register">
 		</form>
 	</div>
