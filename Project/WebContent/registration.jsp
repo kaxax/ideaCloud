@@ -46,7 +46,7 @@
 	
 	<div id = "post-div">
 	
-		<form action="post.jsp">
+		<form action="homepage.jsp">
 			<input type=submit value="see post" class="button" id="register">
 		</form>
 	

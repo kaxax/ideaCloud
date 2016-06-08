@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	<form action="http://localhost:8080/IdeaCloud/register" class = "form">
+	<form action="http://localhost:8080/IdeaCloud/getPosts" class = "form">
 		
 		<a href="http://fb.com"> <img src="fb.png" width="3%" id = "image-fb"></a>
 		
