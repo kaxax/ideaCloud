@@ -27,6 +27,9 @@
     <a onclick="reply_click(this.id)" id = "11" href="#">poetry</a>    
   </div>
 </div>
+<div id ="postsDiv">
+</div>
+
 <script>
 marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
 function getPosts(id,type){
@@ -34,16 +37,17 @@ function getPosts(id,type){
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 	    	postsT = xhttp.responseText;	
-	    	alert(PostsT);
+	    	 var shadow = document.getElementById("postsDiv");
+	    	 shadow.innerHTML = postsT;
+
 	    }
 	  };
-	  xhttp.open("POST", "http://localhost:8080/ideaCloud/getPosts", true);
+	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  xhttp.send("id="+id +"&type="+type); // 0 anu homepage
 }
 function goOnProfile(){
 	getPosts(0, 1);
-	alert("semded");
 }
 function initf(){
 	getPosts(0, 0);

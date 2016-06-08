@@ -1,3 +1,11 @@
+#postsDiv{
+	position: absolute;
+    left: 50%;
+    top : 30%;
+    margin-left: -250px;
+	
+}
+
 .dropbtn {
     background-color: #4CAF50;
     color: white;
