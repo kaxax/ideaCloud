@@ -3,70 +3,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<style type="text/css">
-		.post {
-			width: 500px;
-			height: 200px;
-			padding: 15px;
-			border: 1px solid black;
-			position: relative;
-		}
-		.author {
-			float: left;
-			width: 100px;
-			height: 100px;
-		}
-		.type {
-			float: right;
-			width: 30px;
-			height: 30px;
-		}
-		.image {
-			width: 100px;
-			height: 100px;
-			
-		}
-		.author_name, .date {
-			width: 100px;
-			height: 25px;
-			line-height: 25px;
-		}
-		.body {
-			position: absolute;
-			width: 300px;
-			height: 150px;
-			left: 150px;
-		}
-		.meta_info {
-			position: absolute;
-			left: 20px;
-			top: 180px;
-		}
-		.votes {
-			float: left;
-			margin-right: 20px;
-		}
-		.share{
-		float: right;
-		margin-right: 20px;
-		font-size: 120%;
-		}
-		</style>
+		<link rel="stylesheet" type="text/css" href="post.css">
 	</head>
 	<body>
-		[:post_item:]
+		
+		
+		
+		
 		<div class="post">
 			<div class="author">
 				<div class="image"> 
-					<img src="img.jpg" height="100" width="100"/>
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
 				</div>
-				<div class="author_name"> {{:username:}} </div>
-				<div class="date">lvl: {{:lvl:}} </div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
 			</div>
 			<div class="body">
-				<div class = "title">{{:title:}}</div>
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
 				<p></p>
-				<div lass = "text">{{:text:}}</div>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
 			</div>
 			<div class="type">
 				<div calss = "QA">
@@ -75,26 +30,382 @@
 			</div>
 			<div class="meta_info">
 				<div class="votes upvote">
-					<div class="vote_name"> UP </div>
-					<div class="vote_count"> 357 </div>
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
 				</div>
 				<div class="votes downvote">
-					<div class="vote_name"> DOWN </div>
-					<div class="vote_count">    22 </div>
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
 				</div>
-				<div class="share now">
+				<div class="share">
 					<a href = "http://share-now">
-						<div class="vote_name"> share now </div>
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
 						</a>
 				</div>
 				
-				<div class="share later">
+				<div class="share">
 					<a href = "http://share">
-						<div class="vote_name"> share  </div>
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
 						</a>
 				</div>
 			</div>
 		</div>
-		[:post_item:]
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		<div class="post">
+			<div class="author">
+				<div class="image"> 
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
+				</div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
+			</div>
+			<div class="body">
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
+				<p></p>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
+			</div>
+			<div class="type">
+				<div calss = "QA">
+					<img src="Q.jpg" height="30" width="30"/>
+				</div>
+			</div>
+			<div class="meta_info">
+				<div class="votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		<div class="post">
+			<div class="author">
+				<div class="image"> 
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
+				</div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
+			</div>
+			<div class="body">
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
+				<p></p>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
+			</div>
+			<div class="type">
+				<div calss = "QA">
+					<img src="Q.jpg" height="30" width="30"/>
+				</div>
+			</div>
+			<div class="meta_info">
+				<div class="votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		<div class="post">
+			<div class="author">
+				<div class="image"> 
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
+				</div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
+			</div>
+			<div class="body">
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
+				<p></p>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
+			</div>
+			<div class="type">
+				<div calss = "QA">
+					<img src="Q.jpg" height="30" width="30"/>
+				</div>
+			</div>
+			<div class="meta_info">
+				<div class="votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		<div class="post">
+			<div class="author">
+				<div class="image"> 
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
+				</div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
+			</div>
+			<div class="body">
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
+				<p></p>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
+			</div>
+			<div class="type">
+				<div calss = "QA">
+					<img src="Q.jpg" height="30" width="30"/>
+				</div>
+			</div>
+			<div class="meta_info">
+				<div class="votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		
+		<div class="post">
+			<div class="author">
+				<div class="image"> 
+					<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
+				</div>
+				<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
+				<div class="user-info">lvl: 69 </div>
+			</div>
+			<div class="body">
+				<a href="post-id" class = "link">  <div class = "title">satesto statia</div></a>
+				<p></p>
+				<div class = "text">es aris satesto statia romelic imedia dzalian dzalina kargi gamova</div>
+			</div>
+			<div class="type">
+				<div calss = "QA">
+					<img src="Q.jpg" height="30" width="30"/>
+				</div>
+			</div>
+			<div class="meta_info">
+				<div class="votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+			
+	
+		
+		
+		
+		
+		
+		
 	</body>
 </html>

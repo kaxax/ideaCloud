@@ -13,6 +13,7 @@ body {
 
 #image-share{
 	width: 80%;
+	height: 80%;
 }
 
 
@@ -30,6 +31,7 @@ body {
 }
 #image-help{
 	width: 60%;
+	height: 60%;
 }
 
 #logo{
@@ -40,6 +42,7 @@ body {
 }
 #image-logo{
 	width: 60%;
+	height: 60%;
 }
 
 #image-fb{
