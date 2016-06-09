@@ -11,7 +11,7 @@
 <div class="dropdown">
   <button class="dropbtn" onclick="searchit()">search</button>
   <div class="dropdown-content">
-  <textarea placeholder="This is an awesome comment box" rows="1" 
+  <textarea placeholder="type eords to search" rows="1" 
   name="comment[text]" id="comment_text" cols="1" class="ui-autocomplete-input" 
   autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
     <a onclick="reply_click(this.id)" id = "1" href="#">computer science</a>
@@ -27,6 +27,19 @@
     <a onclick="reply_click(this.id)" id = "11" href="#">poetry</a>    
   </div>
 </div>
+<div class="post-text-area">
+ 
+<select id="blue">
+  <optgroup label="Choose I or Q">
+    <option>Idea</option>
+    <option>Question</option>
+  </optgroup>
+</select>
+
+</div>
+  <textarea placeholder="type here" rows="2" 
+  name="comment[text]" id="post_text" cols="1" class="ui-autocomplete-input" 
+  autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
 <div id ="postsDiv">
 </div>
 
@@ -65,8 +78,6 @@ function reply_click(clicked_id)
 		button.style.background='#fff';		
 		marked_categories[clicked_id] = false;
 	}
-
-	
 }
 </script>
 </body>
