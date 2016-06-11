@@ -49,6 +49,14 @@
 		<form action="homepage.jsp">
 			<input type=submit value="see post" class="button" id="register">
 		</form>
+		
+	</div>
+	
+	<div id = change-info-div>
+	
+		<form action="http://localhost:8080/IdeaCloud/checkPassword">
+			<input type=submit value="change info" class="button" id="change-info">
+		</form>
 	
 	</div>
 
