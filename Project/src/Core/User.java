@@ -14,10 +14,11 @@ public class User {
 	private String userMoto;
 	private String userImgSrc;	
 	
-	public User(int userId, String userName, String userNickName, String userEmail, String userPassword, 
+	public User(int userId, String userName, String userSurname, String userNickName, String userEmail, String userPassword, 
 			int userAge, int userLevel, int userSex, String userMoto, String userImgSrc){
 		this.userId = userId;
 		this.userName=userName;
+		this.userSurname = userSurname;
 		this.userNickName=userNickName;
 		this.userEmail=userEmail;
 		this.userPassword = userPassword;

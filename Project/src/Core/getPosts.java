@@ -4,12 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
+import Core.Post;
+import Core.User;
 
 /**
  * Servlet implementation class getPosts
@@ -49,10 +55,24 @@ public class getPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-		String tamplate = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		
+		ArrayList<Post> posts = new ArrayList<Post>();
+		Post tmp = new Post(12, "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
+		posts.add(tmp);
+		User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
+		String result = "";
+		String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
+		String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		for (int i=0;i<posts.size();i++){	
+			String temp=generate_template(template, posts.get(i), user);
+			
+			result = result + temp;
+			
+		}
+		result = result + style;
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		out.append(tamplate);
+		out.append(result);
 
 		out.close();
 	}
@@ -70,6 +90,18 @@ public class getPosts extends HttpServlet {
 		}
 		String content = contentBuilder.toString();
 		return content;
+	}
+	private String generate_template(String template1, Post post, User user){
+		String template = template1;
+		String tmp1;
+		tmp1=template.replace("::img-src::", user.getUSerImgSrc());
+		template=tmp1.replace("::user-name::", user.getUSerNickname());
+		tmp1=template.replace("::lvl::", Integer.toString(user.getUserLevel()));
+		template=tmp1.replace("::post-title::", post.getPostTitle());
+		tmp1=template.replace("::post-text::", post.getPostText());
+		template=tmp1.replace("::vote-up::", Integer.toString(post.getPostCloud()));
+		tmp1=template.replace("::vote-down::", Integer.toString(post.getPostUncloud()));
+		return tmp1;
 	}
 
 }
