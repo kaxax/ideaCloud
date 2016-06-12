@@ -1,18 +1,45 @@
+
+#QorA-area{
+	position: absolute;
+    left: 30%;
+	top : 54%;
+}
+#post_push_area{
+	position: absolute;
+    left: 30%;
+    top : 20%;
+}
+#post_push_btn{
+	position: absolute;
+    width: 120px;
+    height: 50px;
+	margin-top : 170px;
+	margin-left : 416px;
+}
 #postsDiv{
 	position: absolute;
-    left: 50%;
-    top : 50%;
-    margin-left: -250px;
-
+    left: 30%;
+    top : 55%;
 }
-
 #post_text{
 	position: absolute;
     width: 520px;
     height: 100px;
-    left: 50%;
-    top : 35%;
-    margin-left: -250px;
+    margin-top:50px;
+}
+
+#search_title_text{
+	position: absolute;
+    width: 520px;
+    height: 20px;
+}
+
+#search_post_text{
+	width: 450px;
+	margin-left :4px;
+}
+#search_container{
+	width:530px;
 }
 /* hide input */
 input.radio:empty {
@@ -51,45 +78,78 @@ select {
 #blue {
   background-color:#3498DB;
 }
+#blue1 {
+  background-color:#3498DB;
+}
 
 #blue:hover {
+  background-color:#2980B9;
+}
+
+#blue1:hover {
   background-color:#2980B9;
 }
 select:focus, select:active {
   border:0;
   outline:0;
 }
-
-
 .post-text-area{
 	position: absolute;
-    left: 50%;
-    top : 25%;
+    left: 30%;
+	 top : 11%;
     width: 520px;
-    margin-left: -250px;
-    
+}
+#search-dropdown{
+	left: 30%;
 }
 
 .dropbtn {
     background-color: #4CAF50;
     color: white;
-    padding: 34px;
     font-size: 16px;
     border: none;
     cursor: pointer;
  	width: 530px;
-    height: 50px;
+	height : 40px;
 }
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
 	position: absolute;
-    left: 50%;
-    margin-left: -250px;
+    left: 30%;
     width: 100px;
-    height: 100px;
-	 z-index: 100;
+    height: 20px;
+	z-index: 2;
 }
-
+#post_dropdown{
+	left: 24%;
+	top : 0%;
+	z-index: 1;
+	height : 46px;
+	
+}
+#post_dropbtn{
+    background-color:#3498DB;
+    color: white;
+	width: 410px;
+	z-index: 1;
+	height : 40px;
+	font-family:arial,tahoma;
+  	font-size:16px;
+  	font-weight:bold;
+  	color:#fff;
+  	text-align:center;
+  	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+  	border-radius:3px;
+  	-webkit-border-radius:3px;
+  	-webkit-appearance: none;
+  	border:0;
+  	outline:0;
+  	-webkit-transition:0.3s ease all;
+	   -moz-transition:0.3s ease all;
+	    -ms-transition:0.3s ease all;
+	     -o-transition:0.3s ease all;
+	        transition:0.3s ease all;
+}
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
     display: none;
@@ -111,34 +171,30 @@ select:focus, select:active {
 }
 .dropdown-content a {
     color: black;
-    padding: 12px 90px;
+    padding: 3px 10px;
     text-decoration: none;
 	font-size: 20px;
     display: block;
 }
 .dropdown-content textarea {
     color: black;
-    padding: 12px 16px;
+    padding: 1px 1px;
     text-decoration: none;
     display: block;
 }
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
 
 textarea {
-  margin-top: 10px;
-  margin-left: 10px;
   width: 560px;
   height: 50px;
   -moz-border-bottom-colors: none;
