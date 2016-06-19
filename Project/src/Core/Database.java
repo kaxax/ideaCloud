@@ -74,4 +74,7 @@ public class Database {
 		}
 		
 	}
+	public int getId(String email, String password){
+		return 0;
+	}
 }
