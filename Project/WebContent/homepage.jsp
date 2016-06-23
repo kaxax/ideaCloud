@@ -73,18 +73,26 @@
 
 
 <div id="QorA-area">
-<select id="blue1" >
-  <optgroup label="Choose I or Q">
-    <option>Idea</option>
-    <option>Question</option>
-  </optgroup>
-</select>
+<div>
+
+    <input type="checkbox" name="system_type3" value="5" />
+    <span style="width:100px;display:inline-block;">Idea</span>
+    <input type="checkbox" name="system_type3" value="5" />
+    <span style="width:100px;display:inline-block;">Question</span>
+</div>
 </div>
 
 <div id ="postsDiv">
 </div>
 
+<td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
+
 <script>
+var user_id=document.getElementById("session_user_id").value;	
+function post_it(){
+	title = document.getElementById("search_title_text").value;
+	text = document.getElementById("post_text").value;	
+}
 marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
 function showSearch(){
     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -97,7 +105,21 @@ function showSearch(){
     }
   }	
 
-function getPosts(id,type){
+
+function addPosts(title,text){
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
+	    	postsT = xhttp.responseText;	
+	    	 var shadow = document.getElementById("postsDiv");
+	    	 shadow.innerHTML = postsT;
+	    }
+	  };
+	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/addPosts", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhttp.send("id="+user_id +"&title="+title +"&text="+text); 
+}
+function getPosts(type){
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
@@ -109,15 +131,15 @@ function getPosts(id,type){
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("id="+id +"&type="+type); // 0 anu homepage
+	  xhttp.send("id="+user_id +"&type="+type); // 0 anu homepage
 }
 function goOnProfile(){
-	getPosts(0, 1);
+	getPosts( 1);
 }
 function initf(){
 
 	 document.getElementById("search_container").classList.toggle("show");
-	getPosts(0, 0);
+	getPosts(0);
 }
 function searchit(){	
 	alert("ss");
