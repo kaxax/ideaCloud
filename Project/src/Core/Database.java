@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import Core.Post;
+import Core.Comment;
+import Core.User;
+
+
 
 public class Database {
 	private Connection con;
@@ -54,6 +59,20 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public Post getPost(int id){
+		//TODO
+		return null;
+	}
+	public User getUser(int id){
+		//TODO
+		return null;
+	}
+	public Comment getComment(int id){
+		//TODO
+		return null;
+	}
+	
 	public void addComment(Comment c){
 		
 		try {
