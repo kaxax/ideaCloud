@@ -11,7 +11,7 @@ public class Pool {
 	private static Pool connectionPool;
 	private BasicDataSource data;
 
-	private Pool() throws IOException, SQLException, PropertyVetoException {
+	Pool() throws IOException, SQLException, PropertyVetoException {
 		data = new BasicDataSource();
 		data.setDriverClassName("com.mysql.jdbc.Driver");
 		data.setUsername("root");

@@ -55,14 +55,15 @@ public class getPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-		
 		ArrayList<Post> posts = new ArrayList<Post>();
 		Post tmp = new Post(12, "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
 		posts.add(tmp);
 		User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
 		String result = "";
-		String style = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postStyle.html");
-		String template = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+
+		
+		String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
+		String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
 		for (int i=0;i<posts.size();i++){	
 			String temp=generate_template(template, posts.get(i), user);
 			
@@ -91,7 +92,7 @@ public class getPosts extends HttpServlet {
 		String content = contentBuilder.toString();
 		return content;
 	}
-	private String generate_template(String template1, Post post, User user){
+	private static String generate_template(String template1, Post post, User user){
 		String template = template1;
 		String tmp1;
 		tmp1=template.replace("::img-src::", user.getUSerImgSrc());
