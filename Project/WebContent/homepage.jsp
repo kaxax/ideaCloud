@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="homepage.css" />
 </head>
 <body onload="initf()">
-	
+		
 <img src="smiley.gif" class = "profpic" onclick="goOnProfile()" alt="Smiley face" ">
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
