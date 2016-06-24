@@ -37,11 +37,14 @@ public class addPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String result = "";
-		PrintWriter out = response.getWriter();
-		out.append(result);
-
-		out.close();
+		
+		 String userId = request.getParameter("id");
+		 String title = request.getParameter("title");
+		 String text = request.getParameter("text");
+		 String result = "";
+		 PrintWriter out = response.getWriter();
+		 out.append(result);
+		 out.close();
 	}
 
 }
