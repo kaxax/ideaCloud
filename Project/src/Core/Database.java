@@ -41,7 +41,7 @@ public class Database {
 	
 		
 	
-	public void addPost(Post p){
+	public int addPost(Post p){
 		try {
 	    	PreparedStatement stmt = con.prepareStatement("INSERT INTO post "
 					+ "(title, text, type, authorId, topic, clouds, unclouds) " 
@@ -58,6 +58,8 @@ public class Database {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//gogi yleo unda daabruno is id roml id zec am post chaamateb 
+		return 0;
 	}
 	
 	public Post getPost(int id){
