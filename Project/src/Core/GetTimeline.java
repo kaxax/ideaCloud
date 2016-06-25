@@ -3,17 +3,32 @@ package Core;
 import java.util.ArrayList;
 
 import javafx.util.Pair;
+
+import java.beans.PropertyVetoException;
+import java.io.IOException;
 import java.lang.Math;
+
+import Core.Pool;
+import Core.Database;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class GetTimeline {
 
 	
 	
-	public ArrayList<Integer> getPosts(int wallTyep, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
-		if (wallTyep == 0){
-			return getHomePagePosts(questions, ideas, categories, searchTerm);
+	public ArrayList<Integer> getPosts(int start, int end, boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
+		if (status){
+			if (wallType == 0){
+				return getHomePagePosts(questions, ideas, categories, searchTerm);
+			}
+			else{
+				return getProfilePosts(userId, questions, ideas, categories, searchTerm);
+			}
 		}
-		else{
-			return getProfilePosts(questions, ideas, categories, searchTerm);
+		else {
+			return getStandartTimeline(userId, start, end, wallType, ideas, questions);
 		}
 	}
 	private Pair<Double, Double> getPostCount(ArrayList<String> categories, boolean questions, boolean ideas, String word){
@@ -32,18 +47,50 @@ public class GetTimeline {
 	}
 	
 	private ArrayList<Integer> sortPosts(ArrayList<Pair<Integer, Double>> posts){
+		
+		return null;
+	}
+	
+	private ArrayList<Integer> getStandartTimeline(int userId, int start, int end, int wallType, boolean ideas, boolean questions){
+		Pool pl;
+		try {
+			pl = new Pool();
+			Connection conn = pl.getConnection();
+			Database db = new Database(conn);
+			
+			ArrayList<Integer> tmp;
+			if(wallType == 0){
+				tmp = db.getLatestPosts(start, end, ideas, questions);
+				return tmp;
+			}
+			else{
+				tmp = db.getLatestProfilePosts(userId, start, end, ideas, questions);
+				return tmp;
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	
 	
-	private ArrayList<Integer> getHomePagePosts(boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
+	private ArrayList<Integer> getProfilePosts(int userID, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
 		
 		return null;
 	}
 	
 	
 	
-	private ArrayList<Integer> getProfilePosts(boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
+	private ArrayList<Integer> getHomePagePosts(boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
 		String[] words = searchTerm.split(" ");
 		ArrayList<Pair<Integer, Double>> posts = getPosts(categories, questions, ideas);
 		for (int i=0; i<words.length; i++){
