@@ -1,0 +1,140 @@
+@CHARSET "ISO-8859-1";
+
+#post_div{
+	position: relative;
+	left: 30%;
+	width: 700px;
+	height: auto;
+	padding: 15px;
+	border: 3px solid grey;
+	top: -300px;
+	margin-top: 50px;
+}
+#user_info_div{
+	position: relative;
+	left: 10%;
+	top: 15%;
+}
+.user_text_div{
+	margin-top: 15px;
+	font-size: 150%;
+}
+#post_title_div{
+	text-align:center;
+	font-size: xx-large;
+	color: #6c6c6c;
+	font-weight: bold;
+}
+
+#post_text_div{
+	margin-top: 20px;
+	font-style: italic;
+	font-size: x-large;
+}
+#post_cloud_div{
+	
+}
+#post_uncloud_div{
+	
+}
+
+
+.type {
+	float: right;
+	width: 50px;
+	height: 50px;
+}
+
+.meta_info {
+margin-bottom: 18px;
+}
+.votes {
+			top: -30px;		
+			float: left;
+			margin-right: 20px;*/
+}
+.share{
+		float: right;
+		margin-right: 20px;
+		font-size: 120%;
+}
+.arrow{
+	border: 3px solid grey;
+	bottom: 20px;
+	width: 30px;
+	height: 30px;	
+	
+	
+}
+
+#down-arrow{
+	width: 100%;
+	height: 100%;
+}
+#up-arrow{
+	width: 100%;
+	height: 100%;
+}
+.vote-count{
+	font-size: large;
+	font-weight: bold;
+	color: grey;
+	margin-left: 7px;
+}
+
+#iamge-share{
+	width: 120px;
+}
+
+.share{
+	margin-top: 2px;
+	margin-left: 20px;
+}
+.vote-name{
+	margin-left: 20px;
+}
+
+
+
+
+
+#comment_div {
+			width: 700px;
+			height: auto;
+			padding: 15px;
+			border: 3px solid grey;
+			position: absolute;
+			margin-top: 80px;
+			left: -2px;
+}
+.author {
+			float: left;
+			width: 80px;
+			height: auto;
+}
+.body {
+			width: 600px;
+			height: auto;
+			float: right;
+}
+.title{
+	font-size: xx-large;
+	color: #6c6c6c;
+	font-weight: bold;
+	float: right;
+}
+.text{
+	
+	margin-left: 20px;
+	font-style: italic;
+	font-size: large;
+}
+
+
+
+
+
+
+
+
+

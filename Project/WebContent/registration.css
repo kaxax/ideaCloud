@@ -101,7 +101,11 @@ input[type=button], input[type=submit], input[type=reset] {
 	top: 5%;
 	left: 20%;
 }
-
+#sample_post{
+	margin-top: 10px;
+	position: absolute;
+	left: 20px;
+}
 
 
 
