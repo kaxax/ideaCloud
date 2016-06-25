@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import Core.Post;
 import Core.Comment;
 import Core.User;
@@ -72,6 +74,21 @@ public class Database {
 		//TODO
 		return null;
 	}
+	//ak unda amoigos userId-s mkone useris droit dalagebuli postebi
+	//da makedan daabrunos start idexidan end indexamde mdgomi postebis id-ebis arrayListi
+	//(to ideas == true ideebi sachiroa da questions  == true qyestionebic sachiroa)
+	public ArrayList<Integer> getLatestProfilePosts(int userId, int start, int end, boolean ideas, boolean questions){
+		//TODO
+		return null;
+	}
+	//ak ubralod unda amoigos droit dalagebuli postebi (kvela postis masivida)
+	//da makedan daabrunos start indexidan end indexamde racaa magati id-ebis arraylisti unda
+	//(to ideas == true ideebi sachiroa da questions  == true qyestionebic sachiroa)
+	public ArrayList<Integer> getLatestPosts(int start, int end, boolean ideas, boolean questions){
+		//TODO
+		return null;
+	}
+	
 	
 	public void addComment(Comment c){
 		
