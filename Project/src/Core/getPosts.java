@@ -60,10 +60,8 @@ public class getPosts extends HttpServlet {
 		posts.add(tmp);
 		User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
 		String result = "";
-
-		
-		String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
-		String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		String style = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postStyle.html");
+		String template = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postTamplate.html");
 		for (int i=0;i<posts.size();i++){	
 			String temp=generate_template(template, posts.get(i), user);
 			

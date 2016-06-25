@@ -50,47 +50,47 @@ public class addPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Pool pl;
-		Connection conn;
+		
+		//Pool pl;
+		//Connection conn;
 		Post post;
-		User user;
-		try {
-			pl = new Pool();
-			conn = pl.getConnection();
-			Database db = new Database(conn);	
+		//User user;
+		//try {
+		//	pl = new Pool();
+			//conn = pl.getConnection();
+			//Database db = new Database(conn);	
 			
-			int postId = Integer.parseInt(request.getParameter("postId"));
+			int postId = 0;
 			String postTitle = request.getParameter("title");
 			String postText = request.getParameter("text");
 			int postUserId = Integer.parseInt(request.getParameter("userId"));
 			int postType = Integer.parseInt(request.getParameter("type"));
 			String postTopic = request.getParameter("topic");
-			int postCloud = Integer.parseInt(request.getParameter("cloud"));
-			int postUncloud = Integer.parseInt(request.getParameter("uncloud"));
+			int postCloud = 0;
+			int postUncloud = 0;
 			
 			post = new Post(postId, postTitle, postText, postUserId, postType, postTopic, postCloud, postUncloud);
-			db.addPost(post);
-			user = db.getUser(postUserId);
+			//db.addPost(post);
+			//user = db.getUser(postUserId);
 			
 			//tmp user is to test the servlet before corresponding method in Database.java is imlemented
 			
 			User tmpUser = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
-			
-			String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
-			String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+			String style = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postStyle.html");
+			String template = getHtml("D:\\oop\\ideaCloud\\Project\\WebContent\\postTamplate.html");
 			
 			String result = generate_template(template, post, tmpUser);
 			
 			PrintWriter out = response.getWriter();
-			out.append(result);
+			out.append(result+style);
 			out.close();
-		} catch (SQLException e) {
+		//} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PropertyVetoException e) {
+			//e.printStackTrace();
+		//} catch (PropertyVetoException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 		
 	}
 	
