@@ -11,8 +11,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6949002b7de589a6b69249f85037ebeb0d77e8fb
 # Created by https://www.gitignore.io/api/java,eclipse
 
 ### Eclipse ###
@@ -82,5 +85,8 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
 
 Project/.classpath
+=======
+>>>>>>> 6949002b7de589a6b69249f85037ebeb0d77e8fb
