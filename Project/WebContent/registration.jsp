@@ -5,6 +5,9 @@
 <head>
 <link rel="stylesheet" type="text/css" href="registration.css">
 <title>register</title>
+<script src="http://code.jquery.com/jquery-3.0.0.min.js"
+	integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -12,8 +15,7 @@
 		<img src="logo.png" id = "image-logo">
 	</div>
 
-	<form action="http://localhost:8080/IdeaCloud/hereWeGo" id = "form">
-	
+	<form id = "form" method="post">
 		<div id = "name-div">
 			<input type="text" id="name" placeholder="name" name = "name">
 		</div>
@@ -39,7 +41,7 @@
 		</div>
 		
 		<div id = "submit-div">
-			<input id="button" type=submit value="here we go!" class="button" onclick="myFunction()">
+			<input id="button" type="submit" value="here we go!" class="button">
 		</div>
 		
 	</form>
@@ -62,4 +64,43 @@
 
 
 </body>
+<script>
+$(document).ready(function() {
+	$('#form').submit(function() {
+		$.ajax({
+			url : "register",
+			type : "POST",
+			dataType: "json",
+			data : $("#form").serialize(),
+			success : function(data) {
+				if (data.errorCase == 0){
+					window.location = "http://localhost:8080/IdeaCloud/index.jsp";
+				}
+				else if (data.errorCase == 123) {
+					alert("Not everything is filled, password doesnt match, mail used");
+				}
+				else if (data.errorCase == 12) {
+					alert("Not everything is filled, password doesnt match");
+				}
+				else if (data.errorCase == 23) {
+					alert("Password doesnt match, mail used");
+				}
+				else if (data.errorCase == 13) {
+					alert("Not everything is filled, mail used");
+				}
+				else if (data.errorCase == 1) {
+					alert("Not everything is filled");
+				}
+				else if (data.errorCase == 2) {
+					alert("Password doesnt match");
+				}
+				else if (data.errorCase == 3) {
+					alert("Mail used");
+				}
+			}
+		});
+		return false;
+	});
+});
+</script>
 </html>
