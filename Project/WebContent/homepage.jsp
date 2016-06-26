@@ -43,7 +43,7 @@
 </select>
 
 <div class="dropdown" id = "post_dropdown">
-  <button class="dropbtn" id = "post_dropbtn" onclick="searchit()">Choose Categories</button>
+  <button class="dropbtn" id = "post_dropbtn" >Choose Categories</button>
   <div class="dropdown-content" id = "post_dropdown-content ">
     <a onclick="reply_post_click(this.id)" id = "p1" href="#">computer science</a>
     <a onclick="reply_post_click(this.id)" id = "p2" href="#">biology</a>
@@ -75,9 +75,9 @@
 <div id="QorA-area">
 <div>
 
-    <input id ="i-box" type="checkbox" name="system_type3" value="5" />
+    <input id ="i_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Idea</span>
-    <input id ="q-box" type="checkbox" name="system_type3" value="5" />
+    <input id ="q_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Question</span>
 </div>
 </div>
@@ -151,7 +151,7 @@ function initf(){
 		type = 2;
 	}else if(document.getElementById('i_box').checked){
 		type = 0;
-	}else if(document.getElementById('i_box').checked){
+	}else if(document.getElementById('q_box').checked){
 		type = 1;
 	}else{
 		type =2;
@@ -160,7 +160,20 @@ function initf(){
 	getPosts(0,type,"");
 } 
 function searchit(){	
-	alert("ss");
+	document.getElementById("search_container").classList.toggle("show");
+	var type=0;
+	
+	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
+		type = 2;
+	}else if(document.getElementById('i_box').checked){
+		type = 0;
+	}else if(document.getElementById('q_box').checked){
+		type = 1;
+	}else{
+		type =2;
+	}
+	searchTerm = document.getElementById('search_post_text').value
+	getPosts(1, type, searchTerm)
 }
 function reply_click(clicked_id)
 {
@@ -175,13 +188,14 @@ function reply_click(clicked_id)
 }
 function reply_post_click(clicked_id)
 {
+	clk_id = parseInt(clicked_id.substring(1));
 	var button = document.getElementById(clicked_id);
-	if (post_marked_categories[clicked_id] == false){
+	if (post_marked_categories[clk_id ] == false){
 		button.style.background='lightgreen';		
-		post_marked_categories[clicked_id] = true;
+		post_marked_categories[clk_id ] = true;
 	}else{
 		button.style.background='#fff';		
-		post_marked_categories[clicked_id] = false;
+		post_marked_categories[clk_id ] = false;
 	}
 }
 </script>
