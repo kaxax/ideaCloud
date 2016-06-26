@@ -54,7 +54,7 @@ public class GetTimeline {
 	private ArrayList<Integer> getStandartTimeline(int userId, int start, int end, int wallType, boolean ideas, boolean questions){
 		Pool pl;
 		try {
-			pl = new Pool();
+			pl = Pool.getPool();
 			Connection conn = pl.getConnection();
 			Database db = new Database(conn);
 			

@@ -10,8 +10,11 @@
 <body>
 	<div id = "user_info_div">
 		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img src="img.jpg" id = "user_img" width="12%"> </a>
+		
 		<div class = "user_text_div">
+		<a href="http://localhost:8080/IdeaCloud/hereWeGo" id = "post_author_link">
 		nickname
+		</a>
 		</div>
 		<div class = "user_text_div">
 		age: 69
@@ -34,6 +37,14 @@
 			<div id = "post_text_div">
 			<br>
 			
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
 				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
 				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
 				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
@@ -104,7 +115,44 @@
 					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
 					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
 				</div>
+		</div>
+		
+		<div class="comment_meta_info">
+				<div class="comment_votes upvote">
+					<div class="vote_name"> 
+						<div class="arrow" id = "up">
+							<img  src="up-arrow.png" id = "up-arrow">
+						</div>
+					</div>
+					<div class="vote-count"> 
+						98 
+					</div>
+				</div>
+				<div class="comment_votes downvote">
+					<div class="vote_name" > 
+						<div class="arrow" id = "down">
+							<img  src="down-arrow.png" id = "down-arrow">
+						</div> 
+					</div>
+					<div class="vote-count">22</div>
+				</div>
+				<div class="share">
+					<a href = "http://share-now">
+						<div class="vote-name"> 
+							<img  src="share-now.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
+				
+				<div class="share">
+					<a href = "http://share">
+						<div class="vote-name">
+							<img  src="share-later.png" id = "iamge-share">
+						</div>
+						</a>
+				</div>
 			</div>
+		
 	
 	</div>
 </div>
