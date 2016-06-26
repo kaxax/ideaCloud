@@ -2,6 +2,7 @@ package Core;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class Database {
 	
 		
 	
-	public void addPost(Post p){
+	public int addPost(Post p){
 		try {
 	    	PreparedStatement stmt = con.prepareStatement("INSERT INTO post "
 					+ "(title, text, type, authorId, topic, clouds, unclouds) " 
@@ -60,6 +61,8 @@ public class Database {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//gogi yleo unda daabruno is id roml id zec am post chaamateb 
+		return 0;
 	}
 	
 	public Post getPost(int id){
@@ -112,5 +115,53 @@ public class Database {
 	}
 	public int getId(String email, String password){
 		return 0;
+	}
+
+	public int getUserId(String email) {
+		int result = -1;
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from user where email = ? ");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
+	public void updateUser(User u) {
+		try (PreparedStatement stmt = con
+				.prepareStatement("update user set nickname = ?, name = ?, surname= ?, email = ?, password = ?, age = ?, sex = ?, level = ?, moto = ?, imgSrc = ? "
+						+ "where id = ?")) {
+			stmt.setString(1, u.getUSerNickname());
+			stmt.setString(2, u.getUserName());
+			stmt.setString(3, u.getUserSurname());
+			stmt.setString(4, u.getUserEmail());
+			stmt.setString(5, u.getUserPasswrod());
+			stmt.setInt(6, u.getUSerAge());
+			stmt.setInt(7, u.getUserSex());
+			stmt.setInt(8, u.getUserLevel());
+			stmt.setString(9, u.getUserMoto());
+			stmt.setString(10, u.getUSerImgSrc());
+			stmt.setInt(11, u.getUserId());
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void removeUser(User u){
+		try {
+			PreparedStatement stmt = con.prepareStatement("delete from user where id = ? ");
+			stmt.setInt(1, u.getUserId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

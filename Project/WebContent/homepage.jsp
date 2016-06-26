@@ -43,19 +43,19 @@
 </select>
 
 <div class="dropdown" id = "post_dropdown">
-  <button class="dropbtn" id = "post_dropbtn" onclick="searchit()">Choose Categories</button>
+  <button class="dropbtn" id = "post_dropbtn" >Choose Categories</button>
   <div class="dropdown-content" id = "post_dropdown-content ">
-    <a onclick="reply_click(this.id)" id = "p1" href="#">computer science</a>
-    <a onclick="reply_click(this.id)" id = "p2" href="#">biology</a>
-    <a onclick="reply_click(this.id)" id = "p3" href="#">art</a>
-    <a onclick="reply_click(this.id)" id = "p4" href="#">engineering</a>
-    <a onclick="reply_click(this.id)" id = "p5" href="#">AI</a>
-    <a onclick="reply_click(this.id)" id = "p6" href="#">Novels</a>
-    <a onclick="reply_click(this.id)" id = "p7" href="#">social</a>
-    <a onclick="reply_click(this.id)" id = "p8" href="#">fight</a>
-    <a onclick="reply_click(this.id)" id = "p9" href="#">chemistry </a>
-    <a onclick="reply_click(this.id)" id = "p10" href="#">film</a>
-    <a onclick="reply_click(this.id)" id = "p11" href="#">poetry</a>    
+    <a onclick="reply_post_click(this.id)" id = "p1" href="#">computer science</a>
+    <a onclick="reply_post_click(this.id)" id = "p2" href="#">biology</a>
+    <a onclick="reply_post_click(this.id)" id = "p3" href="#">art</a>
+    <a onclick="reply_post_click(this.id)" id = "p4" href="#">engineering</a>
+    <a onclick="reply_post_click(this.id)" id = "p5" href="#">AI</a>
+    <a onclick="reply_post_click(this.id)" id = "p6" href="#">Novels</a>
+    <a onclick="reply_post_click(this.id)" id = "p7" href="#">social</a>
+    <a onclick="reply_post_click(this.id)" id = "p8" href="#">fight</a>
+    <a onclick="reply_post_click(this.id)" id = "p9" href="#">chemistry </a>
+    <a onclick="reply_post_click(this.id)" id = "p10" href="#">film</a>
+    <a onclick="reply_post_click(this.id)" id = "p11" href="#">poetry</a>    
   </div>
 </div>
 </div>
@@ -75,9 +75,9 @@
 <div id="QorA-area">
 <div>
 
-    <input type="checkbox" name="system_type3" value="5" />
+    <input id ="i_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Idea</span>
-    <input type="checkbox" name="system_type3" value="5" />
+    <input id ="q_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Question</span>
 </div>
 </div>
@@ -91,9 +91,11 @@
 var user_id=document.getElementById("session_user_id").value;	
 function post_it(){
 	title = document.getElementById("search_title_text").value;
-	text = document.getElementById("post_text").value;	
+	text = document.getElementById("post_text").value;
+	addPosts(title,text);
 }
 marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
+post_marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
 function showSearch(){
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
@@ -112,14 +114,18 @@ function addPosts(title,text){
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 	    	postsT = xhttp.responseText;	
 	    	 var shadow = document.getElementById("postsDiv");
-	    	 shadow.innerHTML = postsT;
+	    	shadow.innerHTML = postsT + shadow.innerHTML;
 	    }
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/addPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("id="+user_id +"&title="+title +"&text="+text); 
+	  var type = document.getElementById("blue").selectedIndex;
+	  //es mere shecvale user id 
+	  user_id=0;
+	  xhttp.send("userId="+ user_id +"&title="+title +"&text="+text+"&type="+type+"&topic="+"art"); 
 }
-function getPosts(type){
+//boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
+function getPosts(walltype,type,searchTerm){
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
@@ -131,18 +137,43 @@ function getPosts(type){
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("id="+user_id +"&type="+type); // 0 anu homepage
+	  user_id = 0;
+	  categories = JSON.stringify(marked_categories);
+	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
 }
 function goOnProfile(){
-	getPosts( 1);
+	getPosts(1);
 }
 function initf(){
-
-	 document.getElementById("search_container").classList.toggle("show");
-	getPosts(0);
-}
+	document.getElementById("search_container").classList.toggle("show");
+	var type=0;
+	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
+		type = 2;
+	}else if(document.getElementById('i_box').checked){
+		type = 0;
+	}else if(document.getElementById('q_box').checked){
+		type = 1;
+	}else{
+		type =2;
+	}
+	
+	getPosts(0,type,"");
+} 
 function searchit(){	
-	alert("ss");
+	document.getElementById("search_container").classList.toggle("show");
+	var type=0;
+	
+	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
+		type = 2;
+	}else if(document.getElementById('i_box').checked){
+		type = 0;
+	}else if(document.getElementById('q_box').checked){
+		type = 1;
+	}else{
+		type =2;
+	}
+	searchTerm = document.getElementById('search_post_text').value
+	getPosts(1, type, searchTerm)
 }
 function reply_click(clicked_id)
 {
@@ -153,6 +184,18 @@ function reply_click(clicked_id)
 	}else{
 		button.style.background='#fff';		
 		marked_categories[clicked_id] = false;
+	}
+}
+function reply_post_click(clicked_id)
+{
+	clk_id = parseInt(clicked_id.substring(1));
+	var button = document.getElementById(clicked_id);
+	if (post_marked_categories[clk_id ] == false){
+		button.style.background='lightgreen';		
+		post_marked_categories[clk_id ] = true;
+	}else{
+		button.style.background='#fff';		
+		post_marked_categories[clk_id ] = false;
 	}
 }
 </script>

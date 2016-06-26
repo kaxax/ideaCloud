@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 public class Pool {
 	private static Pool connectionPool;
@@ -15,8 +15,9 @@ public class Pool {
 		data = new BasicDataSource();
 		data.setDriverClassName("com.mysql.jdbc.Driver");
 		data.setUsername("root");
-		data.setPassword("gela123");
-		data.setUrl("");
+		data.setPassword("gela69");
+		data.setUrl("jdbc:mysql://localhost/ideacloud");
+
 	}
 
 	public static Pool getPool() throws IOException, SQLException,

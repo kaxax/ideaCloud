@@ -49,7 +49,10 @@
 	<div id = "post-div">
 	
 		<form action="homepage.jsp">
-			<input type=submit value="see post" class="button" id="register">
+			<input type=submit value="see sample homepage" class="button" id="register">
+		</form>
+		<form action="samplePost.jsp" id = "sample_post">
+			<input type=submit value="see sample post" class="button" id="register">
 		</form>
 		
 	</div>
