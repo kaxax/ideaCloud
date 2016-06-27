@@ -69,7 +69,8 @@ public class addPosts extends HttpServlet {
 			int postCloud = 0;
 			int postUncloud = 0;
 			
-			post = new Post(postId, postTitle, postText, postUserId, postType, postTopic, postCloud, postUncloud);
+			post = new Post( postTitle, postText, postUserId, postType, postTopic, postCloud, postUncloud);
+			post.setId(postId);
 			//db.addPost(post);
 			//user = db.getUser(postUserId);
 			

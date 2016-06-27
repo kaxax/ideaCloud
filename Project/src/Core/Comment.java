@@ -9,14 +9,17 @@ public class Comment {
 	private int commentUncloud;
 	private String commentText;
 	
-	public Comment(int commentId, int commentPostId , int commentUserId, int commentCloud,
+	public Comment( int commentPostId , int commentUserId, int commentCloud,
 			int commentUncloud, String commentText){
-		this.commentId=commentId;
+		
 		this.commentPostId=commentPostId;
 		this.commentUserId=commentUserId;
 		this.commentCloud=commentCloud;
 		this.commentUncloud=commentUncloud;
 		this.commentText=commentText;
+	}
+	public void setId(int id){
+		this.commentId = id;
 	}
 	public int getCommentId(){
 		return this.commentId;

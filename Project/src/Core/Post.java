@@ -11,9 +11,9 @@ public class Post {
 	private int postCloud;
 	private int postUncloud;
 	
-	public Post(int postId, String postTitle, String postText, int postUserId, int postType,
+	public Post( String postTitle, String postText, int postUserId, int postType,
 			String postTopic, int postCloud, int postUncloud){
-		this.postId=postId;
+		
 		this.postTitle=postTitle;
 		this.postText=postText;
 		this.postUserId=postUserId;
@@ -21,6 +21,9 @@ public class Post {
 		this.postTopic=postTopic;
 		this.postCloud=postCloud;
 		this.postUncloud=postUncloud;
+	}
+	public void setId(int id){
+		this.postId = id;
 	}
 	public int getPostId(){
 		return this.postId;

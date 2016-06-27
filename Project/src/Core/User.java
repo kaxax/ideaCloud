@@ -29,6 +29,7 @@ public class User {
 		this.userImgSrc=userImgSrc;
 		
 	}
+	
 	public int getUserId(){
 		return this.userId;
 	}

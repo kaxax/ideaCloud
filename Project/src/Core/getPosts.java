@@ -56,7 +56,8 @@ public class getPosts extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
 		ArrayList<Post> posts = new ArrayList<Post>();
-		Post tmp = new Post(12, "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
+		Post tmp = new Post( "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
+		tmp.setId(12);
 		posts.add(tmp);
 		User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
 		String result = "";

@@ -5,126 +5,299 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import Core.Post;
 import Core.Comment;
 import Core.User;
 
-
-
 public class Database {
 	private Connection con;
-	public Database(Connection conn){
+
+	public Database(Connection conn) {
 		this.con = conn;
 	}
-	public void insertUser(User u){
-	    
-	    try {
-	    	PreparedStatement stmt = con.prepareStatement("INSERT INTO user "
-					+ "(nickname, name, surname, email, password, age, sex, level, moto, imgSrc) " 
-					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
-	    	stmt.setString(1, u.getUSerNickname());
-	    	stmt.setString(2, u.getUserName());
-	    	stmt.setString(3, u.getUserSurname());
-	    	stmt.setString(4, u.getUserEmail());
-	    	stmt.setString(5, u.getUserPasswrod());
-	    	stmt.setInt(6, u.getUSerAge());
-		    stmt.setInt(7, u.getUserSex()) ;
-		    stmt.setInt(8,u.getUserLevel());
-		    stmt.setString(9, u.getUserMoto()) ;
-		    stmt.setString(10, u.getUSerImgSrc());
-		    stmt.executeUpdate();
+
+	public void insertUser(User u) {
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("insert into user "
+							+ "(nickname, name, surname, email, password, age, sex, level, moto, imgSrc,cdate) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+			stmt.setString(1, u.getUSerNickname());
+			stmt.setString(2, u.getUserName());
+			stmt.setString(3, u.getUserSurname());
+			stmt.setString(4, u.getUserEmail());
+			stmt.setString(5, u.getUserPasswrod());
+			stmt.setInt(6, u.getUSerAge());
+			stmt.setInt(7, u.getUserSex());
+			stmt.setInt(8, u.getUserLevel());
+			stmt.setString(9, u.getUserMoto());
+			stmt.setString(10, u.getUSerImgSrc());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(11, dateFormat.format(date));
+			stmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
-		
-	
-	public int addPost(Post p){
-		try {
-	    	PreparedStatement stmt = con.prepareStatement("INSERT INTO post "
-					+ "(title, text, type, authorId, topic, clouds, unclouds) " 
-					+ "values (?, ?, ?, ?, ?, ?, ?)");
-	    	stmt.setString(1, p.getPostTitle());
-	    	stmt.setString(2, p.getPostText());
-	    	stmt.setInt(3, p.getPostType());
-	    	stmt.setInt(4, p.getPostUSerId());
-	    	stmt.setString(5, p.getPostTopic());
-	    	stmt.setInt(6, p.getPostCloud());
-		    stmt.setInt(7, p.getPostUncloud()) ;
-		    stmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//gogi yleo unda daabruno is id roml id zec am post chaamateb 
-		return 0;
-	}
-	
-	public Post getPost(int id){
-		//TODO
-		return null;
-	}
-	public User getUser(int id){
-		//TODO
-		return null;
-	}
-	public Comment getComment(int id){
-		//TODO
-		return null;
-	}
-	//ak unda amoigos userId-s mkone useris droit dalagebuli postebi
-	//da makedan daabrunos start idexidan end indexamde mdgomi postebis id-ebis arrayListi
-	//(to ideas == true ideebi sachiroa da questions  == true qyestionebic sachiroa)
-	public ArrayList<Integer> getLatestProfilePosts(int userId, int start, int end, boolean ideas, boolean questions){
-		//TODO
-		return null;
-	}
-	//ak ubralod unda amoigos droit dalagebuli postebi (kvela postis masivida)
-	//da makedan daabrunos start indexidan end indexamde racaa magati id-ebis arraylisti unda
-	//(to ideas == true ideebi sachiroa da questions  == true qyestionebic sachiroa)
-	public ArrayList<Integer> getLatestPosts(int start, int end, boolean ideas, boolean questions){
-		//TODO
-		return null;
-	}
-	
-	
-	public void addComment(Comment c){
-		
-		try {
-	    	PreparedStatement stmt = con.prepareStatement("INSERT INTO comment "
-					+ "(postId, authorId, text, clouds, unclouds) " 
-					+ "values (?, ?, ?, ?, ?)");
 
-	    	
-	    	stmt.setInt(1, c.getCommentPostId());
-	    	stmt.setInt(2, c.getCommentUSerId());
-	    	stmt.setString(3, c.getCommentText());
-	    	stmt.setInt(4, c.getCommentCloud());
-	    	stmt.setInt(5, c.getCommentUncloud());
-		    stmt.executeUpdate();
+	public int addPost(Post p) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO post "
+					+ "(title, text, type, authorId, topic, clouds, unclouds, cdate) "
+					+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
+			stmt.setString(1, p.getPostTitle());
+			stmt.setString(2, p.getPostText());
+			stmt.setInt(3, p.getPostType());
+			stmt.setInt(4, p.getPostUSerId());
+			stmt.setString(5, p.getPostTopic());
+			stmt.setInt(6, p.getPostCloud());
+			stmt.setInt(7, p.getPostUncloud());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(8, dateFormat.format(date));
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
-	public int getId(String email, String password){
+		// gogi yleo unda daabruno is id roml id zec am post chaamateb
 		return 0;
+	}
+
+	public Post getPost(int id) {
+		Post p;
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from post where id = ?");
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				String title = rs.getString("title");
+				String text = rs.getString("text");
+				int type = Integer.parseInt(rs.getString("type"));
+				int authorId = rs.getInt("authorId");
+				String topic = rs.getString("topic");
+				int clouds = rs.getInt("clouds");
+				int unclouds = rs.getInt("unclouds");
+				p = new Post(title, text, authorId, type, topic, clouds,
+						unclouds);
+				p.setId(id);
+				return p;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public User getUser(int id) {
+		User u;
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from user where id = ?");
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				String nickname = rs.getString("nickname");
+				String name = rs.getString("name");
+				String surname = rs.getString("surname");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				int age = rs.getInt("age");
+				int sex = rs.getInt("sex");
+				int level = rs.getInt("level");
+				String moto = rs.getString("moto");
+				String imgSrc = rs.getString("imgSrc");
+				u = new User(id, name, surname, nickname, email, password, age,
+						level, sex, moto, imgSrc);
+				return u;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public Comment getComment(int id) {
+		Comment c;
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from comments where id = ?");
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				int postId = rs.getInt("postId");
+				int authorId = rs.getInt("authorId");
+				String text = rs.getString("text");
+				int clouds = rs.getInt("clouds");
+				int unclouds = rs.getInt("unclouds");
+				c = new Comment(postId, authorId, clouds, unclouds, text);
+				c.setId(id);
+				return c;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// ak unda amoigos userId-s mkone useris droit dalagebuli postebi
+	// da makedan daabrunos start idexidan end indexamde mdgomi postebis id-ebis
+	// arrayListi
+	// (to ideas == true ideebi sachiroa da questions == true qyestionebic
+	// sachiroa)
+	//type 1 idea
+	public ArrayList<Integer> getLatestProfilePosts(int userId, int start,
+			int end, boolean ideas, boolean questions) {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		int type1;
+		int type2;
+		if(ideas && questions){
+			type2 = 2;
+			type1 = -1;
+		}else if(ideas){
+			type1 = 0;
+			type2 = 2;
+		}else{
+			type1 = -1;
+			type2 = 1;
+		}
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from post where authorId = ? and type<? and type >? order by cdate desc");
+			stmt.setInt(1, userId);
+			stmt.setInt(2, type2);
+			stmt.setInt(3, type1);
+
+			ResultSet rs = stmt.executeQuery();
+			for (int i = 0; rs != null && rs.next() && i <=end; i++) {
+				int postId = rs.getInt("id");
+				if(i>=start)
+					result.add(postId);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// ak ubralod unda amoigos droit dalagebuli postebi (kvela postis masivida)
+	// da makedan daabrunos start indexidan end indexamde racaa magati id-ebis
+	// arraylisti unda
+	// (to ideas == true ideebi sachiroa da questions == true qyestionebic
+	// sachiroa)
+	public ArrayList<Integer> getLatestPosts(int start, int end, boolean ideas,
+			boolean questions) {
+		
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		int type1;
+		int type2;
+		if(ideas && questions){
+			type2 = 2;
+			type1 = -1;
+		}else if(ideas){
+			type1 = 0;
+			type2 = 2;
+		}else{
+			type1 = -1;
+			type2 = 1;
+		}
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from post where type<? and type >? order by cdate desc");
+			
+			stmt.setInt(1, type2);
+			stmt.setInt(2, type1);
+
+			ResultSet rs = stmt.executeQuery();
+			for (int i = 0; rs != null && rs.next() && i <=end; i++) {
+				int postId = rs.getInt("id");
+				if(i>=start)
+					result.add(postId);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void addComment(Comment c) {
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("insert into comments "
+							+ "(postId, authorId, text, clouds, unclouds, cdate) "
+							+ "values (?, ?, ?, ?, ?, ?)");
+
+			stmt.setInt(1, c.getCommentPostId());
+			stmt.setInt(2, c.getCommentUSerId());
+			stmt.setString(3, c.getCommentText());
+			stmt.setInt(4, c.getCommentCloud());
+			stmt.setInt(5, c.getCommentUncloud());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(6, dateFormat.format(date));
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public int getId(String email, String password) {
+		int result = -1;
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from user where email = ? and password = ? ");
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				result = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public int getUserId(String email) {
 		int result = -1;
-		
+
 		try {
-			PreparedStatement stmt = con.prepareStatement("select * from user where email = ? ");
+			PreparedStatement stmt = con
+					.prepareStatement("select * from user where email = ? ");
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
+			if (rs != null && rs.next()) {
 				result = rs.getInt("id");
 			}
 		} catch (SQLException e) {
@@ -134,7 +307,26 @@ public class Database {
 		return result;
 
 	}
+	public ArrayList<Comment> getPostComments(int id){
+		ArrayList<Comment> result = new ArrayList<Comment>();
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from comments where postId = ? order by cdate");
+			
+			stmt.setInt(1, id);
 
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next() ) {
+				int cId = rs.getInt("id");
+				Comment c = getComment(cId);
+				result.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	public void updateUser(User u) {
 		try (PreparedStatement stmt = con
 				.prepareStatement("update user set nickname = ?, name = ?, surname= ?, email = ?, password = ?, age = ?, sex = ?, level = ?, moto = ?, imgSrc = ? "
@@ -155,9 +347,11 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-	public void removeUser(User u){
+
+	public void removeUser(User u) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("delete from user where id = ? ");
+			PreparedStatement stmt = con
+					.prepareStatement("delete from user where id = ? ");
 			stmt.setInt(1, u.getUserId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
