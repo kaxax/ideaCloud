@@ -72,7 +72,7 @@ public class register extends HttpServlet {
 		boolean passwordSame = password.equals(passwordAgain);
 		boolean mailFree = true;
 		try {
-			Pool pl = new Pool();
+			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
 			Database db = new Database(conn);
 			if(db.getUserId(mail)!=-1){
@@ -113,7 +113,7 @@ public class register extends HttpServlet {
 			User user = new User(-1, name, surname, username, mail, password, -1, 0, -1, "", "");
 			try {
 				
-				Pool pl = new Pool();
+				Pool pl =Pool.getPool();
 				Connection conn = pl.getConnection();
 				Database db = new Database(conn);
 				db.insertUser(user);

@@ -137,7 +137,7 @@ function getPosts(walltype,type,searchTerm){
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  user_id = 0;
+	 // user_id = 0;
 	  categories = JSON.stringify(marked_categories);
 	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
 }

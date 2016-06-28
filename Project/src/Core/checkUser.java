@@ -57,7 +57,7 @@ public class checkUser extends HttpServlet {
 			Database db = new Database(con);
 			id  = db.getId(username, password);
 			if (id != -1){
-				saveSession(request);
+				saveSession(request, id);
 			}
 			map.put("id", id);
 			map.put("username", username);
@@ -75,7 +75,7 @@ public class checkUser extends HttpServlet {
 		
 	}
 
-	private void saveSession(HttpServletRequest request) {
+	private void saveSession(HttpServletRequest request, int id) {
 		HttpSession ses = request.getSession(false);
 		String username = null;
 		try {
@@ -85,6 +85,7 @@ public class checkUser extends HttpServlet {
 		}
 		if (username != null){
 			String password = (String) request.getParameter("test");
+			ses.setAttribute("user_id", id);
 			ses.setAttribute("username", username);
 			ses.setAttribute("password", password);
 		}
