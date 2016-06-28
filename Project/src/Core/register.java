@@ -1,7 +1,9 @@
 package Core;
 
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+
+import Core.Pool;
+import java.sql.Connection;
+import Core.Database;
+import Core.User;
 
 /**
  * Servlet implementation class register
@@ -64,11 +71,23 @@ public class register extends HttpServlet {
 		boolean everythingFilled = (!name.equals("") && !surname.equals("") && !username.equals("") && !mail.equals("") && !password.equals("") && !passwordAgain.equals(""));
 		boolean passwordSame = password.equals(passwordAgain);
 		boolean mailFree = true;
-		int id;
-		id = -1;
-		if (id != -1){
-			mailFree = false;
+		try {
+			Pool pl = new Pool();
+			Connection conn = pl.getConnection();
+			Database db = new Database(conn);
+			if(db.getUserId(mail)!=-1){
+				mailFree = false;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 		if(!everythingFilled && !passwordSame && !mailFree){
 			errorCase = 123;
 		}
@@ -89,6 +108,23 @@ public class register extends HttpServlet {
 		}
 		else if(!mailFree){
 			errorCase = 3;
+		}
+		if (errorCase == 0){
+			User user = new User(-1, name, surname, username, mail, password, -1, 0, -1, "", "");
+			try {
+				Pool pl = new Pool();
+				Connection conn = pl.getConnection();
+				Database db = new Database(conn);
+				db.insertUser(user);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (PropertyVetoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("errorCase", errorCase);
