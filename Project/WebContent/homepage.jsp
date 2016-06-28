@@ -121,7 +121,7 @@ function addPosts(title,text){
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  var type = document.getElementById("blue").selectedIndex;
 	  //es mere shecvale user id 
-	  user_id=0;
+	  //user_id=0;
 	  xhttp.send("userId="+ user_id +"&title="+title +"&text="+text+"&type="+type+"&topic="+"art"); 
 }
 //boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm

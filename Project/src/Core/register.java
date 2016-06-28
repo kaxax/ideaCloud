@@ -112,11 +112,12 @@ public class register extends HttpServlet {
 		if (errorCase == 0){
 			User user = new User(-1, name, surname, username, mail, password, -1, 0, -1, "", "");
 			try {
+				
 				Pool pl = new Pool();
 				Connection conn = pl.getConnection();
 				Database db = new Database(conn);
 				db.insertUser(user);
-				
+				System.out.println("aaaaaeeee");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
