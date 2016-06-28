@@ -52,11 +52,19 @@ public class checkUser extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		int id;
-		/*
-		 * try {
+		try {
 			Connection con = Pool.getPool().getConnection();
 			Database db = new Database(con);
-			int id = db.getId(username, password);
+			id  = db.getId(username, password);
+			if (id != -1){
+				saveSession(request);
+			}
+			map.put("id", id);
+			map.put("username", username);
+			map.put("password", password);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(new Gson().toJson(map));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,18 +72,6 @@ public class checkUser extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 */
-		
-		id = 15; 
-		if (id != -1){
-			saveSession(request);
-		}
-		map.put("id", id);
-		map.put("username", username);
-		map.put("password", password);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(new Gson().toJson(map));
 		
 	}
 
