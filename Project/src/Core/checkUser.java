@@ -17,6 +17,8 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 import Core.Database;
 import Core.Pool;
 
@@ -63,6 +65,7 @@ public class checkUser extends HttpServlet {
 			e.printStackTrace();
 		}
 		 */
+		
 		id = 15; 
 		if (id != -1){
 			saveSession(request);
