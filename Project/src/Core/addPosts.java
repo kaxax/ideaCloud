@@ -64,13 +64,11 @@ public class addPosts extends HttpServlet {
 			String postTitle = request.getParameter("title");
 			String postText = request.getParameter("text");
 			int postUserId = Integer.parseInt(request.getParameter("userId"));
-			System.out.println(postUserId);
 			int postType = Integer.parseInt(request.getParameter("type"));
 			String postTopic = request.getParameter("topic");
 			int postCloud = 0;
 			int postUncloud = 0;
 			
-			System.out.println(postUserId);
 			
 			post = new Post( postTitle, postText, postUserId, postType, postTopic, postCloud, postUncloud);
 			post.setId(postId);
