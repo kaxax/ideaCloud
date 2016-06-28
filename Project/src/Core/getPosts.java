@@ -1,9 +1,11 @@
 package Core;
 
+import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -14,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
+
+
+
 import Core.Post;
 import Core.User;
+import Core.GetTimeline;
 
 /**
  * Servlet implementation class getPosts
@@ -55,16 +61,31 @@ public class getPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-		ArrayList<Post> posts = new ArrayList<Post>();
-		Post tmp = new Post( "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
-		tmp.setId(12);
-		posts.add(tmp);
-		User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
+		ArrayList<Integer> posts;
+		//Post tmp = new Post( "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
+		//tmp.setId(12);
+		//posts.add(tmp);
+		//User user = new User(1, "Gela", "Magaltadze", "tvtgela", "ragaca", "ragaca", 21, 12, 1 , "avoee", "img.jpg");
+		int user_id = 0;
+		if(request.getSession().getAttribute("user_id") != null){
+			user_id = (int) request.getSession().getAttribute("user_id");
+		}
+		System.out.println(user_id);
 		String result = "";
 		String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
 		String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
-		for (int i=0;i<posts.size();i++){	
-			String temp=generate_template(template, posts.get(i), user);
+		
+		Pool pl;
+		try {
+			pl = Pool.getPool();
+		
+		Database db = new Database(pl.getConnection());
+		GetTimeline tm = new GetTimeline();
+		posts = tm.getPosts(0, 10, false, user_id, 0, true, true, null, "");
+		for (int i=0;i<posts.size();i++){
+			Post post = db.getPost(posts.get(i));
+			User user = db.getUser(post.getPostUSerId());
+			String temp=generate_template(template, post, user);
 			
 			result = result + temp;
 			
@@ -75,6 +96,13 @@ public class getPosts extends HttpServlet {
 		out.append(result);
 
 		out.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private String getHtml(String file){
