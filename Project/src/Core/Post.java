@@ -6,7 +6,7 @@ public class Post {
 	private String postTitle;
 	private String postText;
 	private int postUserId;
-	private int postType;
+	private int postType;	//1-question	0-answer
 	private String postTopic;
 	private int postCloud;
 	private int postUncloud;

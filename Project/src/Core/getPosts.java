@@ -144,7 +144,14 @@ public class getPosts extends HttpServlet {
 		tmp1=template.replace("::vote-down::", Integer.toString(post.getPostUncloud()));
 		template = tmp1.replace("::user_id::", Integer.toString(user.getUserId()));
 		tmp1 = template.replace("::post_id::", Integer.toString(post.getPostId()));
-		return tmp1;
+		if (post.getPostType()==1){
+			template=tmp1.replace("::post_type_img::", "Q.jpg");
+		}
+		else{
+			template=tmp1.replace("::post_type_img::", "A.jpg");
+		}
+		System.out.println("post type:\t"+post.getPostType());
+		return template;
 	}
 
 }
