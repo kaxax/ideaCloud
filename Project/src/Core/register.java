@@ -78,7 +78,7 @@ public class register extends HttpServlet {
 			if(db.getUserId(mail)!=-1){
 				mailFree = false;
 			}
-			
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

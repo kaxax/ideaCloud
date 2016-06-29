@@ -61,12 +61,16 @@ public class GetTimeline {
 			ArrayList<Integer> tmp;
 			if(wallType == 0){
 				tmp = db.getLatestPosts(start, end, ideas, questions);
+				conn.close();
 				return tmp;
 			}
 			else{
 				tmp = db.getLatestProfilePosts(userId, start, end, ideas, questions);
+				conn.close();
 				return tmp;
 			}
+			
+			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -85,6 +85,7 @@ public class addPosts extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.append(result+style);
 			out.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (PropertyVetoException e) {
