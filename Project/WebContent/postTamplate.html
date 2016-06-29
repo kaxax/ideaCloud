@@ -1,13 +1,13 @@
 <div class="post">
 			<div class="author">
-				<div class="image"> 
-					<a href="user-id" class = "link"><img src=::img-src:: height="80" width="80"/></a>
+				<div class="image" id = "user_id_::user_id::" onclick="goToUser(self.id)"> 
+					<a  class = "link"><img src="::img-src::" height="80" width="80"/></a>
 				</div>
-				<a href="user-id" class = "link"><div class="user-info"> ::user-name:: </div></a>
-				<div class="user-info">lvl: ::lvl:: </div>
+				<a  class = "link"><div class="user-info" id = "user_id_::user_id::" onclick="goToUser(self.id)"> ::user-name:: </div></a>
+				<div class="user-info" ">lvl: ::lvl:: </div>
 			</div>
 			<div class="body">
-				<a href="post-id" class = "link">  <div class = "title">::post-title::</div></a>
+				<a  class = "link">  <div class = "title" id = "post_id_::post_id::" onclick="goToPost(self.id)">::post-title::</div></a>
 				<p></p>
 				<div class = "text">::post-text::</div>
 			</div>
@@ -20,7 +20,7 @@
 				<div class="votes upvote">
 					<div class="vote_name"> 
 						<div class="arrow" id = "up">
-							<img  src="up-arrow.png" id = "up-arrow">
+							<img  src="up-arrow.png" style = "width: 100%; height: 100%;" id = "up-arrow_::post_id::" onclick="voteUp(this.id)">
 						</div>
 					</div>
 					<div class="vote-count"> 
@@ -30,7 +30,7 @@
 				<div class="votes downvote">
 					<div class="vote_name" > 
 						<div class="arrow" id = "down">
-							<img  src="down-arrow.png" id = "down-arrow">
+							<img  src="down-arrow.png" style = "width: 100%; height: 100%;"  id = "down-arrow_::post_id::" onclick="voteDown(this.id)">
 						</div> 
 					</div>
 					<div class="vote-count">

@@ -126,20 +126,27 @@ function addPosts(title,text){
 }
 //boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
 function getPosts(walltype,type,searchTerm){
-	  var xhttp = new XMLHttpRequest();
+	 
+	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
+	    	
 	    	postsT = xhttp.responseText;	
+	    	
 	    	 var shadow = document.getElementById("postsDiv");
 	    	 shadow.innerHTML = postsT;
 
 	    }
 	  };
+	 
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	 // user_id = 0;
+	 
 	  categories = JSON.stringify(marked_categories);
+	 
 	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
+	 
 }
 function goOnProfile(){
 	getPosts(1);
