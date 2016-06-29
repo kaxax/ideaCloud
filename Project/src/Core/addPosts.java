@@ -18,8 +18,8 @@ import Core.Post;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import Core.User;
 
+import Core.User;
 import Core.getPosts;
 
 /**
@@ -112,14 +112,30 @@ public class addPosts extends HttpServlet {
 	private static String generate_template(String template1, Post post, User user){
 		String template = template1;
 		String tmp1;
-		tmp1=template.replace("::img-src::", user.getUSerImgSrc());
+		if (user.getUSerImgSrc().length()>0){
+			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
+			System.out.println("img_src:   "+user.getUSerImgSrc());
+		}
+		else{
+			System.out.println("img_src:   unknown.ong");
+			tmp1=template.replace("::img-src::", "unknown.png");
+		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
 		tmp1=template.replace("::lvl::", Integer.toString(user.getUserLevel()));
 		template=tmp1.replace("::post-title::", post.getPostTitle());
 		tmp1=template.replace("::post-text::", post.getPostText());
 		template=tmp1.replace("::vote-up::", Integer.toString(post.getPostCloud()));
 		tmp1=template.replace("::vote-down::", Integer.toString(post.getPostUncloud()));
-		return tmp1;
+		template = tmp1.replace("::user_id::", Integer.toString(user.getUserId()));
+		tmp1 = template.replace("::post_id::", Integer.toString(post.getPostId()));
+		if (post.getPostType()==1){
+			template=tmp1.replace("::post_type_img::", "Q.jpg");
+		}
+		else{
+			template=tmp1.replace("::post_type_img::", "A.jpg");
+		}
+		System.out.println("post type:\t"+post.getPostType());
+		return template;
 	}
 	
 	
