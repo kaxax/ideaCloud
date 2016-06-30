@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div id = "user_info_div">
-		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img src="img.jpg" id = "user_img" width="12%"> </a>
+		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img src="img.jpg" id = "user_img" width="100px"> </a>
 		
 		<div class = "user_text_div">
 		<a href="http://localhost:8080/IdeaCloud/hereWeGo" id = "post_author_link">
@@ -92,71 +92,89 @@
 						</a>
 				</div>
 			</div>
-			
-	<div id = "comment_div">
-		<div class="author">
-			<div class="image"> 
-				<a href="user-id" class = "link"><img src="img.jpg" height="80" width="80"/></a>
-			</div>
-			<a href="user-id" class = "link"><div class="user-info"> tvtgela </div></a>
-			<div class="user-info">lvl: 69 </div>
-		</div>
-		<div class="body">
-				
-				<div class = "text">
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamovaromelic 
-					imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-					es aris satesto statia romelic imedia dzalian dzalina kargi gamova
-				</div>
 		</div>
 		
-		<div class="comment_meta_info">
+		
+		
+		<div id = "comments">
+			
+			<div class = "comment">
+				<div class="author">
+					
+					<div class="image" id = "user_id_::user_id::" onclick="goToUser(self.id)"> 
+						<a  class = "link"><img src="::img-src::" height="80" width="80"/></a>
+					</div>
+					
+					<a  class = "link"><div class="user-info" id = "user_id_::user_id::" onclick="goToUser(self.id)"> ::user-name:: </div></a>
+					
+					<div class="user-info" >
+						lvl: ::lvl:: 
+					</div>
+				</div>
+				<div class = "comment_title_div">
+					::comment title::
+				</div>
+				<div class = "comment_text_div">
+					this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
+				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok
+				</div>
+				
+			<div class="comment_meta_info">
 				<div class="comment_votes upvote">
-					<div class="vote_name"> 
-						<div class="arrow" id = "up">
-							<img  src="up-arrow.png" id = "up-arrow">
+					<div class="comment_vote_name"> 
+						<div class="comment_arrow" id = "up">
+							<img  src="up-arrow.png" style = "width: 100%; height: 100%;" id = "up-arrow_::post_id::" onclick="voteUp(this.id)">
 						</div>
 					</div>
-					<div class="vote-count"> 
-						98 
+					<div class="comment_vote-count"> 
+						::vote-up::
 					</div>
 				</div>
 				<div class="comment_votes downvote">
-					<div class="vote_name" > 
-						<div class="arrow" id = "down">
-							<img  src="down-arrow.png" id = "down-arrow">
+					<div class="comment_vote_name" > 
+						<div class="comment_arrow" id = "down">
+							<img  src="down-arrow.png" style = "width: 100%; height: 100%;"  id = "down-arrow_::post_id::" onclick="voteDown(this.id)">
 						</div> 
 					</div>
-					<div class="vote-count">22</div>
+					<div class="comment_vote-count">
+						::vote-down::
+					</div>
 				</div>
-				<div class="share">
+				<div class="comment_share">
 					<a href = "http://share-now">
-						<div class="vote-name"> 
+						<div class="comment_vote-name"> 
 							<img  src="share-now.png" id = "iamge-share">
 						</div>
 						</a>
 				</div>
 				
-				<div class="share">
+				<div class="comment_share">
 					<a href = "http://share">
-						<div class="vote-name">
+						<div class="comment_vote-name">
 							<img  src="share-later.png" id = "iamge-share">
 						</div>
 						</a>
 				</div>
 			</div>
+				
+			</div>
 		
-	
-	</div>
-</div>
-	
+		</div>
+ 		<div style="height: 500px;"></div>
 
 </body>
 </html>
