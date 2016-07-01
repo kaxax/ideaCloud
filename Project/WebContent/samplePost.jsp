@@ -111,9 +111,7 @@
 						lvl: ::lvl:: 
 					</div>
 				</div>
-				<div class = "comment_title_div">
-					::comment title::
-				</div>
+				
 				<div class = "comment_text_div">
 					this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
 				this is a sample post and it should be big so I'm just writing it dow like this, hope it's ok 
