@@ -4,7 +4,7 @@
 	HttpSession ses = request.getSession(false);
 	String usr_id = null;
 	try {
-		usr_id = ses.getAttribute("username").toString();
+		usr_id = ses.getAttribute("user_id").toString();
 	} catch (Exception e) {
 	}
 	if (usr_id != null) {
@@ -33,6 +33,7 @@
 		<fb:login-button scope="public_profile,email"
 			onlogin="checkLoginState();" id="image-fb">
 		</fb:login-button>
+		<div id="status"></div>
 		<div id="logo">
 			<img src="logo.png" id="image-logo">
 		</div>
@@ -46,8 +47,7 @@
 		</div>
 
 	</form>
-	<form id="loginForm"
-		 method="post">
+	<form id="loginForm" method="post">
 		<div id="username-div">
 			<input type="text" placeholder="username" id="username"
 				name="username">
@@ -66,39 +66,34 @@
 	<form action="http://localhost:8080/IdeaCloud/joinNow" id="join">
 		<input type=submit value="Join Now" class="button" id="register">
 	</form>
-	<div id="testResponse"></div>
+	<form id="fbLoginForm" method="post" style="display:none">
+		<input type="text" id="fbFirstName" name="fbFirstName"> <input
+			type="text" id="imgSrc" name="imgSrc"> <input type="text"
+			id="fbLastName" name="fbLastName"> <input type="text"
+			id="fbMail" name="fbMail"> <input type="submit"
+			name="fbSubmit" id="fbSubmit">
+	</form>
 </body>
 <script>
-	// This is called with the results from from FB.getLoginStatus().
 	function statusChangeCallback(response) {
-		console.log('statusChangeCallback');
-		console.log(response);
-		// The response object is returned with a status field that lets the
-		// app know the current login status of the person.
-		// Full docs on the response object can be found in the documentation
-		// for FB.getLoginStatus().
 		if (response.status === 'connected') {
 			// Logged into your app and Facebook.
-			testAPI();
+			doMagic();
 		} else if (response.status === 'not_authorized') {
 			// The person is logged into Facebook, but not your app.
-			document.getElementById('status').innerHTML = 'Please log '
-					+ 'into this app.';
+
 		} else {
 			// The person is not logged into Facebook, so we're not sure if
 			// they are logged into this app or not.
-			document.getElementById('status').innerHTML = 'Please log '
-					+ 'into Facebook.';
 		}
 	}
 
-	// This function is called when someone finishes with the Login
-	// Button.  See the onlogin handler attached to it in the sample
-	// code below.
+	
 	function checkLoginState() {
 		FB.getLoginStatus(function(response) {
 			statusChangeCallback(response);
 		});
+		
 	}
 
 	window.fbAsyncInit = function() {
@@ -108,22 +103,6 @@
 			// the session
 			xfbml : true, // parse social plugins on this page
 			version : 'v2.5' // use graph api version 2.5
-		});
-
-		// Now that we've initialized the JavaScript SDK, we call 
-		// FB.getLoginStatus().  This function gets the state of the
-		// person visiting this page and can return one of three states to
-		// the callback you provide.  They can be:
-		//
-		// 1. Logged into your app ('connected')
-		// 2. Logged into Facebook, but not your app ('not_authorized')
-		// 3. Not logged into Facebook and can't tell if they are logged into
-		//    your app or not.
-		//
-		// These three cases are handled in the callback function.
-
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
 		});
 
 	};
@@ -139,39 +118,67 @@
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 
-	// Here we run a very simple test of the Graph API after login is
-	// successful.  See statusChangeCallback() for when this call is made.
-	function testAPI() {
-		console.log('Welcome!  Fetching your information.... ');
-		FB
-				.api(
-						'/me',
-						function(response) {
-							console.log('Successful login for: '
-									+ response.name);
-							document.getElementById('status').innerHTML = 'Thanks for logging in, '
-									+ response.name + '!';
-						});
+	
+	function doMagic() {
+		FB.api('/me', {
+			fields : 'first_name,last_name, email, id'
+		}, function(response) {
+			var imgSrc = 'http://graph.facebook.com/' + response.id
+					+ '/picture?type=normal';
+			$("#fbFirstName").val(response.first_name);
+			$("#fbLastName").val(response.last_name);
+			$("#fbMail").val(response.email);
+			$("#imgSrc").val(imgSrc);
+			$("#fbLoginForm").submit();
+		});
 	}
 	//test
-	$(document).ready(function() {
-		$('#loginForm').submit(function() {
-			$.ajax({
-				url : "homePage",
-				type : "POST",
-				dataType: "json",
-				data : $("#loginForm").serialize(),
-				success : function(data) {
-					if (data.id != -1){
-						window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
-					}
-					else{
-						alert("Incorrect combination of: \n user: " + data.username + "\n password: " + data.password);
-					}
-				}
-			});
-			return false;
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+						$('#loginForm')
+								.submit(
+										function() {
+											$
+													.ajax({
+														url : "homePage",
+														type : "POST",
+														dataType : "json",
+														data : $("#loginForm")
+																.serialize(),
+														success : function(data) {
+															if (data.id != -1) {
+																window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
+															} else {
+																alert("Incorrect combination of: \n user: "
+																		+ data.username
+																		+ "\n password: "
+																		+ data.password);
+															}
+														}
+													});
+											return false;
+										});
+					});
+	$(document)
+			.ready(
+					function() {
+						$('#fbLoginForm')
+								.submit(
+										function() {
+											$
+													.ajax({
+														url : "fbLogin",
+														type : "POST",
+														dataType : "json",
+														data : $("#fbLoginForm")
+																.serialize(),
+														success : function(data) {
+															window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
+														}
+													});
+											return false;
+										});
+					});
 </script>
 </html>
