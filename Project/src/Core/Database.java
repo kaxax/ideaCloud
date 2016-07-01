@@ -50,11 +50,131 @@ public class Database {
 
 	}
 
+	public void insertCloud(Cloud c) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("insert into clouds "
+					+ "(postId, userId, cloud) " + "values (?, ?, ?)");
+			stmt.setInt(1, c.getPostId());
+			stmt.setInt(2, c.getUserId());
+			stmt.setInt(3, c.status());
+
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Cloud getCloud(int id) {
+		Cloud c;
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from clouds where id = ?");
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				int postId = rs.getInt("postId");
+				int authorId = rs.getInt("userId");
+				int cloud = rs.getInt("cloud");
+				c = new Cloud(postId, authorId, cloud);
+				c.setId(id);
+				return c;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Cloud getCloudByIds(int uId, int pId) {
+		Cloud c;
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from clouds where postId = ? and userId = ?");
+			stmt.setInt(1, pId);
+			stmt.setInt(2, uId);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				int id = rs.getInt("id");
+				int postId = rs.getInt("postId");
+				int authorId = rs.getInt("userId");
+				int cloud = rs.getInt("cloud");
+				c = new Cloud(postId, authorId, cloud);
+				c.setId(id);
+				return c;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void updateCloud(Cloud c) {
+		
+		try (PreparedStatement stmt = con
+				.prepareStatement("update clouds set postId = ?, userId = ?, cloud = ? where id = ?")) {
+			System.out.println(c.status());
+			stmt.setInt(1, c.getPostId());
+			stmt.setInt(2, c.getUserId());
+			stmt.setInt(3, c.status());
+			stmt.setInt(4, c.getId());
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	public void removeCloud(Cloud c) {
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("delete from clouds where id = ? ");
+			stmt.setInt(1, c.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<Comment> getCommentByIds(int uId, int pId) {
+		ArrayList<Comment> result = new ArrayList<Comment>();
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("select * from comments where postId = ? and authorId = ? ");
+			stmt.setInt(1, pId);
+			stmt.setInt(2, uId);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				int cId = rs.getInt("id");
+				Comment c = getComment(cId);
+				result.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
+		
+	}
+
 	public int addPost(Post p) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("INSERT INTO post "
-					+ "(title, text, type, authorId, topic, clouds, unclouds, cdate) "
-					+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement stmt = con
+					.prepareStatement("INSERT INTO post "
+							+ "(title, text, type, authorId, topic, clouds, unclouds, cdate) "
+							+ "values (?, ?, ?, ?, ?, ?, ?, ?)");
 			stmt.setString(1, p.getPostTitle());
 			stmt.setString(2, p.getPostText());
 			stmt.setInt(3, p.getPostType());
@@ -169,19 +289,19 @@ public class Database {
 	// arrayListi
 	// (to ideas == true ideebi sachiroa da questions == true qyestionebic
 	// sachiroa)
-	//type 1 idea
+	// type 1 idea
 	public ArrayList<Integer> getLatestProfilePosts(int userId, int start,
 			int end, boolean ideas, boolean questions) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		int type1;
 		int type2;
-		if(ideas && questions){
+		if (ideas && questions) {
 			type2 = 2;
 			type1 = -1;
-		}else if(ideas){
+		} else if (ideas) {
 			type1 = 0;
 			type2 = 2;
-		}else{
+		} else {
 			type1 = -1;
 			type2 = 1;
 		}
@@ -193,9 +313,9 @@ public class Database {
 			stmt.setInt(3, type1);
 
 			ResultSet rs = stmt.executeQuery();
-			for (int i = 0; rs != null && rs.next() && i <=end; i++) {
+			for (int i = 0; rs != null && rs.next() && i <= end; i++) {
 				int postId = rs.getInt("id");
-				if(i>=start)
+				if (i >= start)
 					result.add(postId);
 			}
 		} catch (SQLException e) {
@@ -212,31 +332,31 @@ public class Database {
 	// sachiroa)
 	public ArrayList<Integer> getLatestPosts(int start, int end, boolean ideas,
 			boolean questions) {
-		
+
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		int type1;
 		int type2;
-		if(ideas && questions){
+		if (ideas && questions) {
 			type2 = 2;
 			type1 = -1;
-		}else if(ideas){
+		} else if (ideas) {
 			type1 = 0;
 			type2 = 2;
-		}else{
+		} else {
 			type1 = -1;
 			type2 = 1;
 		}
 		try {
 			PreparedStatement stmt = con
 					.prepareStatement("select * from post where type<? and type >? order by cdate desc");
-			
+
 			stmt.setInt(1, type2);
 			stmt.setInt(2, type1);
 
 			ResultSet rs = stmt.executeQuery();
-			for (int i = 0; rs != null && rs.next() && i <=end; i++) {
+			for (int i = 0; rs != null && rs.next() && i <= end; i++) {
 				int postId = rs.getInt("id");
-				if(i>=start)
+				if (i >= start)
 					result.add(postId);
 			}
 		} catch (SQLException e) {
@@ -307,16 +427,17 @@ public class Database {
 		return result;
 
 	}
-	public ArrayList<Comment> getPostComments(int id){
+
+	public ArrayList<Comment> getPostComments(int id) {
 		ArrayList<Comment> result = new ArrayList<Comment>();
 		try {
 			PreparedStatement stmt = con
 					.prepareStatement("select * from comments where postId = ? order by cdate");
-			
+
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
-			while (rs != null && rs.next() ) {
+			while (rs != null && rs.next()) {
 				int cId = rs.getInt("id");
 				Comment c = getComment(cId);
 				result.add(c);
@@ -327,6 +448,7 @@ public class Database {
 		}
 		return result;
 	}
+
 	public void updateUser(User u) {
 		try (PreparedStatement stmt = con
 				.prepareStatement("update user set nickname = ?, name = ?, surname= ?, email = ?, password = ?, age = ?, sex = ?, level = ?, moto = ?, imgSrc = ? "
