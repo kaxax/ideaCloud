@@ -72,7 +72,7 @@ public class Database {
 			PreparedStatement stmt = con
 					.prepareStatement("select * from clouds where id = ?");
 			stmt.setInt(1, id);
-			
+
 			ResultSet rs = stmt.executeQuery();
 			if (rs != null && rs.next()) {
 
@@ -119,7 +119,7 @@ public class Database {
 	}
 
 	public void updateCloud(Cloud c) {
-		
+
 		try (PreparedStatement stmt = con
 				.prepareStatement("update clouds set postId = ?, userId = ?, cloud = ? where id = ?")) {
 			System.out.println(c.status());
@@ -131,8 +131,7 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 	public void removeCloud(Cloud c) {
@@ -165,8 +164,7 @@ public class Database {
 			e.printStackTrace();
 		}
 		return result;
-		
-		
+
 	}
 
 	public int addPost(Post p) {
@@ -425,6 +423,40 @@ public class Database {
 			e.printStackTrace();
 		}
 		return result;
+
+	}
+
+	public ArrayList<Post> getCategoryPosts(ArrayList<String> categories) {
+		ArrayList<Post> posts = new ArrayList<Post>();
+		try {
+			String st = "select * from post ";
+			if (categories.size() != 0) {
+				for (int i = 0; i < categories.size() - 1; i++) {
+					st += "where title =? or";
+				}
+				st+= "where title =?";
+			}
+			st += " order by cdate desc";
+			
+			PreparedStatement stmt = con
+					.prepareStatement(st);
+
+			for(int i =0 ; i<categories.size(); i++){
+				stmt.setString(i+1, categories.get(i));
+			}
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				int pid = rs.getInt("id");
+				Post p = getPost(pid);
+				posts.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return posts;
+
 
 	}
 
