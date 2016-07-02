@@ -90,9 +90,9 @@ public class postPage extends HttpServlet {
 			return;
 		}
 
-		int post_id = Integer.parseInt((String) request.getAttribute("post_id"));
-		int start = Integer.parseInt((String) request.getAttribute("start"));
-		int end = Integer.parseInt((String) request.getAttribute("ent"));
+		int post_id = Integer.parseInt(request.getParameter("post_id"));
+		int start = Integer.parseInt( request.getParameter("start"));
+		int end = Integer.parseInt(request.getParameter("end"));
 		String commentHtml = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\commentTamplate.html"); 
 		try {
 			Pool pl = Pool.getPool();

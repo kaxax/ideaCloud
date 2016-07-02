@@ -5,18 +5,23 @@
 <title>sample post</title>
 <script type="text/javascript">
 	function showMore(id){
+		var start = 0;
+		var end = 5;
 		var postId = id.split("_")[3];	
 		var postdiv = document.getElementById("comments");
 		  var xhttp = new XMLHttpRequest();
 		  xhttp.onreadystatechange = function() {
 		    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 		    	postsT = xhttp.responseText;
+		    	start += 5;
+		    	end += 5;
 		    	postdiv.innerHTML = postsT ;
 		    }
 		  };
+		 
 		  xhttp.open("POST", "http://localhost:8080/IdeaCloud/postPage", true);
 		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		  xhttp.send("post_id="+postId); 
+		  xhttp.send("post_id="+postId+"&start="+start+"&end="+end); 
 	}
 	
 function commentIt(id){	
