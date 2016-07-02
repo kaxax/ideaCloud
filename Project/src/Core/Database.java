@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import Core.Cloud;
 import Core.Post;
 import Core.Comment;
 import Core.User;
@@ -145,19 +146,20 @@ public class Database {
 		}
 	}
 
-	public ArrayList<Comment> getCommentByIds(int uId, int pId) {
+	public ArrayList<Comment> getCommentByIds(int pId, int start, int end) {
 		ArrayList<Comment> result = new ArrayList<Comment>();
 		try {
 			PreparedStatement stmt = con
-					.prepareStatement("select * from comments where postId = ? and authorId = ? ");
+					.prepareStatement("select * from comments where postId = ? order by cdate desc");
 			stmt.setInt(1, pId);
-			stmt.setInt(2, uId);
 
 			ResultSet rs = stmt.executeQuery();
-			while (rs != null && rs.next()) {
-				int cId = rs.getInt("id");
-				Comment c = getComment(cId);
-				result.add(c);
+			for (int i = 0; rs != null && rs.next() && i <= end; i++) {
+				if (i >= start) {
+					int cId = rs.getInt("id");
+					Comment c = getComment(cId);
+					result.add(c);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
