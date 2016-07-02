@@ -22,7 +22,20 @@ public class Database {
 	public Database(Connection conn) {
 		this.con = conn;
 	}
-
+	public void insertCategory(int postId, String cat){
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("insert into category "
+							+ "(postId, category) "
+							+ "values (?, ?)");
+			stmt.setInt(1, postId);
+			stmt.setString(2, cat);
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void insertUser(User u) {
 
 		try {
@@ -428,15 +441,15 @@ public class Database {
 
 	}
 
-	public ArrayList<Post> getCategoryPosts(ArrayList<String> categories) {
+	public ArrayList<Post> getCategoryPosts(ArrayList<String> categories, int idea, int question) {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
-			String st = "select * from post ";
+			String st = "select * from category ";
 			if (categories.size() != 0) {
 				for (int i = 0; i < categories.size() - 1; i++) {
-					st += "where title =? or";
+					st += "where category =? or";
 				}
-				st+= "where title =?";
+				st+= "where category =?";
 			}
 			st += " order by cdate desc";
 			
@@ -449,9 +462,10 @@ public class Database {
 
 			ResultSet rs = stmt.executeQuery();
 			while (rs != null && rs.next()) {
-				int pid = rs.getInt("id");
+				int pid = rs.getInt("postId");
 				Post p = getPost(pid);
-				posts.add(p);
+				if((p.getPostType()==1 && idea==1) || (p.getPostType()==0 && idea==1))
+					posts.add(p);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
