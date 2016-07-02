@@ -5,10 +5,8 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="post.css">
 	</head>
-	<body>
-		
-		
-		
+	<body>		
+
 		
 		<div class="post">
 			<div class="author">

@@ -106,8 +106,15 @@ function showSearch(){
       }
     }
   }	
+  function goToPost(id){
 
-
+	  var postId = id.split("_")[2];
+	  var url = "http://localhost:8080/IdeaCloud/postPage?post_id="+postId;
+	  alert(url);
+	  window.location.href = url;
+	  
+ 	  return false;
+  }
 function addPosts(title,text){
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {

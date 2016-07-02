@@ -73,8 +73,8 @@ public class getPosts extends HttpServlet {
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
 		String result = "";
-		String style = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postStyle.html");
-		String template = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		String style = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postStyle.html");
+		String template = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postTamplate.html");
 		
 		Pool pl;
 		try {

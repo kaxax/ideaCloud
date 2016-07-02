@@ -52,14 +52,10 @@ public class postPage extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int post_id = 0;
-		String postHtml = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\wholePostTamplate.html");
-		if(request.getSession().getAttribute("user_id") != null){
-			post_id = (int) request.getSession().getAttribute("user_id");
-		}
-		else {
-			return;
-		}
-		post_id = Integer.parseInt((String) request.getAttribute("post_id"));
+		String  iddd = request.getParameter("post_id");
+		String postHtml = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\wholePostTamplate.html");
+		post_id = Integer.parseInt(iddd);
+
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
@@ -93,10 +89,11 @@ public class postPage extends HttpServlet {
 		if (request.getSession().getAttribute("user_id") == null){
 			return;
 		}
+
 		int post_id = Integer.parseInt((String) request.getAttribute("post_id"));
 		int start = Integer.parseInt((String) request.getAttribute("start"));
 		int end = Integer.parseInt((String) request.getAttribute("ent"));
-		String commentHtml = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\commentTamplate.html"); 
+		String commentHtml = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\commentTamplate.html"); 
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
