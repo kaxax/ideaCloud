@@ -13,12 +13,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.fabric.xmlrpc.base.Data;
+
 import java.sql.Connection;
 
 
 
 
 
+
+
+
+import java.util.ArrayList;
 
 import Core.Pool;
 import Core.Post;
@@ -53,6 +59,7 @@ public class postPage extends HttpServlet {
 		else {
 			return;
 		}
+		post_id = Integer.parseInt((String) request.getAttribute("post_id"));
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
@@ -83,10 +90,38 @@ public class postPage extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		
-		
-		
+		if (request.getSession().getAttribute("user_id") == null){
+			return;
+		}
+		int post_id = Integer.parseInt((String) request.getAttribute("post_id"));
+		int start = Integer.parseInt((String) request.getAttribute("start"));
+		int end = Integer.parseInt((String) request.getAttribute("ent"));
+		String commentHtml = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\commentTamplate.html"); 
+		try {
+			Pool pl = Pool.getPool();
+			Connection conn = pl.getConnection();
+			Database db = new Database(conn);
+			
+			ArrayList<Comment> comments = db.getCommentByIds(post_id, start, end);
+			String result = "";
+			for (int i=0;i<comments.size();i++){
+				Comment comment = comments.get(i);
+				User user = db.getUser(comment.getCommentUSerId());
+				result = result + generate_comment_template(commentHtml, comment, user);
+			}
+			PrintWriter out = response.getWriter();
+			out.append(result);
+			out.close();
+			conn.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 		
 		// TODO Auto-generated method stub
 	}
@@ -118,6 +153,27 @@ public class postPage extends HttpServlet {
 		tmp1 = template.replace("::post_user_age::", Integer.toString(user.getUSerAge()));
 		System.out.println("post type:\t"+post.getPostType());
 		return tmp1;
+	}
+	
+	
+	private static String generate_comment_template(String template1, Comment comment, User user){
+		String template = template1;
+		String tmp1;
+		if (user.getUSerImgSrc().length()>0){
+			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
+		}
+		else{
+			tmp1=template.replace("::img-src::", "unknown.png");
+		}
+		template=tmp1.replace("::comment_id::", Integer.toString(comment.getCommentId()));
+		tmp1=template.replace("::user_id::", Integer.toString(user.getUserId()));
+		template=tmp1.replace("::user-name::", user.getUSerNickname());
+		tmp1=template.replace("::comment_text::", comment.getCommentText());
+		template=tmp1.replace("::comment_cloud::", Integer.toString(comment.getCommentCloud()));
+		tmp1=template.replace("::comment_uncloud::", Integer.toString(comment.getCommentUncloud()));
+		template = tmp1.replace("::lvl:: ", Integer.toString(user.getUserLevel()));
+		
+		return template;
 	}
 	
 	

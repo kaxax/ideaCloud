@@ -39,6 +39,6 @@ public class Comment {
 	public String getCommentText(){
 		return this.commentText;
 	}
-	
+
 	
 }
