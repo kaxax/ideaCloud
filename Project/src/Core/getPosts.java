@@ -63,7 +63,6 @@ public class getPosts extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-		System.out.println("received request");
 		ArrayList<Integer> posts;
 		//Post tmp = new Post( "musha posti", "es aris musha posti, romelic dagenerirebulia html-is chascorebit", 1, 0, "science", 22, 11);
 		//tmp.setId(12);
@@ -80,12 +79,9 @@ public class getPosts extends HttpServlet {
 		Pool pl;
 		try {
 		pl = Pool.getPool();
-		System.out.println("got pool");
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
-		System.out.println("got db");
 		GetTimeline tm = new GetTimeline();
-		System.out.println("got timeline");
 		posts = tm.getPosts(0, 10, false, user_id, 0, true, true, null, "");
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
@@ -99,7 +95,6 @@ public class getPosts extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.append(result);
-		System.out.println("sent response");
 		out.close();
 		conn.close();
 		} catch (SQLException e) {
