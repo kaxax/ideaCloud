@@ -45,9 +45,14 @@ public class postPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int post_id = 0;
 		String postHtml = getHtml("D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent\\wholePostTamplate.html");
-		int post_id = Integer.parseInt((String) request.getAttribute("post_id"));
+		if(request.getSession().getAttribute("user_id") != null){
+			post_id = (int) request.getSession().getAttribute("user_id");
+		}
+		else {
+			return;
+		}
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
@@ -77,6 +82,12 @@ public class postPage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
+		
+		
 		// TODO Auto-generated method stub
 	}
 	
