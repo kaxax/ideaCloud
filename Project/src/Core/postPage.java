@@ -37,6 +37,11 @@ import Core.Comment;
  */
 @WebServlet("/postPage")
 public class postPage extends HttpServlet {
+	
+
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -53,7 +58,7 @@ public class postPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int post_id = 0;
 		String  iddd = request.getParameter("post_id");
-		String postHtml = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\wholePostTamplate.html");
+		String postHtml = getHtml(cwd+"\\WebContent\\wholePostTamplate.html");
 		post_id = Integer.parseInt(iddd);
 
 		try {
@@ -93,7 +98,7 @@ public class postPage extends HttpServlet {
 		int post_id = Integer.parseInt(request.getParameter("post_id"));
 		int start = Integer.parseInt( request.getParameter("start"));
 		int end = Integer.parseInt(request.getParameter("end"));
-		String commentHtml = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\commentTamplate.html"); 
+		String commentHtml = getHtml(cwd+"\\WebContent\\commentTamplate.html"); 
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
@@ -148,7 +153,6 @@ public class postPage extends HttpServlet {
 			template=tmp1.replace("::post_type::", "A.jpg");
 		}
 		tmp1 = template.replace("::post_user_age::", Integer.toString(user.getUSerAge()));
-		System.out.println("post type:\t"+post.getPostType());
 		return tmp1;
 	}
 	

@@ -2,9 +2,11 @@ package Core;
 
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 
 
+
+
+
 import Core.Post;
 import Core.User;
 import Core.GetTimeline;
@@ -30,6 +35,7 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -55,7 +61,7 @@ public class getPosts extends HttpServlet {
 		
 		
 		
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
 	}
 
 	/**
@@ -72,9 +78,49 @@ public class getPosts extends HttpServlet {
 		if(request.getSession().getAttribute("user_id") != null){
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
+		else{
+			return;
+		}
+		
+		ArrayList<String> catList = fillCategories();
+		ArrayList<String> myCatList = new ArrayList<String>();
+	
+		int qi = Integer.parseInt(request.getParameter("type"));   //orie - 2    idea - 0    qestion - 1 
+		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof -1   homepage - 0
+		String searchTerm = request.getParameter("searchTerm");
+		String categories = request.getParameter("categories");
+		String[] cats = categories.substring(1, categories.length()-1).split(",");
+		for(int i=0;i<catList.size();i++){
+			if((i+1)<cats.length && cats[i+1].equals("true")){
+				myCatList.add(catList.get(i));
+			}
+		}
+		
+		
+		int start = 0;
+		int end = 10;
+		boolean status = false;
+		if (myCatList.size()>0 || searchTerm.length()>0){
+			status = true;
+		}
+		
+		boolean questions = true;
+		boolean ideas = true;
+		if(qi == 0){
+			questions = false;
+		}
+		if(qi == 1){
+			ideas = false;
+		}
+		//int start, int end, boolean status, int userId, int wallType, 
+		//boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
+		
+		
+		
+		
 		String result = "";
-		String style = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postStyle.html");
-		String template = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		String style = getHtml(cwd+"\\WebContent\\postStyle.html");
+		String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
 		
 		Pool pl;
 		try {
@@ -82,7 +128,11 @@ public class getPosts extends HttpServlet {
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
 		GetTimeline tm = new GetTimeline();
-		posts = tm.getPosts(0, 10, false, user_id, 0, true, true, null, "");
+		
+		posts = tm.getPosts(start, end, status, user_id, wallType, questions, ideas, myCatList, searchTerm);
+		if(posts==null){
+			return;
+		}
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
 			User user = db.getUser(post.getPostUSerId());
@@ -136,10 +186,8 @@ public class getPosts extends HttpServlet {
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
 			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
-			System.out.println("img_src:   "+user.getUSerImgSrc());
 		}
 		else{
-			System.out.println("img_src:   unknown.ong");
 			tmp1=template.replace("::img-src::", "unknown.png");
 		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
@@ -158,8 +206,22 @@ public class getPosts extends HttpServlet {
 		else{
 			template=tmp1.replace("::post_type_img::", "A.jpg");
 		}
-		System.out.println("post type:\t"+post.getPostType());
 		return template;
+	}
+	private static ArrayList<String> fillCategories (){
+		ArrayList<String> ans =	new ArrayList<String>();
+		ans.add("computer science");
+		ans.add("biology");
+		ans.add("art");
+		ans.add("engeneering");
+		ans.add("AI");
+		ans.add("Novels");
+		ans.add("social");
+		ans.add("fight");
+		ans.add("chemistry");
+		ans.add("film");
+		ans.add("poetry");
+		return ans;
 	}
 
 }

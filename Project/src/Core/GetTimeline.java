@@ -88,13 +88,16 @@ public class GetTimeline {
 	
 	
 	private ArrayList<Integer> getProfilePosts(int userID, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
-		
+		System.out.println("movedi profilshi");
 		return null;
 	}
 	
 	
 	
 	private ArrayList<Integer> getHomePagePosts(boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
+		
+		System.out.println("movedi getHomepageshi");
+		
 		String[] words = searchTerm.split(" ");
 		ArrayList<Pair<Integer, Double>> posts = getPosts(categories, questions, ideas);
 		for (int i=0; i<words.length; i++){

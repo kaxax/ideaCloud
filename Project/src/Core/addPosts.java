@@ -27,6 +27,9 @@ import Core.getPosts;
  */
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
+	
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -77,8 +80,8 @@ public class addPosts extends HttpServlet {
 			
 			
 			
-			String style = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postStyle.html");
-			String template = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+			String style = getHtml(cwd+"\\WebContent\\postStyle.html");
+			String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
 			
 			String result = generate_template(template, post, user);
 			

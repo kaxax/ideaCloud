@@ -13,12 +13,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import Core.Comment;
 /**
  * Servlet implementation class addComment
  */
 @WebServlet("/addComment")
 public class addComment extends HttpServlet {
+	
+
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -66,7 +71,7 @@ public class addComment extends HttpServlet {
 			int commentUncloud = 0;
 			Comment cmt = new Comment(postid, user_id, 0, 0, commentText);
 			db.addComment(cmt);
-			String template = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\commentTamplate.html");
+			String template = getHtml(cwd+"\\WebContent\\commentTamplate.html");
 			
 			User usr = db.getUser(user_id);
 			String result = generate_comment_template(template, cmt, usr);
