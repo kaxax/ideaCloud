@@ -2,6 +2,7 @@ package Core;
 
 import java.beans.PropertyVetoException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 
 
+
 import Core.Post;
 import Core.User;
 import Core.GetTimeline;
@@ -30,6 +32,7 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -55,7 +58,7 @@ public class getPosts extends HttpServlet {
 		
 		
 		
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
 	}
 
 	/**
@@ -73,8 +76,8 @@ public class getPosts extends HttpServlet {
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
 		String result = "";
-		String style = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postStyle.html");
-		String template = getHtml("D:\\oop\\cl\\ideaCloud\\Project\\WebContent\\postTamplate.html");
+		String style = getHtml(cwd+"\\WebContent\\postStyle.html");
+		String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
 		
 		Pool pl;
 		try {
@@ -125,10 +128,8 @@ public class getPosts extends HttpServlet {
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
 			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
-			System.out.println("img_src:   "+user.getUSerImgSrc());
 		}
 		else{
-			System.out.println("img_src:   unknown.ong");
 			tmp1=template.replace("::img-src::", "unknown.png");
 		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
@@ -145,7 +146,6 @@ public class getPosts extends HttpServlet {
 		else{
 			template=tmp1.replace("::post_type_img::", "A.jpg");
 		}
-		System.out.println("post type:\t"+post.getPostType());
 		return template;
 	}
 
