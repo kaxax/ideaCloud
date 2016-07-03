@@ -20,17 +20,17 @@
   	autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
   	</textarea>
   	</div>
-    <a onclick="reply_click(this.id)" id = "1" href="#">computer science</a>
-    <a onclick="reply_click(this.id)" id = "2" href="#">biology</a>
-    <a onclick="reply_click(this.id)" id = "3" href="#">art</a>
-    <a onclick="reply_click(this.id)" id = "4" href="#">engineering</a>
-    <a onclick="reply_click(this.id)" id = "5" href="#">AI</a>
-    <a onclick="reply_click(this.id)" id = "6" href="#">Novels</a>
-    <a onclick="reply_click(this.id)" id = "7" href="#">social</a>
-    <a onclick="reply_click(this.id)" id = "8" href="#">fight</a>
-    <a onclick="reply_click(this.id)" id = "9" href="#">chemistry </a>
-    <a onclick="reply_click(this.id)" id = "10" href="#">film</a>
-    <a onclick="reply_click(this.id)" id = "11" href="#">poetry</a>    
+    <a onclick="reply_click(this.id)" id = "0" href="#">computer science</a>
+    <a onclick="reply_click(this.id)" id = "1" href="#">biology</a>
+    <a onclick="reply_click(this.id)" id = "2" href="#">art</a>
+    <a onclick="reply_click(this.id)" id = "3" href="#">engineering</a>
+    <a onclick="reply_click(this.id)" id = "4" href="#">AI</a>
+    <a onclick="reply_click(this.id)" id = "5" href="#">Novels</a>
+    <a onclick="reply_click(this.id)" id = "6" href="#">social</a>
+    <a onclick="reply_click(this.id)" id = "7" href="#">fight</a>
+    <a onclick="reply_click(this.id)" id = "8" href="#">chemistry </a>
+    <a onclick="reply_click(this.id)" id = "9" href="#">film</a>
+    <a onclick="reply_click(this.id)" id = "10" href="#">poetry</a>    
   </div>
 </div>
 
