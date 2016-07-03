@@ -22,6 +22,12 @@ public class Cloud {
 	public int getPostId(){
 		return postId;
 	}
+	public void setcloud(int ccl){
+		cloud = ccl;
+	}
+	public int getcloud(){
+		return cloud;
+	}
 	public int status(){
 		return cloud;
 	}

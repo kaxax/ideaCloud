@@ -88,6 +88,7 @@
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 
 <script>
+var vote_result = 0;
 var user_id=document.getElementById("session_user_id").value;	
 function post_it(){
 	title = document.getElementById("search_title_text").value;
@@ -107,14 +108,79 @@ function showSearch(){
     }
   }	
   function goToPost(id){
-
 	  var postId = id.split("_")[2];
 	  var url = "http://localhost:8080/IdeaCloud/postPage?post_id="+postId;
-	  alert(url);
-	  window.location.href = url;
-	  
+	  window.location.href = url;	  
  	  return false;
-  }
+ }
+ function voteUp(id){
+	var vote_but = document.getElementById(id);
+	 var postId = id.split("_")[1];
+	
+	if(vote_result == 1){
+		var vote_num = document.getElementById("up-count_"+postId);
+		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
+		vote_result =0
+		vote_but.style.backgroundColor = '';
+	}else if(vote_result == -1){
+		var vote_num = document.getElementById("down-count_"+postId);
+		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
+		var vote_but1 = document.getElementById("down-arrow_"+postId);
+		vote_but1.style.backgroundColor = '';
+		vote_result =0;
+		vote_but.style.backgroundColor = '';
+		voteUp(id);
+	}else if(vote_result == 0){
+		var vote_num = document.getElementById("up-count_"+postId);
+		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
+		vote_but.style.backgroundColor = 'blue';
+		vote_result =1;
+	}
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
+	    	postsT = xhttp.responseText;	
+	    	 
+	    }
+	  };
+	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  var type = document.getElementById("blue").selectedIndex;
+	  xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "1"); 
+ }
+function voteDown(id){
+	var vote_but = document.getElementById(id);
+	 var postId = id.split("_")[1];
+	if(vote_result == 1){
+		var vote_num = document.getElementById("up-count_"+postId);
+		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
+		vote_result =0
+		vote_but.style.backgroundColor = '';
+		var vote_but1 = document.getElementById("up-arrow_"+postId);
+		vote_but1.style.backgroundColor = '';
+		voteDown(id);
+	}else if(vote_result == -1){
+		var vote_num = document.getElementById("down-count_"+postId);
+		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)+ 1;
+		vote_result =0;
+		vote_but.style.backgroundColor = '';
+	}else if(vote_result == 0){
+		var vote_num = document.getElementById("down-count_"+postId);
+		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)- 1;
+		vote_but.style.backgroundColor = 'red';
+		vote_result =-1;
+	}
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (xhttp.readyState == 4 && xhttp.status == 200) {	
+		    	postsT = xhttp.responseText;	 
+		    }
+		  };
+		xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		var type = document.getElementById("blue").selectedIndex;		
+		xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"); 
+ }
 function addPosts(title,text){
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
@@ -137,12 +203,9 @@ function getPosts(walltype,type,searchTerm){
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	
-	    	postsT = xhttp.responseText;	
-	    	
-	    	 var shadow = document.getElementById("postsDiv");
-	    	 shadow.innerHTML = postsT;
-
+	        postsT = xhttp.responseText;		    	
+	    	var shadow = document.getElementById("postsDiv");
+	    	shadow.innerHTML = postsT;
 	    }
 	  };
 	 
@@ -187,7 +250,7 @@ function searchit(){
 		type =2;
 	}
 	searchTerm = document.getElementById('search_post_text').value
-	getPosts(1, type, searchTerm)
+	getPosts(0, type, searchTerm)
 }
 function reply_click(clicked_id)
 {

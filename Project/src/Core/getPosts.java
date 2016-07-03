@@ -86,10 +86,9 @@ public class getPosts extends HttpServlet {
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
 			User user = db.getUser(post.getPostUSerId());
-			String temp=generate_template(template, post, user);
-			
+			Cloud cld = db.getCloudByIds(user_id, post.getPostId());
+			String temp=generate_template(template, post, user,cld);
 			result = result + temp;
-			
 		}
 		result = result + style;
 		response.setContentType("text/html; charset=UTF-8");
@@ -120,7 +119,19 @@ public class getPosts extends HttpServlet {
 		String content = contentBuilder.toString();
 		return content;
 	}
-	private static String generate_template(String template1, Post post, User user){
+	private static String generate_template(String template1, Post post, User user, Cloud cll){
+		String up_color = "";
+		String down_color = "";
+		if(cll != null){
+			if(cll.getcloud() == 0){
+				down_color = "red";
+				up_color = "";
+			}else{
+				down_color = "";
+				up_color = "blue";
+			}
+		}
+	
 		String template = template1;
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
@@ -135,6 +146,8 @@ public class getPosts extends HttpServlet {
 		tmp1=template.replace("::lvl::", Integer.toString(user.getUserLevel()));
 		template=tmp1.replace("::post-title::", post.getPostTitle());
 		tmp1=template.replace("::post-text::", post.getPostText());
+		template=tmp1.replace("::up_color::", up_color);
+		tmp1=template.replace("::down_color::",down_color);
 		template=tmp1.replace("::vote-up::", Integer.toString(post.getPostCloud()));
 		tmp1=template.replace("::vote-down::", Integer.toString(post.getPostUncloud()));
 		template = tmp1.replace("::user_id::", Integer.toString(user.getUserId()));

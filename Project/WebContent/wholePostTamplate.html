@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>sample post</title>
 <script type="text/javascript">
-	function showMore(id){
-		var start = 0;
-		var end = 5;
+	var start = 0;
+	var end = 4;
+	function showMore(id){	
 		var postId = id.split("_")[3];	
 		var postdiv = document.getElementById("comments");
 		  var xhttp = new XMLHttpRequest();
@@ -14,8 +14,8 @@
 		    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 		    	postsT = xhttp.responseText;
 		    	start += 5;
-		    	end += 5;
-		    	postdiv.innerHTML = postsT ;
+		    	end += 4;
+		    	postdiv.innerHTML += postsT ;
 		    }
 		  };
 		 
@@ -34,8 +34,8 @@ function commentIt(id){
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {
 	    	postsT = xhttp.responseText;
-	    	alert(postsT);
-	    	postdiv.innerHTML += postsT;
+	    	
+	    	postdiv.innerHTML = postsT + postdiv.innerHTML;
 	    }
 	  };
 

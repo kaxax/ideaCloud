@@ -46,6 +46,12 @@ public class Post {
 	public int getPostCloud(){
 		return this.postCloud;
 	}
+	public void setPostCloud(int k){
+		 this.postCloud += k;
+	}
+	public void setPostunCloud(int k){
+		this.postUncloud +=k;
+	}
 	public int getPostUncloud(){
 		return this.postUncloud;
 	}
