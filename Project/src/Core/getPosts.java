@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
+
 
 
 
@@ -75,6 +78,46 @@ public class getPosts extends HttpServlet {
 		if(request.getSession().getAttribute("user_id") != null){
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
+		else{
+			return;
+		}
+		
+		ArrayList<String> catList = fillCategories();
+		ArrayList<String> myCatList = new ArrayList<String>();
+	
+		int qi = Integer.parseInt(request.getParameter("type"));   //orie - 2    idea - 0    qestion - 1 
+		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof -1   homepage - 0
+		String searchTerm = request.getParameter("searchTerm");
+		String categories = request.getParameter("categories");
+		String[] cats = categories.substring(1, categories.length()-1).split(",");
+		for(int i=0;i<catList.size();i++){
+			if((i+1)<cats.length && cats[i+1].equals("true")){
+				myCatList.add(catList.get(i));
+			}
+		}
+		
+		
+		int start = 0;
+		int end = 10;
+		boolean status = false;
+		if (myCatList.size()>0 || searchTerm.length()>0){
+			status = true;
+		}
+		
+		boolean questions = true;
+		boolean ideas = true;
+		if(qi == 0){
+			questions = false;
+		}
+		if(qi == 1){
+			ideas = false;
+		}
+		//int start, int end, boolean status, int userId, int wallType, 
+		//boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
+		
+		
+		
+		
 		String result = "";
 		String style = getHtml(cwd+"\\WebContent\\postStyle.html");
 		String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
@@ -85,7 +128,11 @@ public class getPosts extends HttpServlet {
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
 		GetTimeline tm = new GetTimeline();
-		posts = tm.getPosts(0, 10, false, user_id, 0, true, true, null, "");
+		
+		posts = tm.getPosts(start, end, status, user_id, wallType, questions, ideas, myCatList, searchTerm);
+		if(posts==null){
+			return;
+		}
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
 			User user = db.getUser(post.getPostUSerId());
@@ -147,6 +194,21 @@ public class getPosts extends HttpServlet {
 			template=tmp1.replace("::post_type_img::", "A.jpg");
 		}
 		return template;
+	}
+	private static ArrayList<String> fillCategories (){
+		ArrayList<String> ans =	new ArrayList<String>();
+		ans.add("computer science");
+		ans.add("biology");
+		ans.add("art");
+		ans.add("engeneering");
+		ans.add("AI");
+		ans.add("Novels");
+		ans.add("social");
+		ans.add("fight");
+		ans.add("chemistry");
+		ans.add("film");
+		ans.add("poetry");
+		return ans;
 	}
 
 }

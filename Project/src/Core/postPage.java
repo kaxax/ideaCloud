@@ -153,7 +153,6 @@ public class postPage extends HttpServlet {
 			template=tmp1.replace("::post_type::", "A.jpg");
 		}
 		tmp1 = template.replace("::post_user_age::", Integer.toString(user.getUSerAge()));
-		System.out.println("post type:\t"+post.getPostType());
 		return tmp1;
 	}
 	
