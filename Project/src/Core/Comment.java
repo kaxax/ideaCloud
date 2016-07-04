@@ -33,6 +33,12 @@ public class Comment {
 	public int getCommentCloud(){
 		return this.commentCloud;
 	}
+	public void setCommentCloud(int k){
+		this.commentCloud =k ;
+	}
+	public void setCommentUnCloud(int k){
+		this.commentUncloud =k ;
+	}
 	public int getCommentUncloud(){
 		return this.commentUncloud;
 	}

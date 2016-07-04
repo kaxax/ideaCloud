@@ -39,7 +39,7 @@ import Core.Comment;
 public class postPage extends HttpServlet {
 	
 
-	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -60,14 +60,15 @@ public class postPage extends HttpServlet {
 		String  iddd = request.getParameter("post_id");
 		String postHtml = getHtml(cwd+"\\WebContent\\wholePostTamplate.html");
 		post_id = Integer.parseInt(iddd);
-
+		int user_id = (int) request.getSession().getAttribute("user_id");
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
 			Database db = new Database(conn);
 			Post post = db.getPost(post_id);
 			User user = db.getUser(post.getPostUSerId());
-			String result = generate_post_template(postHtml, post, user);
+			Cloud cld = db.getCloudByIds(user_id, post.getPostId());
+			String result = generate_post_template(postHtml, post, user,cld);
 			PrintWriter out = response.getWriter();
 			out.append(result);
 			out.close();
@@ -109,7 +110,8 @@ public class postPage extends HttpServlet {
 			for (int i=0;i<comments.size();i++){
 				Comment comment = comments.get(i);
 				User user = db.getUser(comment.getCommentUSerId());
-				result = result + generate_comment_template(commentHtml, comment, user);
+				Cloud cl = new Cloud(1,2, 0);
+				result = result + generate_comment_template(commentHtml, comment, user,cl);
 			}
 			PrintWriter out = response.getWriter();
 			out.append(result);
@@ -129,7 +131,18 @@ public class postPage extends HttpServlet {
 	}
 	
 	
-	private static String generate_post_template(String template1, Post post, User user){
+	private static String generate_post_template(String template1, Post post, User user, Cloud cll){
+		String up_color = "";
+		String down_color = "";
+		if(cll != null){
+			if(cll.getcloud() == 0){
+				down_color = "red";
+				up_color = "";
+			}else{
+				down_color = "";
+				up_color = "blue";
+			}
+		}
 		String template = template1;
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
@@ -142,6 +155,8 @@ public class postPage extends HttpServlet {
 		tmp1=template.replace("::post_user_lvl::", Integer.toString(user.getUserLevel()));
 		template=tmp1.replace("::post_title::", post.getPostTitle());
 		tmp1=template.replace("::post_text::", post.getPostText());
+		template=tmp1.replace("::up_color::", up_color);
+		tmp1=template.replace("::down_color::",down_color);
 		template=tmp1.replace("::post_cloud::", Integer.toString(post.getPostCloud()));
 		tmp1=template.replace("::post_uncloud::", Integer.toString(post.getPostUncloud()));
 		template = tmp1.replace("::user_id::", Integer.toString(user.getUserId()));
@@ -157,7 +172,18 @@ public class postPage extends HttpServlet {
 	}
 	
 	
-	private static String generate_comment_template(String template1, Comment comment, User user){
+	private static String generate_comment_template(String template1, Comment comment, User user,Cloud cll){
+		String up_color = "";
+		String down_color = "";
+		if(cll != null){
+			if(cll.getcloud() == 0){
+				down_color = "red";
+				up_color = "";
+			}else{
+				down_color = "";
+				up_color = "blue";
+			}
+		}
 		String template = template1;
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
@@ -170,6 +196,8 @@ public class postPage extends HttpServlet {
 		tmp1=template.replace("::user_id::", Integer.toString(user.getUserId()));
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
 		tmp1=template.replace("::comment_text::", comment.getCommentText());
+		template=tmp1.replace("::up_color::", up_color);
+		tmp1=template.replace("::down_color::",down_color);
 		template=tmp1.replace("::comment_cloud::", Integer.toString(comment.getCommentCloud()));
 		tmp1=template.replace("::comment_uncloud::", Integer.toString(comment.getCommentUncloud()));
 		template = tmp1.replace("::lvl:: ", Integer.toString(user.getUserLevel()));

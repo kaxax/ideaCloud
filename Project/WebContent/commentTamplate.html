@@ -22,20 +22,20 @@
 				<div class="comment_votes upvote">
 					<div class="comment_vote_name"> 
 						<div class="comment_arrow" id = "up">
-							<img  src="up-arrow.png" style = "width: 100%; height: 100%;" id = "up-arrow_::comment_id::" class = "up-arrow" onclick="voteUp(this.id)">
+							<img  src="up-arrow.png" style = "width: 100%; height: 100%;background-color: ::cup_color::;" id = "cup-arrow_::comment_id::" class = "up-arrow" onclick="commentvoteUp(this.id)">
 						</div>
 					</div>
-					<div class="comment_vote-count"> 
+					<div class="comment_vote-count" id = "cup-count_::comment_id::"> 
 						::comment_cloud::
 					</div>
 				</div>
 				<div class="comment_votes downvote">
 					<div class="comment_vote_name" > 
 						<div class="comment_arrow" id = "down">
-							<img  src="down-arrow.png" style = "width: 100%; height: 100%;"  id = "down-arrow_::comment_id::" class = "up-arrow" onclick="voteDown(this.id)">
+							<img  src="down-arrow.png" style = "width: 100%; height: 100%; background-color: ::cdown_color::;"  id = "cdown-arrow_::comment_id::" class = "up-arrow" onclick="commentvoteDown(this.id)">
 						</div> 
 					</div>
-					<div class="comment_vote-count">
+					<div class="comment_vote-count" id = "cdown-count_::comment_id::">
 						::comment_uncloud::
 					</div>
 				</div>

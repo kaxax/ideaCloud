@@ -88,7 +88,7 @@
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 
 <script>
-var vote_result = 0;
+
 var user_id=document.getElementById("session_user_id").value;	
 function post_it(){
 	title = document.getElementById("search_title_text").value;
@@ -114,15 +114,28 @@ function showSearch(){
  	  return false;
  }
  function voteUp(id){
-	var vote_but = document.getElementById(id);
+	 var vote_result = 0;
+	 var vote_but = document.getElementById(id);
 	 var postId = id.split("_")[1];
-	
+	 var vote_but1 = document.getElementById("down-arrow_"+postId);
+	 clr = vote_but.style.backgroundColor;
+		clr1 = vote_but1.style.backgroundColor;
+	 if(clr == 'blue'){
+			vote_result = 1;
+		}else if (clr1 == 'red'){
+			vote_result =-1;
+		}else{
+			vote_result = 0;
+		}
+		
 	if(vote_result == 1){
+		
 		var vote_num = document.getElementById("up-count_"+postId);
 		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
 		vote_result =0
 		vote_but.style.backgroundColor = '';
 	}else if(vote_result == -1){
+		
 		var vote_num = document.getElementById("down-count_"+postId);
 		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
 		var vote_but1 = document.getElementById("down-arrow_"+postId);
@@ -130,7 +143,9 @@ function showSearch(){
 		vote_result =0;
 		vote_but.style.backgroundColor = '';
 		voteUp(id);
+		return;
 	}else if(vote_result == 0){
+		
 		var vote_num = document.getElementById("up-count_"+postId);
 		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
 		vote_but.style.backgroundColor = 'blue';
@@ -145,21 +160,37 @@ function showSearch(){
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  var type = document.getElementById("blue").selectedIndex;
 	  xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "1"); 
  }
 function voteDown(id){
+	 var vote_result = 0;
+
 	var vote_but = document.getElementById(id);
-	 var postId = id.split("_")[1];
+	var postId = id.split("_")[1];
+	var vote_but1 = document.getElementById("up-arrow_"+postId);
+	clr = vote_but.style.backgroundColor;
+	clr1 = vote_but1.style.backgroundColor;
+	
+	if(clr == 'red'){	
+		vote_result = -1;
+	}else if (clr1 == 'blue'){
+		vote_result = 1;
+	}else{
+		vote_result = 0;
+	}
+
 	if(vote_result == 1){
+
 		var vote_num = document.getElementById("up-count_"+postId);
 		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
-		vote_result =0
+		vote_result =0;
 		vote_but.style.backgroundColor = '';
-		var vote_but1 = document.getElementById("up-arrow_"+postId);
+		vote_but1 = document.getElementById("up-arrow_"+postId);
 		vote_but1.style.backgroundColor = '';
 		voteDown(id);
+		return;
 	}else if(vote_result == -1){
+
 		var vote_num = document.getElementById("down-count_"+postId);
 		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)+ 1;
 		vote_result =0;
@@ -178,7 +209,6 @@ function voteDown(id){
 		  };
 		xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		var type = document.getElementById("blue").selectedIndex;		
 		xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"); 
  }
 function addPosts(title,text){
@@ -199,7 +229,7 @@ function addPosts(title,text){
 }
 //boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
 function getPosts(walltype,type,searchTerm){
-	 
+	
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
@@ -208,22 +238,25 @@ function getPosts(walltype,type,searchTerm){
 	    	shadow.innerHTML = postsT;
 	    }
 	  };
-	 
+	  
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	 // user_id = 0;
-	 
+	
 	  categories = JSON.stringify(marked_categories);
-	 
+	
 	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
 	 
+	
 }
 function goOnProfile(){
 	getPosts(1);
 }
 function initf(){
+
 	document.getElementById("search_container").classList.toggle("show");
 	var type=0;
+
 	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
 		type = 2;
 	}else if(document.getElementById('i_box').checked){
@@ -233,7 +266,7 @@ function initf(){
 	}else{
 		type =2;
 	}
-	
+
 	getPosts(0,type,"");
 } 
 function searchit(){	
