@@ -1,5 +1,10 @@
-
-
+<%@page import="Core.User"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.util.Date" %>
+<%@page import="java.util.UUID"%>
+<%@page import="Core.Database"%>
+<%@page import="Core.Pool"%>
+<%@page import="org.apache.catalina.Session"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,8 +13,26 @@
 <link rel="stylesheet" type="text/css" href="homepage.css" />
 </head>
 <body onload="initf()">
-		
-<img src="smiley.gif" class = "profpic" onclick="goOnProfile()" alt="Smiley face" ">
+<%
+	HttpSession ses = request.getSession(false);
+	String userIdAsString = ses.getAttribute("user_id").toString();
+	int userId =  Integer.parseInt(userIdAsString);
+	Pool p = Pool.getPool();
+	Connection con = p.getConnection();
+	Database db  = new Database(con);
+	User user = db.getUser(userId);
+	String imgSrc = user.getUSerImgSrc();
+	if(imgSrc.equals("")){
+		imgSrc = "unknown.png";
+	}
+	else {
+		imgSrc += "?time=" + System.currentTimeMillis();
+	}
+	int rank  = user.getUserLevel();
+	con.close();
+%>
+<img src=<%=imgSrc%> class = "profpic" alt="profile pic" />
+<input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
   <div class="dropdown-content">
