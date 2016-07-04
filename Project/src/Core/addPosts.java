@@ -28,7 +28,7 @@ import Core.getPosts;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -117,10 +117,8 @@ public class addPosts extends HttpServlet {
 		String tmp1;
 		if (user.getUSerImgSrc().length()>0){
 			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
-			System.out.println("img_src:   "+user.getUSerImgSrc());
 		}
 		else{
-			System.out.println("img_src:   unknown.ong");
 			tmp1=template.replace("::img-src::", "unknown.png");
 		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
@@ -137,7 +135,6 @@ public class addPosts extends HttpServlet {
 		else{
 			template=tmp1.replace("::post_type_img::", "A.jpg");
 		}
-		System.out.println("post type:\t"+post.getPostType());
 		return template;
 	}
 	
