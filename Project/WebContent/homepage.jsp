@@ -111,7 +111,9 @@
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 
 <script>
-
+function editInfo(){
+	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
+}
 var user_id=document.getElementById("session_user_id").value;	
 function post_it(){
 	title = document.getElementById("search_title_text").value;
