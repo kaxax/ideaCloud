@@ -90,6 +90,8 @@ public class getPosts extends HttpServlet {
 		String searchTerm = request.getParameter("searchTerm");
 		String categories = request.getParameter("categories");
 		String[] cats = categories.substring(1, categories.length()-1).split(",");
+		
+		
 		for(int i=0;i<catList.size();i++){
 			if((i+1)<cats.length && cats[i+1].equals("true")){
 				myCatList.add(catList.get(i));

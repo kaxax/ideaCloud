@@ -18,6 +18,7 @@ import Core.Post;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Core.User;
 import Core.getPosts;
@@ -68,17 +69,32 @@ public class addPosts extends HttpServlet {
 			String postText = request.getParameter("text");
 			int postUserId = Integer.parseInt(request.getParameter("userId"));
 			int postType = Integer.parseInt(request.getParameter("type"));
-			String postTopic = request.getParameter("topic");
+			String categories = request.getParameter("topic");
 			int postCloud = 0;
 			int postUncloud = 0;
 			
 			
-			post = new Post( postTitle, postText, postUserId, postType, postTopic, postCloud, postUncloud);
+			post = new Post( postTitle, postText, postUserId, postType, "", postCloud, postUncloud);
 			post.setId(postId);
-			db.addPost(post);
+			
+			
+			ArrayList<String> catList = fillCategories();
+			ArrayList<String> myCatList = new ArrayList<String>();
+
+			int id = db.addPost(post);
+			String[] cats = categories.substring(1, categories.length()-1).split(",");
+			
+			
+			for(int i=0;i<catList.size();i++){
+				if((i+1)<cats.length && cats[i+1].equals("true")){
+					myCatList.add(catList.get(i));
+				}
+			}
+			for(int i=0;i<myCatList.size();i++){
+				db.insertCategory(id, myCatList.get(i));
+			}
+			
 			user = db.getUser(postUserId);
-			
-			
 			
 			String style = getHtml(cwd+"\\WebContent\\postStyle.html");
 			String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
@@ -136,6 +152,23 @@ public class addPosts extends HttpServlet {
 			template=tmp1.replace("::post_type_img::", "A.jpg");
 		}
 		return template;
+	}
+	
+	
+	private static ArrayList<String> fillCategories (){
+		ArrayList<String> ans =	new ArrayList<String>();
+		ans.add("computer science");
+		ans.add("biology");
+		ans.add("art");
+		ans.add("engeneering");
+		ans.add("AI");
+		ans.add("Novels");
+		ans.add("social");
+		ans.add("fight");
+		ans.add("chemistry");
+		ans.add("film");
+		ans.add("poetry");
+		return ans;
 	}
 	
 	
