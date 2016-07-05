@@ -35,7 +35,7 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -86,7 +86,7 @@ public class getPosts extends HttpServlet {
 		ArrayList<String> myCatList = new ArrayList<String>();
 	
 		int qi = Integer.parseInt(request.getParameter("type"));   //orie - 2    idea - 0    qestion - 1 
-		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof -1   homepage - 0
+		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof - 1   homepage - 0
 		String searchTerm = request.getParameter("searchTerm");
 		String categories = request.getParameter("categories");
 		String[] cats = categories.substring(1, categories.length()-1).split(",");

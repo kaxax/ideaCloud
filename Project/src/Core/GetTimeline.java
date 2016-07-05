@@ -19,16 +19,13 @@ public class GetTimeline {
 	
 	
 	public ArrayList<Integer> getPosts(int start, int end, boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
+		
 		if (status){
-			if (wallType == 0){
-				return getHomePagePosts(questions, ideas, categories, searchTerm);
-			}
-			else{
-				return getProfilePosts(userId, questions, ideas, categories, searchTerm);
-			}
+			return getHomePagePosts(questions, ideas, categories, searchTerm);
 		}
+		
 		else {
-			return getStandartTimeline(userId, start, end, wallType, ideas, questions);
+			return getStandartTimeline(userId, start, end, wallType, ideas, questions);	
 		}
 	}
 	
@@ -52,9 +49,7 @@ public class GetTimeline {
 				conn.close();
 				return tmp;
 			}
-			
-			
-			
+					
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,15 +65,9 @@ public class GetTimeline {
 	}
 	
 	
-	private ArrayList<Integer> getProfilePosts(int userID, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
-		System.out.println("movedi profilshi");
-		return null;
-	}
-	
-	
 	
 	private ArrayList<Integer> getHomePagePosts(boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm){
-		ArrayList<Integer> postIds = new ArrayList<Integer>();
+		ArrayList< Pair<Integer, Boolean> > postIds = new ArrayList< Pair<Integer, Boolean> >();
 		try {
 			Pool pl = Pool.getPool();
 			Connection conn = pl.getConnection();
