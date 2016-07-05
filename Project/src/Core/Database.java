@@ -199,6 +199,7 @@ public class Database {
 			Date date = new Date();
 			stmt.setString(8, dateFormat.format(date));
 			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
