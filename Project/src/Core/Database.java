@@ -558,7 +558,6 @@ public class Database {
 				}
 				st+= "where category =?";
 			}
-			st += " order by cdate desc";
 			
 			PreparedStatement stmt = con
 					.prepareStatement(st);
