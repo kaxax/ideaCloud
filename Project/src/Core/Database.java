@@ -183,6 +183,20 @@ public class Database {
 	}
 
 	public int addPost(Post p) {
+		int id = 0;
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("SHOW TABLE  STATUS LIKE 'post'");
+			
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				id = rs.getInt("Auto_increment");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
 			PreparedStatement stmt = con
 					.prepareStatement("INSERT INTO post "
@@ -204,8 +218,8 @@ public class Database {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// gogi yleo unda daabruno is id roml id zec am post chaamateb
-		return 0;
+		
+		return id;
 	}
 
 	public Post getPost(int id) {
@@ -518,7 +532,41 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
+	
+    
+	public void updatePost(Post p){
+		try (PreparedStatement stmt = con
+				.prepareStatement("update post set title = ?, text = ?, type= ?, authorId = ?, topic = ?, clouds = ?, unclouds = ? where id = ?")) {
+			stmt.setString(1, p.getPostTitle());
+			stmt.setString(2, p.getPostText());
+			stmt.setInt(3, p.getPostType());
+			stmt.setInt(4,p.getPostUSerId());
+			stmt.setString(5, p.getPostTopic());
+			stmt.setInt(6, p.getPostCloud());
+			stmt.setInt(7, p.getPostUncloud());
+			stmt.setInt(8, p.getPostId());
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void updateComment(Comment c){
+		try (PreparedStatement stmt = con
+				.prepareStatement("update comments set postId = ?, authorId = ?, text= ?,clouds = ?, unclouds = ? where id = ?")) {
+		
+			stmt.setInt(1, c.getCommentPostId());
+			stmt.setInt(2, c.getCommentUSerId());
+			stmt.setString(3, c.getCommentText());
+			stmt.setInt(4, c.getCommentCloud());
+			stmt.setInt(5, c.getCommentUncloud());
+			stmt.setInt(6, c.getCommentId());
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public void removeUser(User u) {
 		try {
 			PreparedStatement stmt = con
