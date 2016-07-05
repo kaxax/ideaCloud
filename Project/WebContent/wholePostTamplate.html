@@ -270,14 +270,14 @@ a{
 	margin-top: 15px;
 	font-size: 150%;
 }
-#post_title_div{
+.post_title_div{
 	text-align:center;
 	font-size: xx-large;
 	color: #6c6c6c;
 	font-weight: bold;
 }
 
-#post_text_div{
+.post_text_div{
 	margin-top: 20px;
 	font-style: italic;
 	font-size: x-large;
@@ -343,6 +343,7 @@ margin-bottom: 18px;
 	margin-top: 2px;
 	margin-left: 20px;
 	float: right;
+	cursor: pointer;
 }
 .vote-name{
 	margin-left: 20px;
@@ -406,6 +407,7 @@ margin-bottom: 18px;
 		float: right;
 		margin-right: 20px;
 		font-size: 120%;
+		cursor: pointer;
 }
 .comment_arrow{
 	border: 3px solid grey;
@@ -474,10 +476,10 @@ cursor: pointer;
 				</div>
 			</div>
 			
-			<div id = "post_title_div">
+			<div class = "post_title_div" id = "post_title_::post_id::">
 				::post_title::
 			</div>
-			<div id = "post_text_div">
+			<div class = "post_text_div" id = "post_text_::post_id::">
 			<br>
 			
 				::post_text::
@@ -506,20 +508,18 @@ cursor: pointer;
 						::post_uncloud::
 					</div>
 				</div>
-				<div class="share">
-					<a href = "http://share-now">
+				<div class="share" id = "post_share_now_::post_id::" onclick="post_share_now(this.id)">
 						<div class="vote-name"> 
 							<img  src="share-now.png" id = "iamge-share">
 						</div>
-						</a>
+						
 				</div>
 				 
-				<div class="share">
-					<a href = "http://share">
+				<div class="share" id = "post_share_::post_id::" onclick="post_share(this.id)">
 						<div class="vote-name">
 							<img  src="share-later.png" id = "iamge-share">
 						</div>
-						</a>
+						
 				</div>
 			</div>
 		</div>
