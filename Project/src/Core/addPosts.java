@@ -29,7 +29,7 @@ import Core.getPosts;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -67,7 +67,15 @@ public class addPosts extends HttpServlet {
 			int postId = 0;
 			String postTitle = request.getParameter("title");
 			String postText = request.getParameter("text");
-			int postUserId = Integer.parseInt(request.getParameter("userId"));
+			int postUserId = 0;
+			if(request.getSession().getAttribute("user_id") != null){
+				postUserId = (int) request.getSession().getAttribute("user_id");
+			}
+			else{
+				return;
+			}
+			
+			
 			int postType = Integer.parseInt(request.getParameter("type"));
 			String categories = request.getParameter("topic");
 			int postCloud = 0;
