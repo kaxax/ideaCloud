@@ -56,22 +56,27 @@ public class changeCloud extends HttpServlet {
 		Post post = db.getPost(postId);
 		
 		if(result == 0){
+			
 			Cloud cl = db.getCloudByIds(userId, postId);
+
 			db.removeCloud(cl);
 			if(result1==-1){
 				post.setPostunCloud(1);
 			}else{
 				post.setPostCloud(-1);
 			}
+			
 		}else{
 			if(result1==-1){
+				
 				post.setPostunCloud(-1);
 			}else{
+				
 				post.setPostCloud(1);
 			}
 			Cloud cl = db.getCloudByIds(userId, postId);
 			if (cl==null){
-				Cloud newcl = new Cloud(userId, postId, rs);
+				Cloud newcl = new Cloud(postId, userId, rs);
 				db.insertCloud(newcl);
 				db.updateCloud(newcl);
 			}else{
@@ -79,7 +84,7 @@ public class changeCloud extends HttpServlet {
 				db.updateCloud(cl);
 			}			
 		}
-		
+		db.updatePost(post);
 		conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
