@@ -1,11 +1,24 @@
-<html>	
-<head>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<link rel="stylesheet" type="text/css" href="share.css" />
-   <title>share </title>
+   <title>share </title>	
 </head>
-<body>
+<body onload="init()">
+
 <script>
+var txt="<%= request.getParameter("text") %>";
+var titl="<%= request.getParameter("title") %>";
+function init(){
+	var title_area = document.getElementById("p_ttl");
+	var text_area = document.getElementById("p_txt");
+	title_area.value =titl;
+	text_area.value = txt;
+}
 post_marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
+
+
 function reply_post_click(clicked_id)
 {
 	clk_id = parseInt(clicked_id.substring(1));
@@ -27,8 +40,9 @@ function addPosts(title,text)
 {
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	postsT = xhttp.responseText;	
+	   
+		  if (xhttp.readyState == 4 && xhttp.status == 200) {	  
+			postsT = xhttp.responseText;	
 	    	alert(postsT);
 	    }
 	  };
@@ -37,10 +51,11 @@ function addPosts(title,text)
 	  var type = "0";
 	  topic = JSON.stringify(post_marked_categories);
 	  xhttp.send("&title="+title +"&text="+text+"&type="+type+"&topic="+topic); 
+	   
 }
 function post_it(){
-	var title = document.getElementById("").value;
-	var text = document.getElementById("").value;
+	var title = document.getElementById("p_ttl").value;
+	var text = document.getElementById("p_txt").value;
 	addPosts(title, text);
 }
 </script>

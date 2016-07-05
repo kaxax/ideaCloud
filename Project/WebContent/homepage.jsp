@@ -114,14 +114,8 @@ function post_share(id){
 	var postId = id.split("_")[2];
 	var ttl = document.getElementById("post_id_"+postId).innerHTML;
 	var text = document.getElementById("post_text_"+postId).innerHTML;
-	var win = open("share.html", "MsgWindow", 'width=500,height=300');
-	win.onload = function() {
-		var ttt = win.document.getElementById("title-text");
-		console.log(ttt);
-		console.log(ttt.innerHTMl);
-	};
+	var win = open("share.jsp?text="+text+"&title="+ttl, "MsgWindow", 'width=500,height=300');
 }
-
 function editInfo(){
 	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
 }
