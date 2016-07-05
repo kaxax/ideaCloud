@@ -73,6 +73,7 @@ public class changeCloud extends HttpServlet {
 			if (cl==null){
 				Cloud newcl = new Cloud(userId, postId, rs);
 				db.insertCloud(newcl);
+				db.updateCloud(newcl);
 			}else{
 				cl.setcloud(rs);
 				db.updateCloud(cl);

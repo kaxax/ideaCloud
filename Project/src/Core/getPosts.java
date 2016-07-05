@@ -136,6 +136,7 @@ public class getPosts extends HttpServlet {
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
 			User user = db.getUser(post.getPostUSerId());
+			int k = post.getPostId();
 			Cloud cld = db.getCloudByIds(user_id, post.getPostId());
 			String temp=generate_template(template, post, user,cld);
 			result = result + temp;

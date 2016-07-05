@@ -9,7 +9,7 @@
 			<div class="body">
 				<a  class = "link">  <div class = "title" id = "post_id_::post_id::"  onclick="goToPost(this.id)">::post-title::</div></a>
 				<p></p>
-				<div class = "text">::post-text::</div>
+				<div class = "text" id = "post_text_::post_id::">::post-text::</div>
 			</div>
 			<div class="type">
 				<div calss = "QA">
@@ -37,20 +37,16 @@
 						::vote-down::
 					</div>
 				</div>
-				<div class="share">
-					<a href = "http://share-now">
+				<div class="share" id = "post_share_now_::post_id::" onclick="post_share_now(this.id)">
 						<div class="vote-name"> 
 							<img  src="share-now.png" id = "iamge-share">
 						</div>
-						</a>
 				</div>
 				
-				<div class="share">
-					<a href = "http://share">
+				<div class="share" id = "post_share_::post_id::" onclick="post_share(this.id)">
 						<div class="vote-name">
 							<img  src="share-later.png" id = "iamge-share">
 						</div>
-						</a>
 				</div>
 			</div>
 		</div>
