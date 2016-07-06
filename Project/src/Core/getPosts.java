@@ -21,6 +21,7 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 
 
+
 import Core.Post;
 import Core.User;
 import Core.GetTimeline;
@@ -31,7 +32,7 @@ import Core.GetTimeline;
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
 	
-	private String cwd = "C:\\Users\\home\\Desktop\\project\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 
 	private static final long serialVersionUID = 1L;
        

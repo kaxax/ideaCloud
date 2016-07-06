@@ -31,7 +31,7 @@ import java.util.ArrayList;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "C:\\Users\\home\\Desktop\\project\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
