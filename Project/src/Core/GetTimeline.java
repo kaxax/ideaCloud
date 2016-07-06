@@ -84,7 +84,6 @@ public class GetTimeline {
 			if(ideas)
 				i = 1;
 			ArrayList<Post> posts = db.getCategoryPosts(categories, i, q);
-			System.out.println("postsLen:\t"+posts.size());
 			conn.close();
 			
 			for(int j = 0; j < posts.size(); j++){
@@ -117,11 +116,13 @@ public class GetTimeline {
 	private ArrayList< Pair<Integer, Double> > applyTFIDF(ArrayList< Pair<Integer,Double> > postIds, String term, ArrayList<Post> posts){
 		
 		Double idf = callIDF(term, posts);
+		if(idf == 0.0){
+			idf = 0.000000001;
+		}
 		for(int i = 0; i < posts.size(); i++){
-			Pair<Integer, Double> tmp = new Pair(postIds.get(i).getKey(), callTF(posts.get(i), term)*idf);
+			Pair<Integer, Double> tmp = new Pair(postIds.get(i).getKey(), postIds.get(i).getValue() + callTF(posts.get(i), term)*idf);
 			postIds.set(i, tmp);
 		}
-		System.out.println("idf:\t"+idf);
 		
 		return postIds;
 	}
