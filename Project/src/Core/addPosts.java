@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -74,7 +76,9 @@ public class addPosts extends HttpServlet {
 				postUserId = (int) request.getSession().getAttribute("user_id");
 			}
 			else{
-				return;
+				ServletContext sc = this.getServletContext();
+				RequestDispatcher rd = sc.getRequestDispatcher("/homepage.jsp");
+				rd.forward(request, response);
 			}
 
 			int postType = Integer.parseInt(request.getParameter("type"));

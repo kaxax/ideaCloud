@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
 
 
 
@@ -77,7 +80,9 @@ public class getPosts extends HttpServlet {
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
 		else{
-			return;
+			ServletContext sc = this.getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/homepage.jsp");
+			rd.forward(request, response);
 		}
 		ArrayList<String> catList = fillCategories();
 		ArrayList<String> myCatList = new ArrayList<String>();
