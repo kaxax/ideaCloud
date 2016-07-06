@@ -1,0 +1,22 @@
+#editSubmit{
+	background-color: #00BFFF;
+	width: 305px;
+	height: 40px;
+	border: none;
+	margin: 10px 0px;
+	padding: 5px 5px;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 120%;
+}
+#editSubmit:hover{
+	background-color: #1E90FF;
+}
+#editDiv{
+	position: absolute;
+	left: 40%;
+	font-size: 150%;
+}
+body{
+	background-color: #F0FFFF;
+}

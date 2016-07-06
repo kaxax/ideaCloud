@@ -25,13 +25,10 @@
 	if(imgSrc.equals("")){
 		imgSrc = "unknown.png";
 	}
-	else {
-		imgSrc += "?time=" + System.currentTimeMillis();
-	}
 	int rank  = user.getUserLevel();
 	con.close();
 %>
-<img src=<%=imgSrc%> class = "profpic" alt="profile pic" />
+<img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
 <input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
