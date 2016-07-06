@@ -30,15 +30,16 @@
 	String myUsername = user.getUSerNickname();
 	System.out.println(myUsername);
 	String imgSrc = user.getUSerImgSrc();
-	if(imgSrc.equals("")){
-		imgSrc = "unknown.png";
-	}
+	
 	int rank  = user.getUserLevel();
 	String tmp = request.getParameter("author_id");
 	int author_id = Integer.parseInt(tmp.split("_")[2]);
 	User he = db.getUser(author_id);
 	String hisUsername = he.getUSerNickname();
 	String hisImgSrc = he.getUSerImgSrc();
+	if(hisImgSrc.equals("")){
+		hisImgSrc = "unknown.png";
+	}
 	String hisName = he.getUserName();
 	String hisSurname = he.getUserSurname();
 	con.close();

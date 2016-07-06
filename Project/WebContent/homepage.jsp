@@ -27,6 +27,7 @@
 	Connection con = p.getConnection();
 	Database db  = new Database(con);
 	User user = db.getUser(userId);
+	String nickname = user.getUSerNickname();
 	String imgSrc = user.getUSerImgSrc();
 	if(imgSrc.equals("")){
 		imgSrc = "unknown.png";
@@ -34,7 +35,14 @@
 	int rank  = user.getUserLevel();
 	con.close();
 %>
-<img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
+
+<img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" id = <%="user_id_"+userId%> onclick="goToUser(this.id)" style = "cursor: pointer;"/>
+
+<div style="position: absolute; top: 200px; font-size: xx-large; left: 120px;">
+<%=nickname%>
+</div>
+<img src="add.jpg" style="width: 200px; position: absolute; top: 300px; left: 80px;"/>
+
 <div id=main3button>
 <input id="homepage" type="button" value="Home" onclick="goHomepage();" />
 <input id="editProfile" type="button" value="Edit Profile" onclick="editInfo();" />
@@ -360,5 +368,11 @@ function reply_post_click(clicked_id)
 	}
 }
 </script>
+<style>
+
+.usr{
+	
+}
+</style>
 </body>
 </html>
