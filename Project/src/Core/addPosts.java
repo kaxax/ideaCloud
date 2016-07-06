@@ -28,7 +28,7 @@ import Core.getPosts;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
