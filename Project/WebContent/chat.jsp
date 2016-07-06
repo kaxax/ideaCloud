@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
 </head>
 <body>
-rembo
+<%String name = request.getParameter("myUser");
+  String second = request.getParameter("hisUser");%>
+<h1><%=name + second %></h1>
 </body>
 </html>
