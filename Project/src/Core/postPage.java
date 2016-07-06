@@ -39,7 +39,7 @@ import Core.Comment;
 public class postPage extends HttpServlet {
 	
 
-	private String cwd ="D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -56,6 +56,7 @@ public class postPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("  saddsaasdda  dsa asd sad asd sad asd asd asd sa sad sad   ".length());
 		int post_id = 0;
 		String  iddd = request.getParameter("post_id");
 		String postHtml = getHtml(cwd+"\\WebContent\\wholePostTamplate.html");

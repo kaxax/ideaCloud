@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 
+
 import Core.Post;
 import Core.User;
 import Core.GetTimeline;
@@ -29,7 +30,8 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 
 	private static final long serialVersionUID = 1L;
        
@@ -196,8 +198,18 @@ public class getPosts extends HttpServlet {
 		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
 		tmp1=template.replace("::lvl::", Integer.toString(user.getUserLevel()));
-		template=tmp1.replace("::post-title::", post.getPostTitle());
-		tmp1=template.replace("::post-text::", post.getPostText());
+		if(post.getPostTitle().length()>18){
+			template=tmp1.replace("::post-title::", post.getPostTitle().subSequence(0, 18)+"...");
+		}
+		else{
+			template=tmp1.replace("::post-title::", post.getPostTitle());
+		}
+		if(post.getPostText().length()>150){
+			tmp1=template.replace("::post-text::", post.getPostText().subSequence(0, 150)+"...");
+		}
+		else{
+			tmp1=template.replace("::post-text::", post.getPostText());
+		}
 		template=tmp1.replace("::up_color::", up_color);
 		tmp1=template.replace("::down_color::",down_color);
 		template=tmp1.replace("::vote-up::", Integer.toString(post.getPostCloud()));

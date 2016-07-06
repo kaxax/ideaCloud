@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import Core.User;
 import Core.getPosts;
+
 import java.util.ArrayList;
 
 
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -149,8 +150,18 @@ public class addPosts extends HttpServlet {
 		}
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
 		tmp1=template.replace("::lvl::", Integer.toString(user.getUserLevel()));
-		template=tmp1.replace("::post-title::", post.getPostTitle());
-		tmp1=template.replace("::post-text::", post.getPostText());
+		if(post.getPostTitle().length()>18){
+			template=tmp1.replace("::post-title::", post.getPostTitle().subSequence(0, 18)+"...");
+		}
+		else{
+			template=tmp1.replace("::post-title::", post.getPostTitle());
+		}
+		if(post.getPostText().length()>150){
+			tmp1=template.replace("::post-text::", post.getPostText().subSequence(0, 150)+"...");
+		}
+		else{
+			tmp1=template.replace("::post-text::", post.getPostText());
+		}
 		template=tmp1.replace("::vote-up::", Integer.toString(post.getPostCloud()));
 		tmp1=template.replace("::vote-down::", Integer.toString(post.getPostUncloud()));
 		template = tmp1.replace("::user_id::", Integer.toString(user.getUserId()));
