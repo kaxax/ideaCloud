@@ -19,7 +19,13 @@
 <%
 	
 	HttpSession ses = request.getSession(false);
-	String userIdAsString = ses.getAttribute("user_id").toString();
+	Object stringAttr = ses.getAttribute("user_id");
+	if (stringAttr == null){
+		ServletContext sc = this.getServletContext();
+		RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
+	String userIdAsString = stringAttr.toString();
 	int userId = Integer.parseInt(userIdAsString);
 	Pool p = Pool.getPool();
 	Connection con = p.getConnection();

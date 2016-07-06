@@ -41,7 +41,7 @@ div{
 #postsDiv{
 	position: absolute;
     left: 30%;
-    top : 60%;
+    top : 30%;
 }
 #post_text{
 	position: absolute;
@@ -242,4 +242,59 @@ textarea {
 textarea:focus {
     background: none repeat scroll 0 0 #FFFFFF;
     outline-width: 0;
+}
+#main3button{
+	position: absolute;
+	left: 950px;
+}
+#homepage{
+	padding: 5px;
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+}
+#homepage:hover{
+	width: 100px;
+	height: 40px;
+}
+#editProfile{
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+}
+#editProfile:hover{
+	width: 100px;
+	height: 40px;
+}
+#logout{
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+}
+#logout:hover{
+	width: 100px;
+	height: 40px;
+}
+#chat{
+	background-color: #8B0000;
+	width: 80px;
+	height: 30px;
+	font-size: 20px;
+	color: white;
+	cursor: pointer;
+}
+#text{
+	position:absolute;
+	top: 30%;
+	left: 8%;
+	background-color: white;
 }

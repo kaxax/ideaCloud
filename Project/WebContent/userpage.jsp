@@ -15,7 +15,13 @@
 <body onload="initf()">
 <%
 	HttpSession ses = request.getSession(false);
-	String userIdAsString = ses.getAttribute("user_id").toString();
+	Object stringAttr = ses.getAttribute("user_id");
+	if (stringAttr == null){
+		ServletContext sc = this.getServletContext();
+		RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
+	String userIdAsString = stringAttr.toString();
 	int userId =  Integer.parseInt(userIdAsString);
 	Pool p = Pool.getPool();
 	Connection con = p.getConnection();
@@ -30,15 +36,27 @@
 	int rank  = user.getUserLevel();
 	String tmp = request.getParameter("author_id");
 	int author_id = Integer.parseInt(tmp.split("_")[2]);
-	String hisUsername = db.getUser(author_id).getUSerNickname();
-	System.out.println(hisUsername);
+	User he = db.getUser(author_id);
+	String hisUsername = he.getUSerNickname();
+	String hisImgSrc = he.getUSerImgSrc();
+	String hisName = he.getUserName();
+	String hisSurname = he.getUserSurname();
 	con.close();
 %>
-<img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
+<img src=<%=hisImgSrc%> class = "profpic" alt="profile pic" type="image" />
+<div id="text">
+<p class="justP">Nick: <%=hisUsername%></p></br>
+<p class="justP">Name: <%=hisName%></p></br>
+<p class="justP">Surname: <%=hisSurname%></p></br>
+</div>
+<div id=main3button>
+<input id="homepage" type="button" value="Home" onclick="goHomepage();" />
+<input id="editProfile" type="button" value="Edit Profile" onclick="editInfo();" />
+<input id="logout" type="button" value="Logout" onclick="doLogout();" />
+</div>
 <input id="chat" type="button" value="chat" onclick="goChat();" >
 <input id="tmp1" type="hidden" value=<%=myUsername%>>
 <input id="tmp2" type="hidden" value=<%=hisUsername%>>
-<input id="editInfo" type="button" value="editInfo" onclick="editInfo();">
 <div id ="postsDiv">
 </div>
 
@@ -69,6 +87,16 @@ function goChat(){
 	hisUser = document.getElementById("tmp2").value;
 	window.location = "http://localhost:8080/IdeaCloud/chat.jsp?myUser=" + myUser + "&hisUser=" + hisUser;
 }
+function doLogout(){
+	document.getElementById("logoutForm").submit();
+}
+function goHomepage(){
+	window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
+}
+function editInfo(){
+	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
+}
+
 
 </script>
 </body>

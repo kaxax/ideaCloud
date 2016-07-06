@@ -15,7 +15,13 @@
 <body onload="initf()">
 <%
 	HttpSession ses = request.getSession(false);
-	String userIdAsString = ses.getAttribute("user_id").toString();
+	Object stringAttr = ses.getAttribute("user_id");
+	if (stringAttr == null){
+		ServletContext sc = this.getServletContext();
+		RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
+	String userIdAsString = stringAttr.toString();
 	int userId =  Integer.parseInt(userIdAsString);
 	Pool p = Pool.getPool();
 	Connection con = p.getConnection();
@@ -29,8 +35,12 @@
 	con.close();
 %>
 <img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
-<input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
-<input id="userpageButton" type="button" value="userpage" onclick="gotoUserpage();" />
+<div id=main3button>
+<input id="homepage" type="button" value="Home" onclick="goHomepage();" />
+<input id="editProfile" type="button" value="Edit Profile" onclick="editInfo();" />
+<input id="logout" type="button" value="Logout" onclick="doLogout();" />
+</div>
+<form action="logout" id="logoutForm" method="POST"></form>
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
   <div class="dropdown-content">
@@ -96,9 +106,9 @@
 <div id="QorA-area">
 <div>
 
-    <input id ="i_box" type="checkbox" name="system_type3" onclick="iClick(this)" value="ok" checked/>
+    <input id ="i_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Idea</span>
-    <input id ="q_box" type="checkbox" name="system_type3" onclick="qClick(this)" value="ok" checked/>
+    <input id ="q_box" type="checkbox" name="system_type3" value="ok" checked/>
     <span style="width:100px;display:inline-block;">Question</span>
 </div>
 </div>
@@ -108,19 +118,23 @@
 
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 <script>
-var last_search = "";
+function doLogout(){
+	document.getElementById("logoutForm").submit();
+}
+function goHomepage(){
+	window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
+}
 function goToUser(author_id){
-	alert(author_id);
 	window.location = "http://localhost:8080/IdeaCloud/userpage.jsp?author_id=" + author_id;
+}
+function editInfo(){
+	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
 }
 function post_share(id){
 	var postId = id.split("_")[2];
 	var ttl = document.getElementById("post_id_"+postId).innerHTML;
 	var text = document.getElementById("post_text_"+postId).innerHTML;
 	var win = open("share.jsp?text="+text+"&title="+ttl, "MsgWindow", 'width=500,height=300');
-}
-function editInfo(){
-	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
 }
 function gotoUserpage(){
 	window.location = "http://localhost:8080/IdeaCloud/userpage.jsp";
@@ -131,36 +145,7 @@ function post_it(){
 	text = document.getElementById("post_text").value;
 	addPosts(title,text);
 }
-function iClick(idea){
-	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
-		type = 2;
-	}else if(document.getElementById('i_box').checked){
-		type = 0;
-	}else if(document.getElementById('q_box').checked){
-		type = 1;
-	}else{
-		type =2;
-	}
-	categories = JSON.stringify(marked_categories_backup);
-	searchTerm = last_search;
-	getPostcheckboxes(0, type, searchTerm,categories);
-}
-function qClick(question){
-	if (document.getElementById('i_box').checked && document.getElementById('q_box').checked){
-		type = 2;
-	}else if(document.getElementById('i_box').checked){
-		type = 0;
-	}else if(document.getElementById('q_box').checked){
-		type = 1;
-	}else{
-		type =2;
-	}
-	categories = JSON.stringify(marked_categories_backup);
-	searchTerm = last_search;
-	getPostcheckboxes(0, type, searchTerm,categories);
-}
 marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
-marked_categories_backup = [false,false,false,false,false,false,false,false,false,false,false];
 post_marked_categories = [false,false,false,false,false,false,false,false,false,false,false];
 function showSearch(){
     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -282,7 +267,7 @@ function addPosts(title,text){
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 	    	postsT = xhttp.responseText;	
 	    	 var shadow = document.getElementById("postsDiv");
-	    	 shadow.innerHTML = postsT + shadow.innerHTML;
+	    	shadow.innerHTML = postsT + shadow.innerHTML;
 	    }
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/addPosts", true);
@@ -295,13 +280,11 @@ function addPosts(title,text){
 }
 //boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
 function getPosts(walltype,type,searchTerm){
-
+	
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	last_search=searchTerm;
-	    	marked_categories_backup =marked_categories;
-	    	postsT = xhttp.responseText;		    	
+	        postsT = xhttp.responseText;		    	
 	    	var shadow = document.getElementById("postsDiv");
 	    	shadow.innerHTML = postsT;
 	    }
@@ -313,24 +296,6 @@ function getPosts(walltype,type,searchTerm){
 	
 	  categories = JSON.stringify(marked_categories);
 	
-	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
-	 
-	
-}
-function getPostcheckboxes(walltype,type,searchTerm,categories){
-
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	last_search=searchTerm;
-	    	postsT = xhttp.responseText;		    	
-	    	var shadow = document.getElementById("postsDiv");
-	    	shadow.innerHTML = postsT;
-	    }
-	  };
-	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	 // user_id = 0;
 	  xhttp.send("id="+user_id +"&type="+type+"&walltype="+walltype+"&searchTerm="+searchTerm+"&categories="+categories); // 0 anu homepage
 	 
 	
@@ -368,8 +333,8 @@ function searchit(){
 	}else{
 		type =2;
 	}
-	searchTerm = document.getElementById('search_post_text').value;
-	getPosts(0, type, searchTerm);
+	searchTerm = document.getElementById('search_post_text').value
+	getPosts(0, type, searchTerm)
 }
 function reply_click(clicked_id)
 {

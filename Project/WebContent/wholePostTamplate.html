@@ -4,266 +4,283 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>sample post</title>
 <script type="text/javascript">
-var start = 0;
-var end = 4;
-function post_share(id){
+	var start = 0;
+	var end = 4;
+	function post_share(id) {
 
-	var postId = id.split("_")[2];
-	
-	var ttl = document.getElementById("post_title_"+postId).innerHTML;
-	var text = document.getElementById("post_text_"+postId).innerHTML;
-	var win = open("share.jsp?text="+text+"&title="+ttl, "MsgWindow", 'width=500,height=300');
-}
-function share_comment(id){
-	var postId = id.split("_")[1];
-	var text = document.getElementById("comment_text_"+postId).innerHTML;
-	var win = open("share.jsp?text="+text+"&title="+"", "MsgWindow", 'width=500,height=300');
-	
-}
-function commentvoteUp(id){
-	var vote_result = 0;
-	var vote_but = document.getElementById(id);
-	var postId = id.split("_")[1];
-	var vote_but1 = document.getElementById("cdown-arrow_"+postId);
-	clr = vote_but.style.backgroundColor;
-	clr1 = vote_but1.style.backgroundColor;
-	 if(clr == 'blue'){
+		var postId = id.split("_")[2];
+
+		var ttl = document.getElementById("post_title_" + postId).innerHTML;
+		var text = document.getElementById("post_text_" + postId).innerHTML;
+		var win = open("share.jsp?text=" + text + "&title=" + ttl, "MsgWindow",
+				'width=500,height=300');
+	}
+	function share_comment(id) {
+		var postId = id.split("_")[1];
+		var text = document.getElementById("comment_text_" + postId).innerHTML;
+		var win = open("share.jsp?text=" + text + "&title=" + "", "MsgWindow",
+				'width=500,height=300');
+
+	}
+	function commentvoteUp(id) {
+		var vote_result = 0;
+		var vote_but = document.getElementById(id);
+		var postId = id.split("_")[1];
+		var vote_but1 = document.getElementById("cdown-arrow_" + postId);
+		clr = vote_but.style.backgroundColor;
+		clr1 = vote_but1.style.backgroundColor;
+		if (clr == 'blue') {
 			vote_result = 1;
-		}else if (clr1 == 'red'){
-			vote_result =-1;
-		}else{
+		} else if (clr1 == 'red') {
+			vote_result = -1;
+		} else {
 			vote_result = 0;
 		}
-	if(vote_result == 1){
-		var vote_num = document.getElementById("cup-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-	}else if(vote_result == -1){
-		var vote_num = document.getElementById("cdown-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
-		var vote_but1 = document.getElementById("cdown-arrow_"+postId);
-		vote_but1.style.backgroundColor = '';
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-		commentvoteUp(id);
-		return ;
-	}else if(vote_result == 0){
-		
-		var vote_num = document.getElementById("cup-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
-		vote_but.style.backgroundColor = 'blue';
-		vote_result =1;
-	}
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	postsT = xhttp.responseText;	
-	    	 
-	    }
-	  };
-	  vote_down_value = document.getElementById("cdown-count_"+postId).innerHTML;
-	  vote_up_value = document.getElementById("cup-count_"+postId).innerHTML;
-	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/change_comment_Cloud", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("userId="+ "n" +"&postId="+postId +"&result=" + vote_result +"&result1=" + "1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
-}
-function commentvoteDown(id){
-	var vote_result = 0;
-	var vote_but = document.getElementById(id);
-	var postId = id.split("_")[1];
-	var vote_but1 = document.getElementById("cup-arrow_"+postId);
-	clr = vote_but.style.backgroundColor;
-	clr1 = vote_but1.style.backgroundColor;
-	if(clr == 'red'){	
-		vote_result = -1;
-	}else if (clr1 == 'blue'){
-		vote_result = 1;
-	}else{
-		vote_result = 0;
-	}
-	if(vote_result == 1){
-		var vote_num = document.getElementById("cup-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-		vote_but1 = document.getElementById("cup-arrow_"+postId);
-		vote_but1.style.backgroundColor = '';
-		commentvoteDown(id);
-		return ;
-	}else if(vote_result == -1){
-		var vote_num = document.getElementById("cdown-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)+ 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-	}else if(vote_result == 0){
-		var vote_num = document.getElementById("cdown-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)- 1;
-		vote_but.style.backgroundColor = 'red';
-		vote_result =-1;
-	}
-	
-	
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-	if (xhttp.readyState == 4 && xhttp.status == 200) {	
-		  postsT = xhttp.responseText;	 
-		}
-	};
-	vote_down_value = document.getElementById("cdown-count_"+postId).innerHTML;
-	vote_up_value = document.getElementById("cup-count_"+postId).innerHTML;
-	xhttp.open("POST", "http://localhost:8080/IdeaCloud/change_comment_Cloud", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		if (vote_result == 1) {
+			var vote_num = document.getElementById("cup-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+		} else if (vote_result == -1) {
+			var vote_num = document.getElementById("cdown-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			var vote_but1 = document.getElementById("cdown-arrow_" + postId);
+			vote_but1.style.backgroundColor = '';
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+			commentvoteUp(id);
+			return;
+		} else if (vote_result == 0) {
 
-	xhttp.send("userId="+ "ss" +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
-}
-function voteUp(id){
-	 var vote_result = 0;
-	 var vote_but = document.getElementById(id);
-	 var postId = id.split("_")[1];
-	 var vote_but1 = document.getElementById("down-arrow_"+postId);
-	 clr = vote_but.style.backgroundColor;
-	 clr1 = vote_but1.style.backgroundColor;
-	 if(clr == 'blue'){
+			var vote_num = document.getElementById("cup-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			vote_but.style.backgroundColor = 'blue';
 			vote_result = 1;
-		}else if (clr1 == 'red'){
-			vote_result =-1;
-		}else{
+		}
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+
+			}
+		};
+		vote_down_value = document.getElementById("cdown-count_" + postId).innerHTML;
+		vote_up_value = document.getElementById("cup-count_" + postId).innerHTML;
+		xhttp.open("POST",
+				"http://localhost:8080/IdeaCloud/change_comment_Cloud", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send("userId=" + "n" + "&postId=" + postId + "&result="
+				+ vote_result + "&result1=" + "1" + "&voteup=" + vote_up_value
+				+ "&votedown=" + vote_down_value);
+	}
+	function commentvoteDown(id) {
+		var vote_result = 0;
+		var vote_but = document.getElementById(id);
+		var postId = id.split("_")[1];
+		var vote_but1 = document.getElementById("cup-arrow_" + postId);
+		clr = vote_but.style.backgroundColor;
+		clr1 = vote_but1.style.backgroundColor;
+		if (clr == 'red') {
+			vote_result = -1;
+		} else if (clr1 == 'blue') {
+			vote_result = 1;
+		} else {
 			vote_result = 0;
 		}
-		
-	if(vote_result == 1){
-		
-		var vote_num = document.getElementById("up-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-	}else if(vote_result == -1){
-		var vote_num = document.getElementById("down-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
-		var vote_but1 = document.getElementById("down-arrow_"+postId);
-		vote_but1.style.backgroundColor = '';
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-		voteUp(id);
-		return ;
-	}else if(vote_result == 0){
-		
-		var vote_num = document.getElementById("up-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)+ 1;
-		vote_but.style.backgroundColor = 'blue';
-		vote_result =1;
+		if (vote_result == 1) {
+			var vote_num = document.getElementById("cup-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+			vote_but1 = document.getElementById("cup-arrow_" + postId);
+			vote_but1.style.backgroundColor = '';
+			commentvoteDown(id);
+			return;
+		} else if (vote_result == -1) {
+			var vote_num = document.getElementById("cdown-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+		} else if (vote_result == 0) {
+			var vote_num = document.getElementById("cdown-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_but.style.backgroundColor = 'red';
+			vote_result = -1;
+		}
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+			}
+		};
+		vote_down_value = document.getElementById("cdown-count_" + postId).innerHTML;
+		vote_up_value = document.getElementById("cup-count_" + postId).innerHTML;
+		xhttp.open("POST",
+				"http://localhost:8080/IdeaCloud/change_comment_Cloud", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+
+		xhttp.send("userId=" + "ss" + "&postId=" + postId + "&result="
+				+ vote_result + "&result1=" + "-1" + "&voteup=" + vote_up_value
+				+ "&votedown=" + vote_down_value);
 	}
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-	    	postsT = xhttp.responseText;	
-	    	 
-	    }
-	  };
-		vote_down_value = document.getElementById("down-count_"+postId).innerHTML;
-		vote_up_value = document.getElementById("up-count_"+postId).innerHTML;
-	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("userId="+ "n" +"&postId="+postId +"&result=" + vote_result +"&result1=" + "1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
-}
-function voteDown(id){
-	var vote_result = 0;
-	var vote_but = document.getElementById(id);
-	var postId = id.split("_")[1];
-	var vote_but1 = document.getElementById("up-arrow_"+postId);
-	clr = vote_but.style.backgroundColor;
-	clr1 = vote_but1.style.backgroundColor;
-	
-	if(clr == 'red'){	
-		vote_result = -1;
-	}else if (clr1 == 'blue'){
-		vote_result = 1;
-	}else{
-		vote_result = 0;
+	function voteUp(id) {
+		var vote_result = 0;
+		var vote_but = document.getElementById(id);
+		var postId = id.split("_")[1];
+		var vote_but1 = document.getElementById("down-arrow_" + postId);
+		clr = vote_but.style.backgroundColor;
+		clr1 = vote_but1.style.backgroundColor;
+		if (clr == 'blue') {
+			vote_result = 1;
+		} else if (clr1 == 'red') {
+			vote_result = -1;
+		} else {
+			vote_result = 0;
+		}
+
+		if (vote_result == 1) {
+
+			var vote_num = document.getElementById("up-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+		} else if (vote_result == -1) {
+			var vote_num = document.getElementById("down-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			var vote_but1 = document.getElementById("down-arrow_" + postId);
+			vote_but1.style.backgroundColor = '';
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+			voteUp(id);
+			return;
+		} else if (vote_result == 0) {
+
+			var vote_num = document.getElementById("up-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			vote_but.style.backgroundColor = 'blue';
+			vote_result = 1;
+		}
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+
+			}
+		};
+		vote_down_value = document.getElementById("down-count_" + postId).innerHTML;
+		vote_up_value = document.getElementById("up-count_" + postId).innerHTML;
+		xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send("userId=" + "n" + "&postId=" + postId + "&result="
+				+ vote_result + "&result1=" + "1" + "&voteup=" + vote_up_value
+				+ "&votedown=" + vote_down_value);
+	}
+	function voteDown(id) {
+		var vote_result = 0;
+		var vote_but = document.getElementById(id);
+		var postId = id.split("_")[1];
+		var vote_but1 = document.getElementById("up-arrow_" + postId);
+		clr = vote_but.style.backgroundColor;
+		clr1 = vote_but1.style.backgroundColor;
+
+		if (clr == 'red') {
+			vote_result = -1;
+		} else if (clr1 == 'blue') {
+			vote_result = 1;
+		} else {
+			vote_result = 0;
+		}
+
+		if (vote_result == 1) {
+			var vote_num = document.getElementById("up-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+			vote_but1 = document.getElementById("up-arrow_" + postId);
+			vote_but1.style.backgroundColor = '';
+			voteDown(id);
+			return;
+		} else if (vote_result == -1) {
+			var vote_num = document.getElementById("down-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) + 1;
+			vote_result = 0;
+			vote_but.style.backgroundColor = '';
+		} else if (vote_result == 0) {
+			var vote_num = document.getElementById("down-count_" + postId);
+			vote_num.innerHTML = parseInt(vote_num.innerHTML, 10) - 1;
+			vote_but.style.backgroundColor = 'red';
+			vote_result = -1;
+		}
+
+		vote_down_value = document.getElementById("down-count_" + postId).innerHTML;
+		vote_up_value = document.getElementById("up-count_" + postId).innerHTML;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+			}
+		};
+		xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send("userId=" + "ss" + "&postId=" + postId + "&result="
+				+ vote_result + "&result1=" + "-1" + "&voteup=" + vote_up_value
+				+ "&votedown=" + vote_down_value);
 	}
 
-	if(vote_result == 1){
-		var vote_num = document.getElementById("up-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)- 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-		vote_but1 = document.getElementById("up-arrow_"+postId);
-		vote_but1.style.backgroundColor = '';
-		voteDown(id);
-		return ;
-	}else if(vote_result == -1){
-		var vote_num = document.getElementById("down-count_"+postId);
-		vote_num.innerHTML =  parseInt(vote_num.innerHTML, 10)+ 1;
-		vote_result =0;
-		vote_but.style.backgroundColor = '';
-	}else if(vote_result == 0){
-		var vote_num = document.getElementById("down-count_"+postId);
-		vote_num.innerHTML = parseInt(vote_num.innerHTML, 10)- 1;
-		vote_but.style.backgroundColor = 'red';
-		vote_result =-1;
-	}
-	
-	vote_down_value = document.getElementById("down-count_"+postId).innerHTML;
-	vote_up_value = document.getElementById("up-count_"+postId).innerHTML;
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-	if (xhttp.readyState == 4 && xhttp.status == 200) {	
-		  postsT = xhttp.responseText;	 
-		}
-	};
-	xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("userId="+ "ss" +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
-}
-	
-	function showMore(id){	
+	function showMore(id) {
 		var showbutton = document.getElementById(id);
-		var postId = id.split("_")[3];	
+		var postId = id.split("_")[3];
 		var postdiv = document.getElementById("comments");
-		  var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() {
-		    if (xhttp.readyState == 4 && xhttp.status == 200) {	
-		    	postsT = xhttp.responseText;
-		    	start += 5;
-		    	end += 4;
-		    	postdiv.innerHTML += postsT;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+				start += 5;
+				end += 4;
+				postdiv.innerHTML += postsT;
 
-		    }
-		  };
-		 
-		  xhttp.open("POST", "http://localhost:8080/IdeaCloud/postPage", true);
-		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		  xhttp.send("post_id="+postId+"&start="+start+"&end="+end); 
-}
-	
-function commentIt(id){	
+			}
+		};
 
-	var postId = id.split("_")[1];	
-	var postdiv = document.getElementById("comments");
-	var text = document.getElementById("text_"+postId).value;
-	
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) {
-	    	postsT = xhttp.responseText;
-	    	
-	    	postdiv.innerHTML = postsT + postdiv.innerHTML;
-	    }
-	  };
+		xhttp.open("POST", "http://localhost:8080/IdeaCloud/postPage", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send("post_id=" + postId + "&start=" + start + "&end=" + end);
+	}
 
-	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/addComment", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("post_id="+postId+"&text="+text); 
+	function commentIt(id) {
 
-}
+		var postId = id.split("_")[1];
+		var postdiv = document.getElementById("comments");
+		var text = document.getElementById("text_" + postId).value;
+
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (xhttp.readyState == 4 && xhttp.status == 200) {
+				postsT = xhttp.responseText;
+
+				postdiv.innerHTML = postsT + postdiv.innerHTML;
+			}
+		};
+
+		xhttp.open("POST", "http://localhost:8080/IdeaCloud/addComment", true);
+		xhttp.setRequestHeader("Content-type",
+				"application/x-www-form-urlencoded");
+		xhttp.send("post_id=" + postId + "&text=" + text);
+
+	}
 </script>
 <style>
-	body{
-		background-color: 	#F0FFFF;
+body {
+	background-color: #F0FFFF;
 }
 
-.post_div{
+.post_div {
 	position: relative;
 	left: 30%;
 	width: 700px;
@@ -275,29 +292,31 @@ function commentIt(id){
 	background-color: white;
 }
 
-.user_info_div{
+.user_info_div {
 	position: relative;
 	left: 100px;
 	top: 35px;
 	width: 500px;
 }
 
-a{
-	text-decoration:none;
+a {
+	text-decoration: none;
 	color: black;
 }
-.user_text_div{
+
+.user_text_div {
 	margin-top: 15px;
 	font-size: 150%;
 }
-.post_title_div{
-	text-align:center;
+
+.post_title_div {
+	text-align: center;
 	font-size: xx-large;
 	color: #6c6c6c;
 	font-weight: bold;
 }
 
-.post_text_div{
+.post_text_div {
 	margin-top: 20px;
 	font-style: italic;
 	font-size: x-large;
@@ -310,75 +329,82 @@ a{
 }
 
 .meta_info {
-margin-bottom: 18px;
+	margin-bottom: 18px;
 }
 
 .votes {
-			top: -30px;		
-			float: left;
-			margin-right: 20px;*/
+	top: -30px;
+	float: left;
+	margin-right: 20px;
+	*/
 }
-.share{
-		float: right;
-		margin-right: 20px;
-		font-size: 120%;
+
+.share {
+	float: right;
+	margin-right: 20px;
+	font-size: 120%;
 }
-.arrow{
+
+.arrow {
 	border: 3px solid grey;
 	bottom: 20px;
 	width: 30px;
-	height: 30px;	
-	
-	
+	height: 30px;
 }
 
-#down-arrow{
+#down-arrow {
 	width: 100%;
 	height: 100%;
 }
-#up-arrow{
+
+#up-arrow {
 	width: 100%;
 	height: 100%;
 }
-.down-arrow{
+
+.down-arrow {
 	width: 100%;
 	height: 100%;
 }
-.up-arrow{
+
+.up-arrow {
 	width: 100%;
 	height: 100%;
 }
-.vote-count{
+
+.vote-count {
 	font-size: large;
 	font-weight: bold;
 	color: grey;
 	margin-left: 7px;
 }
 
-#iamge-share{
+#iamge-share {
 	width: 120px;
 }
 
-.share{
+.share {
 	margin-top: 2px;
 	margin-left: 20px;
 	float: right;
 	cursor: pointer;
 }
-.vote-name{
+
+.vote-name {
 	margin-left: 20px;
 }
 
-#comments{
+#comments {
 	position: relative;
 	left: 30%;
 	width: 700px;
 	height: 10px;
-	background-color: ;
+	background-color:;
 	top: -40px;
 	padding: 15px;
 }
-.comment{
+
+.comment {
 	position: relative;
 	margin-bottom: 15%;
 	width: 700px;
@@ -387,16 +413,17 @@ margin-bottom: 18px;
 	border-color: grey;
 	background-color: white;
 	padding: 15px;
-	padding-bottom:70px;
+	padding-bottom: 70px;
 	min-height: 150px;
 }
+
 .author {
-		float: left;
-		width: 100px;
-		height: 130px;
+	float: left;
+	width: 100px;
+	height: 130px;
 }
 
-.comment_title_div{
+.comment_title_div {
 	font-size: x-large;
 	color: #6c6c6c;
 	font-weight: bold;
@@ -404,157 +431,225 @@ margin-bottom: 18px;
 	text-align: center;
 }
 
-.comment_text_div{
+.comment_text_div {
 	font-style: italic;
 	font-size: large;
 	margin-top: 10px;
 	left: 50px;
 }
-.comment_meta_info{
-			position: relative;
-			left: -3px;
-			top: auto;
-			width: 700px;
-			margin-top: 15px;
-			
+
+.comment_meta_info {
+	position: relative;
+	left: -3px;
+	top: auto;
+	width: 700px;
+	margin-top: 15px;
 }
+
 .comment_votes {
-			top: -30px;		
-			float: left;
-			margin-left: 20px;
+	top: -30px;
+	float: left;
+	margin-left: 20px;
 }
-.comment_share{
-		float: right;
-		margin-right: 20px;
-		font-size: 120%;
-		cursor: pointer;
+
+.comment_share {
+	float: right;
+	margin-right: 20px;
+	font-size: 120%;
+	cursor: pointer;
 }
-.comment_arrow{
+
+.comment_arrow {
 	border: 3px solid grey;
 	bottom: 20px;
 	width: 30px;
-	height: 30px;	
+	height: 30px;
 	cursor: pointer;
-	
 }
-#comment_down-arrow{
+
+#comment_down-arrow {
 	width: 100%;
 	height: 100%;
 }
-#comment_up-arrow{
+
+#comment_up-arrow {
 	width: 100%;
 	height: 100%;
 }
-.comment_vote-count{
+
+.comment_vote-count {
 	font-size: large;
 	font-weight: bold;
 	color: grey;
 	margin-left: 7px;
 }
 
-#comment_iamge-share{
+#comment_iamge-share {
 	width: 120px;
 }
 
-.comment_share{
+.comment_share {
 	margin-top: 2px;
 	margin-left: 20px;
 }
-.comment_vote-name{
+
+.comment_vote-name {
 	margin-left: 20px;
 }
-.link{
-text-decoration: none;
-cursor: pointer;
+
+.link {
+	text-decoration: none;
+	cursor: pointer;
 }
 
+#main3button {
+	position: absolute;
+	left: 1200px;
+}
 
+#homepage {
+	padding: 5px;
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+}
+
+#homepage:hover {
+	width: 100px;
+	height: 40px;
+}
+
+#editProfile {
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+	margin: 5px 0px;
+}
+
+#editProfile:hover {
+	width: 100px;
+	height: 40px;
+}
+
+#logout {
+	border: none;
+	border-radius: 2px;
+	width: 80px;
+	height: 30px;
+	background-color: #00BFFF;
+	cursor: pointer;
+}
+
+#logout:hover {
+	width: 100px;
+	height: 40px;
+}
 </style>
 
 </head>
 <body>
-	<div id = "user_info_div_::user_id::" class = "user_info_div">
-		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img src="::user_img::" id = "user_img" width="100px"> </a>
-		
-		<div class = "user_text_div">
-		<a href="http://localhost:8080/IdeaCloud/hereWeGo" id = "post_author_link">
-		::post_user_nickname::
-		</a>
-		</div>
-		<div class = "user_text_div">
-		age: ::post_user_age::
-		</div>
-		<div class = "user_text_div">
-		lvl: ::post_user_lvl::
-		</div>
+	<div id=main3button>
+		<input id="homepage" type="button" value="Home"
+			onclick="goHomepage();" /> </br>
+		<input id="editProfile" type="button" value="Edit Profile"
+			onclick="editInfo();" /> </br>
+		<input id="logout" type="button" value="Logout" onclick="doLogout();" />
 	</div>
-	<div id = "post_div_::post_id::" class = "post_div">
-	
-			<div class="type">
-				<div calss = "QA">
-					<img src="::post_type::.jpg" height="50" width="50"/>
-				</div>
+	<div id="user_info_div_::user_id::" class="user_info_div">
+		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img
+			src="::user_img::" id="user_img" width="100px">
+		</a>
+
+		<div class="user_text_div">
+			<a href="http://localhost:8080/IdeaCloud/hereWeGo"
+				id="post_author_link"> ::post_user_nickname:: </a>
+		</div>
+		<div class="user_text_div">age: ::post_user_age::</div>
+		<div class="user_text_div">lvl: ::post_user_lvl::</div>
+	</div>
+	<div id="post_div_::post_id::" class="post_div">
+
+		<div class="type">
+			<div calss="QA">
+				<img src="::post_type::.jpg" height="50" width="50" />
 			</div>
-			
-			<div class = "post_title_div" id = "post_title_::post_id::">
-				::post_title::
+		</div>
+
+		<div class="post_title_div" id="post_title_::post_id::">
+			::post_title::</div>
+		<div class="post_text_div" id="post_text_::post_id::">
+			::post_text:: <br> <br> <br>
+		</div>
+
+		<div class="meta_info">
+			<div class="votes upvote">
+				<div class="vote_name">
+					<div class="arrow" id="up">
+						<img src="up-arrow.png" class="down-arrow"
+							style="background-color: ::up_color::;" id="up-arrow_::post_id::"
+							onclick="voteUp(this.id)">
+					</div>
+				</div>
+				<div class="vote-count" id="up-count_::post_id::">
+					::post_cloud::</div>
 			</div>
-			<div class = "post_text_div" id = "post_text_::post_id::">
-				::post_text::
-				<br>
-				<br>
-				<br>
+			<div class="votes downvote">
+				<div class="vote_name">
+					<div class="arrow" id="down">
+						<img class="down-arrow" src="down-arrow.png"
+							style="background-color: ::down_color::;"
+							id="down-arrow_::post_id::" onclick="voteDown(this.id)">
+					</div>
+				</div>
+				<div class="vote-count" id="down-count_::post_id::">
+					::post_uncloud::</div>
 			</div>
-			
-			<div class="meta_info">
-				<div class="votes upvote">
-					<div class="vote_name"> 
-						<div class="arrow" id = "up">
-							<img  src="up-arrow.png"  class = "down-arrow"  style = "background-color: ::up_color::;"  id = "up-arrow_::post_id::" onclick="voteUp(this.id)">
-						</div>
-					</div>
-					<div class="vote-count" id = "up-count_::post_id::"> 
-						::post_cloud::
-					</div>
+			<div class="share" id="post_share_now_::post_id::"
+				onclick="post_share_now(this.id)">
+				<div class="vote-name"></div>
+
+			</div>
+
+			<div class="share" id="post_share_::post_id::"
+				onclick="post_share(this.id)">
+				<div class="vote-name">
+					<img src="share-later.png" id="iamge-share">
 				</div>
-				<div class="votes downvote">
-					<div class="vote_name" > 
-						<div class="arrow" id = "down">
-							<img  class = "down-arrow" src="down-arrow.png" style = "background-color: ::down_color::;" id = "down-arrow_::post_id::" onclick="voteDown(this.id)">
-						</div> 
-					</div>
-					<div class="vote-count" id = "down-count_::post_id::">
-						::post_uncloud::
-					</div>
-				</div>
-				<div class="share" id = "post_share_now_::post_id::" onclick="post_share_now(this.id)">
-						<div class="vote-name"> 
-							
-						</div>
-						
-				</div>
-				 
-				<div class="share" id = "post_share_::post_id::" onclick="post_share(this.id)">
-						<div class="vote-name">
-							<img  src="share-later.png" id = "iamge-share">
-						</div>
-						
-				</div>
-					<textarea rows="4" cols="50" id = "text_::post_id::"  style = "position:relative; top:120px; left:0%; width:690px">
+
+			</div>
+			<textarea rows="4" cols="50" id="text_::post_id::"
+				style="position: relative; top: 120px; left: 0%; width: 690px">
 		</textarea>
 
 		</div>
-				<button id = "comment_::post_id::" onclick="commentIt(this.id)"  style = "position:absolute; margin-top:35px; left:81%;width:120px;height:67px;">
-			comment
-		</button>		
- 		<div style="height: 5px;"></div>
-		<button id = "sho_more_button_::post_id::" onclick="showMore(this.id)"  value="show more" style = "position:absolute; margin-top:120px; left:40%;	height:30px;">
-			show more comments
-		</button>	
-			</div>
-			
-		<div id = "comments">
-		</div>
+		<button id="comment_::post_id::" onclick="commentIt(this.id)"
+			style="position: absolute; margin-top: 35px; left: 81%; width: 120px; height: 67px;">
+			comment</button>
+		<div style="height: 5px;"></div>
+		<button id="sho_more_button_::post_id::" onclick="showMore(this.id)"
+			value="show more"
+			style="position: absolute; margin-top: 120px; left: 40%; height: 30px;">
+			show more comments</button>
+	</div>
+
+	<div id="comments"></div>
+	<script>
+		function doLogout() {
+			document.getElementById("logoutForm").submit();
+		}
+		function goHomepage() {
+			window.location = "http://localhost:8080/IdeaCloud/homepage.jsp";
+		}
+		function editInfo() {
+			window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
+		}
+	</script>
 </body>
 
 </html>
