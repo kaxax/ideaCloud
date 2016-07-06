@@ -17,7 +17,6 @@ public class Pool {
 		data.setUsername("root");
 		data.setPassword("gela69");
 		data.setUrl("jdbc:mysql://localhost/ideacloud");
-			
 	}
 
 	public static Pool getPool() throws IOException, SQLException,

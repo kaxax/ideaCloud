@@ -196,8 +196,8 @@ public class postPage extends HttpServlet {
 		tmp1=template.replace("::user_id::", Integer.toString(user.getUserId()));
 		template=tmp1.replace("::user-name::", user.getUSerNickname());
 		tmp1=template.replace("::comment_text::", comment.getCommentText());
-		template=tmp1.replace("::up_color::", up_color);
-		tmp1=template.replace("::down_color::",down_color);
+		template=tmp1.replace("::cup_color::", up_color);
+		tmp1=template.replace("::cdown_color::",down_color);
 		template=tmp1.replace("::comment_cloud::", Integer.toString(comment.getCommentCloud()));
 		tmp1=template.replace("::comment_uncloud::", Integer.toString(comment.getCommentUncloud()));
 		template = tmp1.replace("::lvl:: ", Integer.toString(user.getUserLevel()));

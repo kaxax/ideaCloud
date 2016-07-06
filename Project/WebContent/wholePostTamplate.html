@@ -64,8 +64,6 @@ function commentvoteUp(id){
 	  };
 	  vote_down_value = document.getElementById("cdown-count_"+postId).innerHTML;
 	  vote_up_value = document.getElementById("cup-count_"+postId).innerHTML;
-		alert(vote_down_value);
-		alert(vote_up_value);
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/change_comment_Cloud", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  xhttp.send("userId="+ "n" +"&postId="+postId +"&result=" + vote_result +"&result1=" + "1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 

@@ -86,9 +86,11 @@ public class Database {
 			System.out.println(c.getPostId() + "   " + c.getUserId() + "   " + c.status());
 			stmt.setInt(1, c.getPostId());
 			stmt.setInt(2, c.getUserId());
-			stmt.setInt(3, c.status());
-
+			stmt.setInt(3, c.status());				
 			stmt.execute();
+			System.out.println(c.getPostId());
+			System.out.println(c.getUserId());
+			System.out.println(c.status());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

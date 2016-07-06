@@ -25,10 +25,13 @@
 	if(imgSrc.equals("")){
 		imgSrc = "unknown.png";
 	}
+	else {
+		imgSrc += "?time=" + System.currentTimeMillis();
+	}
 	int rank  = user.getUserLevel();
 	con.close();
 %>
-<img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
+<img src=<%=imgSrc%> class = "profpic" alt="profile pic" />
 <input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
@@ -193,6 +196,7 @@ function showSearch(){
  }
 function voteDown(id){
 	 var vote_result = 0;
+	 document.getElementById("down-count_"+postId).innerHTML
 	var vote_but = document.getElementById(id);
 	var postId = id.split("_")[1];
 	var vote_but1 = document.getElementById("up-arrow_"+postId);
