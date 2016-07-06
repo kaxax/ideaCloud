@@ -88,7 +88,7 @@ public class change_comment_Cloud extends HttpServlet {
 		//	}
 			Cloud cl = db.getCommentCloud(postId);
 			if (cl==null){
-				Cloud newcl = new Cloud(userId, postId, rs);
+				Cloud newcl = new Cloud(postId,userId, rs);
 				db.insertcommentCloud(newcl);
  				db.updateCommentCloud(newcl);
 			}else{
