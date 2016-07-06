@@ -15,7 +15,7 @@ public class Pool {
 		data = new BasicDataSource();
 		data.setDriverClassName("com.mysql.jdbc.Driver");
 		data.setUsername("root");
-		data.setPassword("gela69");
+		data.setPassword("asakujaku12");
 		data.setUrl("jdbc:mysql://localhost/ideacloud");
 	}
 

@@ -20,12 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 
-
-
-
-
-
-
 import Core.Post;
 import Core.User;
 import Core.GetTimeline;
@@ -35,7 +29,7 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-	private String cwd ="D:\\oop\\cl\\ideaCloud\\Project";;
+	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
 
 	private static final long serialVersionUID = 1L;
        
