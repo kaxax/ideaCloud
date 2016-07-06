@@ -15,6 +15,8 @@ import Core.Cloud;
 import Core.Post;
 import Core.Comment;
 import Core.User;
+import Core.Message;
+import Core.Notification;
 
 public class Database {
 	private Connection con;
@@ -679,4 +681,231 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	public void insertMessage(Message m) {
+
+		try {
+			PreparedStatement stmt = con.prepareStatement(
+					"insert into chat " + "(sender, reciever, message, seen, cdate) " + "values (?, ?,? ,?, ?)");
+			stmt.setString(1, m.getSender());
+			stmt.setString(2, m.getReciever());
+			stmt.setString(3, m.getMessage());
+			stmt.setInt(4, m.getStatus());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(5, dateFormat.format(date));
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void insertNotification(Notification n) {
+
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("insert into notification " + "(sender, reciever, seen, cdate) " + "values (?, ?,? , ?)");
+			stmt.setString(1, n.getSender());
+			stmt.setString(2, n.getReciever());
+			stmt.setInt(3, n.getStatus());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(4, dateFormat.format(date));
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// aqvs tu ara users notificationi romelic ar unaxavs
+	public boolean isNotification(String user) {
+		try {
+
+			PreparedStatement stmt = con.prepareStatement("select * from notification where reciever = ? and seen =0");
+			stmt.setString(1, user);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				return true;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// aqvs tu ara unaxavi notificationi konkretuli userisgan
+	public boolean peerNotification(String sender, String reciever) {
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from notification where sender =? and reciever = ? and seen =0");
+			stmt.setString(1, sender);
+			stmt.setString(2, reciever);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				return true;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+//abrunebs yvela users vistanac qonia chati
+	public ArrayList<String> getPeers(String user) {
+		ArrayList<String> peers = new ArrayList<String>();
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from notification where sender =? or reciever = ? order by cdate desc");
+			stmt.setString(1, user);
+			stmt.setString(2, user);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				
+				String first = rs.getString("sender");
+				String second = rs.getString("reciever");
+				String peer = (first.equals(user)) ? second : first;
+				if(!peers.contains(peer))
+					peers.add(peer);
+			}
+			
+			return peers;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// qonia tu ara notificationi
+	public boolean wasNotification(String sender, String reciever) {
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from notification where sender =? and reciever = ?");
+			stmt.setString(1, sender);
+			stmt.setString(2, reciever);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				return true;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// naxa konkretuli notificationi
+	public void notificationSeen(String sid, String rid) {
+
+		try (PreparedStatement stmt = con
+				.prepareStatement("update notification set seen = ?  where sender = ? and reciever = ?")) {
+			stmt.setInt(1, 1);
+			stmt.setString(2, sid);
+			stmt.setString(3, rid);
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// axali notificationi
+	public void newNotification(String sid, String rid) {
+		try (PreparedStatement stmt = con
+				.prepareStatement("update notification set seen = ? , cdate = ? where sender = ? and reciever = ?")) {
+			stmt.setInt(1, 0);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			stmt.setString(2, dateFormat.format(date));
+			stmt.setString(3, sid);
+			stmt.setString(4, rid);
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<String> checkMessage(String sid, String rid) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+
+			PreparedStatement stmt = con.prepareStatement(
+					"select * from chat where sender = ? and reciever = ? and seen =? order by cdate");
+			stmt.setString(1, sid);
+			stmt.setString(2, rid);
+			stmt.setInt(3, 0);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+
+				String text = rs.getString("message");
+				result.add(text);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ArrayList<String> getOldMessages(String sid, String rid) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+			PreparedStatement stmt = con.prepareStatement(
+					"select * from chat where (sender = ? and reciever = ?) or (sender = ? and reciever = ?)  order by cdate desc");
+			stmt.setString(1, sid);
+			stmt.setString(2, rid);
+			stmt.setString(3, rid);
+			stmt.setString(4, sid);
+			
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				
+				String sender = rs.getString("sender");
+				String reciever = rs.getString("reciever");
+				String text = rs.getString("message");
+				result.add(sender);
+				result.add(text);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void seen(String sid, String rid) {
+
+		try (PreparedStatement stmt = con
+				.prepareStatement("update chat set seen = ?  where sender = ? and reciever = ?")) {
+			stmt.setInt(1, 1);
+			stmt.setString(2, sid);
+			stmt.setString(3, rid);
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	
 }
