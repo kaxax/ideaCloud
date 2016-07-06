@@ -21,17 +21,24 @@
 	Connection con = p.getConnection();
 	Database db  = new Database(con);
 	User user = db.getUser(userId);
+	String myUsername = user.getUSerNickname();
+	System.out.println(myUsername);
 	String imgSrc = user.getUSerImgSrc();
 	if(imgSrc.equals("")){
 		imgSrc = "unknown.png";
 	}
 	int rank  = user.getUserLevel();
-	con.close();
 	String tmp = request.getParameter("author_id");
 	int author_id = Integer.parseInt(tmp.split("_")[2]);
+	String hisUsername = db.getUser(author_id).getUSerNickname();
+	System.out.println(hisUsername);
+	con.close();
 %>
 <img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
-<input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
+<input id="chat" type="button" value="chat" onclick="goChat();" >
+<input id="tmp1" type="hidden" value=<%=myUsername%>>
+<input id="tmp2" type="hidden" value=<%=hisUsername%>>
+<input id="editInfo" type="button" value="editInfo" onclick="editInfo();">
 <div id ="postsDiv">
 </div>
 
@@ -48,7 +55,7 @@ function initf(){
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/getPosts", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("type="+"2" +"&walltype=" + "1"+"&searchTerm=" + "" +"&categories=" + ""); 
+	  xhttp.send("type="+"2" +"&walltype=" + "1"+"&searchTerm=" + "" +"&categories=" + "" + "&id=" + <%=author_id%>); 
 }
 
 function editInfo(){
@@ -56,6 +63,11 @@ function editInfo(){
 }
 function gotoUserpage(){
 	window.location = "http://localhost:8080/IdeaCloud/userpage.jsp";
+}
+function goChat(){
+	myUser = document.getElementById("tmp1").value;
+	hisUser = document.getElementById("tmp2").value;
+	window.location = "http://localhost:8080/IdeaCloud/chat.jsp?myUser=" + myUser + "&hisUser=" + hisUser;
 }
 
 </script>
