@@ -35,7 +35,7 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 
 	private static final long serialVersionUID = 1L;
        
@@ -84,13 +84,21 @@ public class getPosts extends HttpServlet {
 		}
 		ArrayList<String> catList = fillCategories();
 		ArrayList<String> myCatList = new ArrayList<String>();
-	
+		
 		int qi = Integer.parseInt(request.getParameter("type"));   //orie - 2    idea - 0    qestion - 1 
 		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof - 1   homepage - 0
 		String searchTerm = request.getParameter("searchTerm");
 		String categories = request.getParameter("categories");
-		String[] cats = categories.substring(1, categories.length()-1).split(",");
-		
+		if(request.getParameter("id") != null){
+			user_id = Integer.parseInt(request.getParameter("id")); 
+		}
+		String[] cats;
+		if(categories.length()>0){
+			cats = categories.substring(1, categories.length()-1).split(",");
+		}
+		else{
+			cats = "".split(" ");
+		}
 		for(int i=0;i<catList.size();i++){
 			if(i < cats.length && cats[i].equals("true")){
 				myCatList.add(catList.get(i));

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        

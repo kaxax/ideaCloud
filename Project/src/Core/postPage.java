@@ -39,7 +39,7 @@ import Core.Comment;
 public class postPage extends HttpServlet {
 	
 
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	
 	private static final long serialVersionUID = 1L;
