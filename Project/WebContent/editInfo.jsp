@@ -30,8 +30,10 @@
 	String nickName = user.getUSerNickname();
 	String mail = user.getUserEmail();
 	String imgSrc = user.getUSerImgSrc();
+	if(imgSrc.equals("")){
+		imgSrc = "unknown.png";
+	}
 	int sex = user.getUserSex();
-	System.out.print(sex);
 	String gender = "male";
 	if (sex == 0) {
 		gender = "female";
@@ -39,23 +41,25 @@
 	con.close();
 %>
 <body>
+	<div id="editDiv">
 	<form id="editInfo" action="editInfo" method="post" enctype="multipart/form-data"  autocomplete="off">
-		<img src=<%=imgSrc%> height="200" id="userImg" name="userImg" /><br>
-		<input type="file" name="imgBrowse" id="imgBrowse"  onchange="previewFile()"  autocomplete="off"><br> First name:<br> 
+		<img src=<%=imgSrc%> height="200" id="userImg" name="userImg" width="200" height="200"/><br>
+		<input type="file" name="imgBrowse" id="imgBrowse"  onchange="previewFile()"  autocomplete="off"><br> 
+		First name:<br>
 		<input type="text" name="editF" id="editF" value=<%=firstName%>><br>
-		Last name:<br> 
+		Last name:<br>
 		<input type="text" name="editN" id="editN" value=<%=lastName%>><br>
-		Nickname:<br> 
-		<input type="text" name="editL" id="editL" value=<%=nickName%>><br>
-		Sex:<br> 
+		<input type="hidden" name="editL" id="editL" value=<%=nickName%>><br>
+		Sex:<br>
 		<input type="radio" name="sex" id="male">Male 
-		<input type="radio" name="sex" id="female">Female <br>
-		Password:<br> 
+		<input type="radio" name="sex" id="female">Female<br>
+		Password:<br>
 		<input type="text" name="editP" id="editP"><br>
-		<input type="text" id="sendImg" name="imgSend"> 
-		<input type="text" id="gnd" name="gnd" value=<%=gender%>>
-		<input type="button" id="editSubmit" name="editSubmit">
+		<input type="hidden" id="sendImg" name="imgSend">
+		<input type="hidden" id="gnd" name="gnd" value=<%=gender%>>
+		<input type="button" id="editSubmit" name="editSubmit" value="submit">
 	</form>
+	</div>
 </body>
 <script>
 	function previewFile() {

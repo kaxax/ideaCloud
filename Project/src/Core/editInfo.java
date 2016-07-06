@@ -67,54 +67,60 @@ public class editInfo extends HttpServlet {
 		HttpSession ses = request.getSession(false);
 		int userId = (int) ses.getAttribute("user_id");
 		String fileName = "";
+		FileItem tmp = null;
 		if (ServletFileUpload.isMultipartContent(request)) {
 			try {
 				List<FileItem> ls = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 				int counter = 0;
 				for (FileItem cur : ls) {
 					if (!cur.isFormField()) {
-						fileName = new File(cur.getName(), userId + ".jpg").getName();
-						cur.write(new File(uploadDir + File.separator + fileName));
+						tmp=cur;
 					}
 					String str = cur.getString();
 					switch (counter) {
 					case 1:
 						first_name = str;
-						System.out.println("first_name set to: " + str + "counteria: " + counter);
+						//System.out.println("first_name set to: " + str + "counteria: " + counter);
 						break;
 					case 2:
 						last_name = str;
-						System.out.println("last_name set to: " + str + "counteria: " + counter);
+						//System.out.println("last_name set to: " + str + "counteria: " + counter);
 						break;
 					case 3:
 						nickname = str;
-						System.out.println("nickname set to: " + str + "counteria: " + counter);
+						//System.out.println("nickname set to: " + str + "counteria: " + counter);
 						break;
 					case 5:
 						password = str;
-						System.out.println("password set to: " + str + "counteria: " + counter);
+						//System.out.println("password set to: " + str + "counteria: " + counter);
 						break;
 					case 6:
 						imgStatus = str;
-						System.out.println("imgStatus set to: " + str + "counteria: " + counter);
+						//System.out.println("imgStatus set to: " + str + "counteria: " + counter);
 						break;
 					case 7:
 						sexString = str;
-						System.out.println("sexString set to: " + str + "counteria: " + counter);
+						//System.out.println("sexString set to: " + str + "counteria: " + counter);
+						if(sexString.equals("female")){
+							throw new WomenOutOfKitchenException("Go Back To Kitchen Woman!");
+						}
 						break;
 					default:
 						break;
 					}
 					counter++;
 				}
-				System.out.println("xoda 1");
 			} catch (Exception e) {
-				System.out.println("xoda 2");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			System.out.println("xoda 3");
+		}
+		if(sexString.equals("female")){
+			ServletContext sc = this.getServletContext();
+			ses.invalidate();
+			RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
+			rd.forward(request, response);
+			return;
 		}
 		Pool p;
 		try {
@@ -134,6 +140,8 @@ public class editInfo extends HttpServlet {
 				user.setUserSex(0);
 			}
 			if (imgStatus.equals("changed")) {
+				fileName = new File(tmp.getName(), userId + ".jpg").getName();
+				tmp.write(new File(uploadDir + File.separator + fileName));
 				imgSrc = getImgSrc(userId);
 				int lengthCounter = 4;
 				lengthCounter += ("" + userId).length();
@@ -144,6 +152,9 @@ public class editInfo extends HttpServlet {
 			con.close();
 
 		} catch (SQLException | PropertyVetoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

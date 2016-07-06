@@ -35,7 +35,8 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -90,9 +91,8 @@ public class getPosts extends HttpServlet {
 		String categories = request.getParameter("categories");
 		String[] cats = categories.substring(1, categories.length()-1).split(",");
 		
-		
 		for(int i=0;i<catList.size();i++){
-			if((i+1)<cats.length && cats[i+1].equals("true")){
+			if(i < cats.length && cats[i].equals("true")){
 				myCatList.add(catList.get(i));
 			}
 		}

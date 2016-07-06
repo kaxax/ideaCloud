@@ -548,30 +548,38 @@ public class Database {
 
 	}
 
+	
+	public boolean contains(ArrayList<Post> posts, Post p){
+		for(int i=0; i<posts.size(); i++){
+			if(posts.get(i).getPostId() == p.getPostId())
+				return true;
+		}
+		return false;
+	}
+	
 	public ArrayList<Post> getCategoryPosts(ArrayList<String> categories, int idea, int question) {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
-			String st = "select * from category ";
+			String st = "select * from post ";
 			if (categories.size() != 0) {
+				st = "select * from category where ";
 				for (int i = 0; i < categories.size() - 1; i++) {
-					st += "where category =? or";
+					st += "category =? or ";
 				}
-				st+= "where category =?";
+				st+= "category =?";
 			}
-			st += " order by cdate desc";
-			
 			PreparedStatement stmt = con
 					.prepareStatement(st);
 
 			for(int i =0 ; i<categories.size(); i++){
 				stmt.setString(i+1, categories.get(i));
 			}
-
+			System.out.println(st);
 			ResultSet rs = stmt.executeQuery();
 			while (rs != null && rs.next()) {
-				int pid = rs.getInt("postId");
+				int pid =(categories.size() != 0)? rs.getInt("postId"):rs.getInt("id");
 				Post p = getPost(pid);
-				if((p.getPostType()==1 && idea==1) || (p.getPostType()==0 && idea==1))
+				if((p.getPostType()==1 && idea==1) || (p.getPostType()==0 && question==1) && !contains(posts,p))
 					posts.add(p);
 			}
 		} catch (SQLException e) {
