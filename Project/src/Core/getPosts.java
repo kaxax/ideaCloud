@@ -35,11 +35,8 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
-<<<<<<< HEAD
 	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
-=======
-	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
->>>>>>> e1fa29d75821ba28e7685a2a0d6a4528234b8e69
+
 	private static final long serialVersionUID = 1L;
        
     /**
