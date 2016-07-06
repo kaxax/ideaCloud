@@ -100,7 +100,7 @@
 			
 			<div class = "comment">
 				<div class="author">
-					
+					 
 					<div class="image" id = "user_id_::user_id::" onclick="goToUser(self.id)"> 
 						<a  class = "link"><img src="::img-src::" height="80" width="80"/></a>
 					</div>

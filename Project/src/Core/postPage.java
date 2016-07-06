@@ -39,7 +39,7 @@ import Core.Comment;
 public class postPage extends HttpServlet {
 	
 
-	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -110,7 +110,7 @@ public class postPage extends HttpServlet {
 			for (int i=0;i<comments.size();i++){
 				Comment comment = comments.get(i);
 				User user = db.getUser(comment.getCommentUSerId());
-				Cloud cl = new Cloud(1,2, 0);
+				Cloud cl = db.getCommentCloud(comment.getCommentId());
 				result = result + generate_comment_template(commentHtml, comment, user,cl);
 			}
 			PrintWriter out = response.getWriter();

@@ -42,6 +42,18 @@ public class change_comment_Cloud extends HttpServlet {
 		int postId =  Integer.parseInt(request.getParameter("postId"));
 		int result = Integer.parseInt(request.getParameter("result"));
 		int result1 = Integer.parseInt(request.getParameter("result1"));
+		int vote_down_result =0;
+		int vote_up_result = 0;
+		try{
+			vote_down_result = Integer.parseInt(request.getParameter("votedown"));
+		}catch(Exception e){
+			vote_down_result = 0;
+		}
+		try{
+			vote_up_result = Integer.parseInt(request.getParameter("voteup"));
+		}catch(Exception e){
+			vote_up_result = 0;
+		}
 		int rs = 0;
 		if(result==-1){
 			rs = 0;
@@ -54,31 +66,34 @@ public class change_comment_Cloud extends HttpServlet {
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
 		Comment cm = db.getComment(postId);
+		cm.setCommentCloud(vote_up_result); 
+		cm.setCommentUnCloud(vote_down_result);		
+		db.updateComment(cm);
 		if(result == 0){
-			Cloud cl = db.getCloudByIds(userId, postId);
-			db.removeCloud(cl);
-			if(result1==-1){
+			Cloud cl = db.getCommentCloud(postId);
+			db.removeCommentCloud(cl);
+			//if(result1==-1){
 				
-				cm.setCommentUnCloud(1);
+			//	cm.setCommentUnCloud(1);
 
-			}else{
-				cm.setCommentCloud(-1);
-			}
+	//		}else{
+		//		cm.setCommentCloud(-1);
+			//}
 		}else{
-			if(result1==-1){
-				cm.setCommentUnCloud(-1);
+			//if(result1==-1){
+				//cm.setCommentUnCloud(-1);
 
-			}else{
-				cm.setCommentCloud(1);
-			}
-		
-			Cloud cl = db.getCloudByIds(userId, postId);
+//			}else{
+	//			cm.setCommentCloud(1);
+		//	}
+			Cloud cl = db.getCommentCloud(postId);
 			if (cl==null){
 				Cloud newcl = new Cloud(userId, postId, rs);
-				db.insertCloud(newcl);
+				db.insertcommentCloud(newcl);
+ 				db.updateCommentCloud(newcl);
 			}else{
 				cl.setcloud(rs);
-				db.updateCloud(cl);
+				db.updateCommentCloud(cl);
 			}			
 		}
 		

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
+
 /**
  * Servlet implementation class changeCloud
  */
@@ -42,6 +44,20 @@ public class changeCloud extends HttpServlet {
 		int postId =  Integer.parseInt(request.getParameter("postId"));
 		int result = Integer.parseInt(request.getParameter("result"));
 		int result1 = Integer.parseInt(request.getParameter("result1"));
+		String uu = request.getParameter("votedown");
+		int vote_down_result =0;
+		int vote_up_result = 0;
+		try{
+			vote_down_result = Integer.parseInt(request.getParameter("votedown"));
+		}catch(Exception e){
+			vote_down_result = 0;
+		}
+		try{
+			vote_up_result = Integer.parseInt(request.getParameter("voteup"));
+		}catch(Exception e){
+			vote_up_result = 0;
+		}
+
 		int rs = 0;
 		if(result==-1){
 			rs = 0;
@@ -54,26 +70,25 @@ public class changeCloud extends HttpServlet {
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
 		Post post = db.getPost(postId);
-		
+		post.setPostunCloud(vote_down_result);
+		post.setPostCloud(vote_up_result);		
 		if(result == 0){
 			
 			Cloud cl = db.getCloudByIds(userId, postId);
-
 			db.removeCloud(cl);
-			if(result1==-1){
-				post.setPostunCloud(1);
-			}else{
-				post.setPostCloud(-1);
-			}
-			
+			//if(result1==-1){
+				//post.setPostunCloud(1);
+				//post.setPostCloud(-1);			
+			///}else{
+				//post.setPostCloud(-1);	
+				//post.setPostunCloud(1);
+			//}
 		}else{
-			if(result1==-1){
-				
-				post.setPostunCloud(-1);
-			}else{
-				
-				post.setPostCloud(1);
-			}
+		//	if(result1==-1){
+		//		post.setPostunCloud(-1);
+			//}else{	
+				//post.setPostCloud(1);
+			//}
 			Cloud cl = db.getCloudByIds(userId, postId);
 			if (cl==null){
 				Cloud newcl = new Cloud(postId, userId, rs);

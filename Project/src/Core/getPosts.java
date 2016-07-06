@@ -81,7 +81,6 @@ public class getPosts extends HttpServlet {
 		else{
 			return;
 		}
-		
 		ArrayList<String> catList = fillCategories();
 		ArrayList<String> myCatList = new ArrayList<String>();
 	
