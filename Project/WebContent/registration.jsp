@@ -46,24 +46,9 @@
 		
 	</form>
 	
-	<div id = "post-div">
 	
-		<form action="homepage.jsp">
-			<input type=submit value="see sample homepage" class="button" id="register">
-		</form>
-		<form action="samplePost.jsp" id = "sample_post">
-			<input type=submit value="see sample post" class="button" id="register">
-		</form>
-		
-	</div>
 	
-	<div id = change-info-div>
 	
-		<form action="http://localhost:8080/IdeaCloud/checkPassword">
-			<input type=submit value="change info" class="button" id="change-info">
-		</form>
-	
-	</div>
 
 
 </body>

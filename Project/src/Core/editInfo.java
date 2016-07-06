@@ -32,7 +32,7 @@ import com.sun.javafx.iio.ImageStorage;
 @WebServlet("/editInfo")
 public class editInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final String uploadDir = "D:/I.G/Freeuni New Dawn/OOP/1408/ideaCloud/Project/WebContent";
+	private final String uploadDir = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project\\WebContent";
 
 	/**
 	 * @see HttpServlet#HttpServlet()

@@ -554,6 +554,7 @@ a {
 
 </head>
 <body>
+<form action="logout" id="logoutForm" method="POST"></form>
 	<div id=main3button>
 		<input id="homepage" type="button" value="Home"
 			onclick="goHomepage();" /> </br>
@@ -562,22 +563,19 @@ a {
 		<input id="logout" type="button" value="Logout" onclick="doLogout();" />
 	</div>
 	<div id="user_info_div_::user_id::" class="user_info_div">
-		<a href="http://localhost:8080/IdeaCloud/hereWeGo"> <img
-			src="::user_img::" id="user_img" width="100px">
-		</a>
+		 <img src="::user_img::" id="::user_id::" width="100px" onclick="goToUser(this.id);" >
 
 		<div class="user_text_div">
 			<a href="http://localhost:8080/IdeaCloud/hereWeGo"
 				id="post_author_link"> ::post_user_nickname:: </a>
 		</div>
-		<div class="user_text_div">age: ::post_user_age::</div>
-		<div class="user_text_div">lvl: ::post_user_lvl::</div>
+		
 	</div>
 	<div id="post_div_::post_id::" class="post_div">
 
 		<div class="type">
 			<div calss="QA">
-				<img src="::post_type::.jpg" height="50" width="50" />
+				<img src="::post_type::" height="50" width="50" />
 			</div>
 		</div>
 
@@ -648,6 +646,10 @@ a {
 		}
 		function editInfo() {
 			window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
+		}
+		
+		function goToUser(author_id){
+			window.location = "http://localhost:8080/IdeaCloud/userpage.jsp?author_id=a_a_" + author_id;
 		}
 	</script>
 </body>

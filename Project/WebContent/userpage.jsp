@@ -44,13 +44,16 @@
 	String hisSurname = he.getUserSurname();
 	con.close();
 %>
+<form action="logout" id="logoutForm" method="POST"></form>
 <img src=<%=hisImgSrc%> class = "profpic" alt="profile pic" type="image" />
 <div id="text">
 <p class="justP">Nick: <%=hisUsername%></p></br>
 <p class="justP">Name: <%=hisName%></p></br>
 <p class="justP">Surname: <%=hisSurname%></p></br>
 </div>
+
 <div id=main3button>
+
 <input id="homepage" type="button" value="Home" onclick="goHomepage();" />
 <input id="editProfile" type="button" value="Edit Profile" onclick="editInfo();" />
 <input id="logout" type="button" value="Logout" onclick="doLogout();" />
@@ -64,6 +67,11 @@
 
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 <script>
+
+function doLogout(){
+	document.getElementById("logoutForm").submit();
+}
+
 function initf(){
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {

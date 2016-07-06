@@ -49,7 +49,7 @@
 	</form>
 	<form id="loginForm" method="post">
 		<div id="username-div">
-			<input type="text" placeholder="username" id="username"
+			<input type="text" placeholder="e-mail" id="username"
 				name="username">
 		</div>
 
