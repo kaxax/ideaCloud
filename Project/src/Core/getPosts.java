@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
+
 
 
 
@@ -31,7 +35,7 @@ import Core.GetTimeline;
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
 	
-	private String cwd = "C:\\Users\\home\\Desktop\\project\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 
 	private static final long serialVersionUID = 1L;
        
@@ -76,7 +80,9 @@ public class getPosts extends HttpServlet {
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}
 		else{
-			return;
+			ServletContext sc = this.getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/homepage.jsp");
+			rd.forward(request, response);
 		}
 		ArrayList<String> catList = fillCategories();
 		ArrayList<String> myCatList = new ArrayList<String>();

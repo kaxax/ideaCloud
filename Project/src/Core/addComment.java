@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +24,7 @@ import Core.Comment;
 public class addComment extends HttpServlet {
 	
 
-	private String cwd = "C:\\Users\\home\\Desktop\\project\\ideaCloud\\Project";
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -50,10 +52,9 @@ public class addComment extends HttpServlet {
 		if(request.getSession().getAttribute("user_id") != null){
 			user_id = (int) request.getSession().getAttribute("user_id");
 		}else{
-			PrintWriter out = response.getWriter();
-			out.append("");
-			out.close();
-			return;
+			ServletContext sc = this.getServletContext();
+			RequestDispatcher rd = sc.getRequestDispatcher("/homepage.jsp");
+			rd.forward(request, response);
 		}
 		Pool pl;
 		Connection conn;
