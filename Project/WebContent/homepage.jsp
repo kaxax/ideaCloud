@@ -30,6 +30,7 @@
 %>
 <img src=<%=imgSrc%> class = "profpic" alt="profile pic" type="image" />
 <input id="editInfo" type="button" value="editInfo" onclick="editInfo();" />
+<input id="userpageButton" type="button" value="userpage" onclick="gotoUserpage();" />
 <div class="dropdown" id = "search-dropdown">
   <button class="dropbtn" onclick="showSearch() ">search</button>
   <div class="dropdown-content">
@@ -107,6 +108,10 @@
 
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
 <script>
+function goToUser(author_id){
+	alert(author_id);
+	window.location = "http://localhost:8080/IdeaCloud/userpage.jsp?author_id=" + author_id;
+}
 function post_share(id){
 	var postId = id.split("_")[2];
 	var ttl = document.getElementById("post_id_"+postId).innerHTML;
@@ -115,6 +120,9 @@ function post_share(id){
 }
 function editInfo(){
 	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
+}
+function gotoUserpage(){
+	window.location = "http://localhost:8080/IdeaCloud/userpage.jsp";
 }
 var user_id=document.getElementById("session_user_id").value;	
 function post_it(){
@@ -185,14 +193,13 @@ function showSearch(){
 	    	 
 	    }
 	  };
-	  vote_down_value = document.getElementById("down-count_"+postId).innerHTML;
-	  vote_up_value = document.getElementById("up-count_"+postId).innerHTML;
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
+	  xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "1"); 
  }
 function voteDown(id){
 	 var vote_result = 0;
+
 	var vote_but = document.getElementById(id);
 	var postId = id.split("_")[1];
 	var vote_but1 = document.getElementById("up-arrow_"+postId);
@@ -235,11 +242,9 @@ function voteDown(id){
 		    	postsT = xhttp.responseText;	 
 		    }
 		  };
-		vote_down_value = document.getElementById("down-count_"+postId).innerHTML;
-		vote_up_value = document.getElementById("up-count_"+postId).innerHTML;
 		xhttp.open("POST", "http://localhost:8080/IdeaCloud/changeCloud", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"+"&voteup=" + vote_up_value+"&votedown=" + vote_down_value); 
+		xhttp.send("userId="+ user_id +"&postId="+postId +"&result=" + vote_result+"&result1=" + "-1"); 
  }
 function addPosts(title,text){
 	  var xhttp = new XMLHttpRequest();
