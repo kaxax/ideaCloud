@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @WebServlet("/addPosts")
 public class addPosts extends HttpServlet {
 	
-	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
+	private String cwd = "D:\\oop\\cl\\ideaCloud\\Project";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -68,7 +68,14 @@ public class addPosts extends HttpServlet {
 			int postId = 0;
 			String postTitle = request.getParameter("title");
 			String postText = request.getParameter("text");
-			int postUserId = Integer.parseInt(request.getParameter("userId"));
+			int postUserId = 0;
+			if(request.getSession().getAttribute("user_id") != null){
+				postUserId = (int) request.getSession().getAttribute("user_id");
+			}
+			else{
+				return;
+			}
+
 			int postType = Integer.parseInt(request.getParameter("type"));
 			String categories = request.getParameter("topic");
 			int postCloud = 0;
@@ -76,14 +83,14 @@ public class addPosts extends HttpServlet {
 			
 			
 			post = new Post( postTitle, postText, postUserId, postType, "", postCloud, postUncloud);
-			post.setId(postId);
-			db.addPost(post);
+
 			user = db.getUser(postUserId);
 			
 			ArrayList<String> catList = fillCategories();
 			ArrayList<String> myCatList = new ArrayList<String>();
 			 
 			int id = db.addPost(post);
+			post.setId(id);
 			String[] cats = categories.substring(1, categories.length()-1).split(",");
 						
 			 			
@@ -95,14 +102,7 @@ public class addPosts extends HttpServlet {
 			for(int i=0;i<myCatList.size();i++){
 			 	db.insertCategory(id, myCatList.get(i));
 			 }
-			 			
 			user = db.getUser(postUserId);
-			
-			
-			
-			
-			
-			
 			String style = getHtml(cwd+"\\WebContent\\postStyle.html");
 			String template = getHtml(cwd+"\\WebContent\\postTamplate.html");
 			
@@ -138,6 +138,7 @@ public class addPosts extends HttpServlet {
 	private static String generate_template(String template1, Post post, User user){
 		String template = template1;
 		String tmp1;
+		int ii =post.getPostId();
 		if (user.getUSerImgSrc().length()>0){
 			tmp1=template.replace("::img-src::", user.getUSerImgSrc());
 			System.out.println("img_src:   "+user.getUSerImgSrc());

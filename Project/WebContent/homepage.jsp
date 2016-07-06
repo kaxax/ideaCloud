@@ -282,7 +282,7 @@ function addPosts(title,text){
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {	
 	    	postsT = xhttp.responseText;	
 	    	 var shadow = document.getElementById("postsDiv");
-	    	shadow.innerHTML = postsT + shadow.innerHTML;
+	    	 shadow.innerHTML = postsT + shadow.innerHTML;
 	    }
 	  };
 	  xhttp.open("POST", "http://localhost:8080/IdeaCloud/addPosts", true);
