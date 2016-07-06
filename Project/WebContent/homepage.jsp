@@ -106,8 +106,13 @@
 </div>
 
 <td><input type="text" id ="session_user_id"value="<%= session.getAttribute("user_id") %>" style="  visibility: hidden;"/></td>
-
 <script>
+function post_share(id){
+	var postId = id.split("_")[2];
+	var ttl = document.getElementById("post_id_"+postId).innerHTML;
+	var text = document.getElementById("post_text_"+postId).innerHTML;
+	var win = open("share.jsp?text="+text+"&title="+ttl, "MsgWindow", 'width=500,height=300');
+}
 function editInfo(){
 	window.location = "http://localhost:8080/IdeaCloud/editInfo.jsp";
 }
@@ -247,7 +252,8 @@ function addPosts(title,text){
 	  var type = document.getElementById("blue").selectedIndex;
 	  //es mere shecvale user id 
 	  //user_id=0;
-	  xhttp.send("userId="+ user_id +"&title="+title +"&text="+text+"&type="+type+"&topic="+"art"); 
+	  topic = JSON.stringify(post_marked_categories);
+	  xhttp.send("userId="+ user_id +"&title="+title +"&text="+text+"&type="+type+"&topic="+topic); 
 }
 //boolean status, int userId, int wallType, boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm
 function getPosts(walltype,type,searchTerm){

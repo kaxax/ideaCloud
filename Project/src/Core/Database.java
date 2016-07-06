@@ -78,6 +78,22 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public void insertcommentCloud(Cloud c) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("insert into commentClouds "
+					+ "(commentId, userId, cloud) " + "values (?, ?, ?)");
+			System.out.println(c.getPostId() + "   " + c.getUserId() + "   " + c.status());
+			stmt.setInt(1, c.getPostId());
+			stmt.setInt(2, c.getUserId());
+			stmt.setInt(3, c.status());
+
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public Cloud getCloud(int id) {
 		Cloud c;
@@ -105,6 +121,31 @@ public class Database {
 		return null;
 	}
 
+	public Cloud getCommentCloud(int id) {
+		Cloud c;
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from commentClouds where id = ?");
+			stmt.setInt(1, id);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+
+				int cId = rs.getInt("commentId");
+				int authorId = rs.getInt("userId");
+				int cloud = rs.getInt("cloud");
+				c = new Cloud(cId, authorId, cloud);
+				c.setId(id);
+				return c;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public Cloud getCloudByIds(int uId, int pId) {
 		Cloud c;
 		try {
@@ -131,12 +172,38 @@ public class Database {
 		}
 		return null;
 	}
+	public Cloud getCommentCloudByIds(int uId, int cId) {
+		Cloud c;
+		try {
+
+			PreparedStatement stmt = con
+					.prepareStatement("select * from commentClouds where commentId = ? and userId = ?");
+			stmt.setInt(1, cId);
+			stmt.setInt(2, uId);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				int id = rs.getInt("id");
+				int commentId = rs.getInt("commentId");
+				int authorId = rs.getInt("userId");
+				int cloud = rs.getInt("cloud");
+				c = new Cloud(commentId, authorId, cloud);
+				c.setId(id);
+				return c;
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void updateCloud(Cloud c) {
 
 		try (PreparedStatement stmt = con
 				.prepareStatement("update clouds set postId = ?, userId = ?, cloud = ? where id = ?")) {
-			System.out.println(c.status());
+			
 			stmt.setInt(1, c.getPostId());
 			stmt.setInt(2, c.getUserId());
 			stmt.setInt(3, c.status());
@@ -147,7 +214,22 @@ public class Database {
 		}
 
 	}
+	public void updateCommentCloud(Cloud c) {
 
+		try (PreparedStatement stmt = con
+				.prepareStatement("update commentClouds set commentId = ?, userId = ?, cloud = ? where id = ?")) {
+			
+			stmt.setInt(1, c.getPostId());
+			stmt.setInt(2, c.getUserId());
+			stmt.setInt(3, c.status());
+			stmt.setInt(4, c.getId());
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void removeCloud(Cloud c) {
 		try {
 			PreparedStatement stmt = con
@@ -158,7 +240,17 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public void removeCommentCloud(Cloud c) {
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("delete from commentClouds where id = ? ");
+			stmt.setInt(1, c.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public ArrayList<Comment> getCommentByIds(int pId, int start, int end) {
 		ArrayList<Comment> result = new ArrayList<Comment>();
 		try {
@@ -183,6 +275,20 @@ public class Database {
 	}
 
 	public int addPost(Post p) {
+		int id = 0;
+		try {
+			PreparedStatement stmt = con
+					.prepareStatement("SHOW TABLE  STATUS LIKE 'post'");
+			
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs != null && rs.next()) {
+				id = rs.getInt("Auto_increment");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
 			PreparedStatement stmt = con
 					.prepareStatement("INSERT INTO post "
@@ -199,12 +305,13 @@ public class Database {
 			Date date = new Date();
 			stmt.setString(8, dateFormat.format(date));
 			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// gogi yleo unda daabruno is id roml id zec am post chaamateb
-		return 0;
+		
+		return id;
 	}
 
 	public Post getPost(int id) {
@@ -441,30 +548,38 @@ public class Database {
 
 	}
 
+	
+	public boolean contains(ArrayList<Post> posts, Post p){
+		for(int i=0; i<posts.size(); i++){
+			if(posts.get(i).getPostId() == p.getPostId())
+				return true;
+		}
+		return false;
+	}
+	
 	public ArrayList<Post> getCategoryPosts(ArrayList<String> categories, int idea, int question) {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
-			String st = "select * from category ";
+			String st = "select * from post ";
 			if (categories.size() != 0) {
+				st = "select * from category where ";
 				for (int i = 0; i < categories.size() - 1; i++) {
-					st += "where category =? or";
+					st += "category =? or ";
 				}
-				st+= "where category =?";
+				st+= "category =?";
 			}
-			st += " order by cdate desc";
-			
 			PreparedStatement stmt = con
 					.prepareStatement(st);
 
 			for(int i =0 ; i<categories.size(); i++){
 				stmt.setString(i+1, categories.get(i));
 			}
-
+			System.out.println(st);
 			ResultSet rs = stmt.executeQuery();
 			while (rs != null && rs.next()) {
-				int pid = rs.getInt("postId");
+				int pid =(categories.size() != 0)? rs.getInt("postId"):rs.getInt("id");
 				Post p = getPost(pid);
-				if((p.getPostType()==1 && idea==1) || (p.getPostType()==0 && idea==1))
+				if((p.getPostType()==1 && idea==1) || (p.getPostType()==0 && question==1) && !contains(posts,p))
 					posts.add(p);
 			}
 		} catch (SQLException e) {
@@ -517,7 +632,41 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
+	
+    
+	public void updatePost(Post p){
+		try (PreparedStatement stmt = con
+				.prepareStatement("update post set title = ?, text = ?, type= ?, authorId = ?, topic = ?, clouds = ?, unclouds = ? where id = ?")) {
+			stmt.setString(1, p.getPostTitle());
+			stmt.setString(2, p.getPostText());
+			stmt.setInt(3, p.getPostType());
+			stmt.setInt(4,p.getPostUSerId());
+			stmt.setString(5, p.getPostTopic());
+			stmt.setInt(6, p.getPostCloud());
+			stmt.setInt(7, p.getPostUncloud());
+			stmt.setInt(8, p.getPostId());
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void updateComment(Comment c){
+		try (PreparedStatement stmt = con
+				.prepareStatement("update comments set postId = ?, authorId = ?, text= ?,clouds = ?, unclouds = ? where id = ?")) {
+		
+			stmt.setInt(1, c.getCommentPostId());
+			stmt.setInt(2, c.getCommentUSerId());
+			stmt.setString(3, c.getCommentText());
+			stmt.setInt(4, c.getCommentCloud());
+			stmt.setInt(5, c.getCommentUncloud());
+			stmt.setInt(6, c.getCommentId());
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	public void removeUser(User u) {
 		try {
 			PreparedStatement stmt = con

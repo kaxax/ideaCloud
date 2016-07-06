@@ -35,7 +35,11 @@ import Core.GetTimeline;
  */
 @WebServlet("/getPosts")
 public class getPosts extends HttpServlet {
+<<<<<<< HEAD
 	private String cwd = "D:\\I.G\\Freeuni New Dawn\\OOP\\1408\\ideaCloud\\Project";
+=======
+	private String cwd = "D:\\gela\\freeuni\\oop\\git-repo\\ideaCloud\\Project";
+>>>>>>> e1fa29d75821ba28e7685a2a0d6a4528234b8e69
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -86,12 +90,13 @@ public class getPosts extends HttpServlet {
 		ArrayList<String> myCatList = new ArrayList<String>();
 	
 		int qi = Integer.parseInt(request.getParameter("type"));   //orie - 2    idea - 0    qestion - 1 
-		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof -1   homepage - 0
+		int wallType = Integer.parseInt(request.getParameter("walltype")); //prof - 1   homepage - 0
 		String searchTerm = request.getParameter("searchTerm");
 		String categories = request.getParameter("categories");
 		String[] cats = categories.substring(1, categories.length()-1).split(",");
+		
 		for(int i=0;i<catList.size();i++){
-			if((i+1)<cats.length && cats[i+1].equals("true")){
+			if(i < cats.length && cats[i].equals("true")){
 				myCatList.add(catList.get(i));
 			}
 		}
@@ -136,6 +141,7 @@ public class getPosts extends HttpServlet {
 		for (int i=0;i<posts.size();i++){
 			Post post = db.getPost(posts.get(i));
 			User user = db.getUser(post.getPostUSerId());
+			int k = post.getPostId();
 			Cloud cld = db.getCloudByIds(user_id, post.getPostId());
 			String temp=generate_template(template, post, user,cld);
 			result = result + temp;

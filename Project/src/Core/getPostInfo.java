@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class changeCloud
+ * Servlet implementation class getPostInfo
  */
-@WebServlet("/changeCloud")
-public class changeCloud extends HttpServlet {
+@WebServlet("/getPostInfo")
+public class getPostInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public changeCloud() {
+    public getPostInfo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,62 +38,22 @@ public class changeCloud extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = (int) request.getSession().getAttribute("user_id");
-		int postId =  Integer.parseInt(request.getParameter("postId"));
-		int result = Integer.parseInt(request.getParameter("result"));
-		int result1 = Integer.parseInt(request.getParameter("result1"));
-		int rs = 0;
-		if(result==-1){
-			rs = 0;
-		}else{
-			rs = 1;
-		}
+		int post_id = Integer.parseInt(request.getParameter("post_id"));
+		// TODO Auto-generated method stub
 		Pool pl;
 		try {
 		pl = Pool.getPool();
 		Connection conn = pl.getConnection();
 		Database db = new Database(conn);
-		Post post = db.getPost(postId);
-		
-		if(result == 0){
-			
-			Cloud cl = db.getCloudByIds(userId, postId);
+		Post pst =  db.getPost(post_id);
 
-			db.removeCloud(cl);
-			if(result1==-1){
-				post.setPostunCloud(1);
-			}else{
-				post.setPostCloud(-1);
-			}
-			
-		}else{
-			if(result1==-1){
-				
-				post.setPostunCloud(-1);
-			}else{
-				
-				post.setPostCloud(1);
-			}
-			Cloud cl = db.getCloudByIds(userId, postId);
-			if (cl==null){
-				Cloud newcl = new Cloud(postId, userId, rs);
-				db.insertCloud(newcl);
-				db.updateCloud(newcl);
-			}else{
-				cl.setcloud(rs);
-				db.updateCloud(cl);
-			}			
-		}
-		db.updatePost(post);
-		conn.close();
-		} catch (SQLException e) {
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (PropertyVetoException e) {
+		}catch (PropertyVetoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 }

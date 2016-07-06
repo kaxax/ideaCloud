@@ -14,7 +14,7 @@
 					</div>
 				</div>
 				
-				<div class = "comment_text_div">
+				<div class = "comment_text_div" id = "comment_text_::comment_id::">
 					::comment_text::
 				</div>
 				
@@ -39,20 +39,12 @@
 						::comment_uncloud::
 					</div>
 				</div>
-				<div class="comment_share">
-					<a href = "http://share-now">
-						<div class="comment_vote-name"> 
-							<img  src="share-now.png" id = "iamge-share">
-						</div>
-						</a>
-				</div>
-				
-				<div class="comment_share">
-					<a href = "http://share">
+				<div class="comment_share" id = "share_::comment_id::" onclick="share_comment(this.id)">
+					
 						<div class="comment_vote-name">
 							<img  src="share-later.png" id = "iamge-share">
 						</div>
-						</a>
+
 				</div>
 			</div>
 				
