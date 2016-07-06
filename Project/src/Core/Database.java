@@ -562,11 +562,11 @@ public class Database {
 		try {
 			String st = "select * from post ";
 			if (categories.size() != 0) {
-				st = "select * from category ";
+				st = "select * from category where ";
 				for (int i = 0; i < categories.size() - 1; i++) {
-					st += "where category =? or";
+					st += "category =? or ";
 				}
-				st+= "where category =?";
+				st+= "category =?";
 			}
 			PreparedStatement stmt = con
 					.prepareStatement(st);
@@ -574,7 +574,7 @@ public class Database {
 			for(int i =0 ; i<categories.size(); i++){
 				stmt.setString(i+1, categories.get(i));
 			}
-
+			System.out.println(st);
 			ResultSet rs = stmt.executeQuery();
 			while (rs != null && rs.next()) {
 				int pid =(categories.size() != 0)? rs.getInt("postId"):rs.getInt("id");
