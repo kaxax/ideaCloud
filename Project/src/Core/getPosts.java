@@ -112,10 +112,10 @@ public class getPosts extends HttpServlet {
 		boolean questions = true;
 		boolean ideas = true;
 		if(qi == 0){
-			questions = false;
+			ideas = false;
 		}
 		if(qi == 1){
-			ideas = false;
+			questions = false;
 		}
 		//int start, int end, boolean status, int userId, int wallType, 
 		//boolean questions, boolean ideas, ArrayList<String> categories, String searchTerm

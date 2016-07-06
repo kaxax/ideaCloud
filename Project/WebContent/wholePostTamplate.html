@@ -373,14 +373,14 @@ margin-bottom: 18px;
 	position: relative;
 	left: 30%;
 	width: 700px;
-	height: 100px;
+	height: 10px;
 	background-color: ;
-	top: -0px;
+	top: -40px;
 	padding: 15px;
 }
 .comment{
 	position: relative;
-	margin-top: 15%;
+	margin-bottom: 15%;
 	width: 700px;
 	height: auto;
 	border: 3px;
@@ -501,6 +501,9 @@ cursor: pointer;
 			</div>
 			<div class = "post_text_div" id = "post_text_::post_id::">
 				::post_text::
+				<br>
+				<br>
+				<br>
 			</div>
 			
 			<div class="meta_info">
@@ -526,7 +529,7 @@ cursor: pointer;
 				</div>
 				<div class="share" id = "post_share_now_::post_id::" onclick="post_share_now(this.id)">
 						<div class="vote-name"> 
-							<img  src="share-now.png" id = "iamge-share">
+							
 						</div>
 						
 				</div>
@@ -537,18 +540,19 @@ cursor: pointer;
 						</div>
 						
 				</div>
-			</div>
-			<textarea rows="4" cols="50" id = "text_::post_id::"  style = "position:relative; top:100px; left:0%; width:690px">
+					<textarea rows="4" cols="50" id = "text_::post_id::"  style = "position:relative; top:120px; left:0%; width:690px">
 		</textarea>
 
 		</div>
-				<button id = "comment_::post_id::" onclick="commentIt(this.id)"  style = "position:absolute; top:400px; left:74%;width:120px;height:50px;">
+				<button id = "comment_::post_id::" onclick="commentIt(this.id)"  style = "position:absolute; top:384px; left:81%;width:120px;height:67px;">
 			comment
 		</button>		
  		<div style="height: 5px;"></div>
-		<button id = "sho_more_button_::post_id::" onclick="showMore(this.id)"  value="show more" style = "position:absolute; top:470px; left:30%;	height:30px;">
+		<button id = "sho_more_button_::post_id::" onclick="showMore(this.id)"  value="show more" style = "position:absolute; top:470px; left:40%;	height:30px;">
 			show more comments
-		</button>		
+		</button>	
+			</div>
+			
 		<div id = "comments">
 		</div>
 </body>
